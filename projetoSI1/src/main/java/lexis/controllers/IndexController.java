@@ -35,7 +35,10 @@ public class IndexController {
           user.setSenha(senha);
           user.setEmail(email);
           model.addAttribute("user", user);
-         
+          System.out.println("login"+ user.getLogin());
+          System.out.println("email:" + user.getEmail());
+          System.out.println("senha" + user.getSenha());
+          System.out.println("Id" + user.getId());
           return "editor";
     }
     
