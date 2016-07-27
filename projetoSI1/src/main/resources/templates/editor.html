@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+    <title>Lexis Cloud Editor</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  
+</head>
+<body style="height: 333px; ">
+<div class="container" style="height: 310px; ">
+    <div class="jumbotron">
+    <h1 th:text="'Bem vindo: ' + ${user.login}" size="100" >bem vindo</h1>			
+			<h4 th:text="'seu email: ' + ${user.email}" size="10">Fellow Spring Framework Gurus!!!</h4>
+        <form method="POST">
+              <label for="description">editor</label><br />
+              <textarea name="description" cols="80" rows="5" style="height: 125px; "> </textarea>
+              <br /> <input type="submit"></input>
+        </form>
+        
+    </div>
+</div>
+
+</body>
+</html>

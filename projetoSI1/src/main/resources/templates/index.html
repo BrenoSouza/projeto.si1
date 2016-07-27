@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="pt-BR">
+
+    <title>Lexis Cloud Editor</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<meta charset="UTF-8"/>
+	<meta name="description" content="Bootstrap test"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700" th:href="@{https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700}" rel="stylesheet" type="text/css" />
+
+	
+
+	<link rel="stylesheet" href="../static/css/bootstrap.css" th:href="@{css/bootstrap.css}" />
+	<link rel="stylesheet" type="text/css" href="../static/css/bootstrap-responsive.css" th:href="@{css/bootstrap-responsive.css}" />
+	<link rel="stylesheet" type="text/css" href="../static/css/style.css" th:href="@{css/style.css}" />
+</head>
+<body>
+	<div class="header">
+		<div class="row-fluid">
+			<header>
+				<div class="">
+					<img src="../static/images/logo.png" th:src="@{images/logo.png}" alt="" class="logo"></img>
+				</div>
+			</header>
+		</div>
+	</div>
+
+
+	<div class="row-fluid principal">
+		<div class="span4 offset1 sign-up" id="sign-up">
+			<h2 class="sign-up ">Cadastre-se</h2>
+			<form action="" method="POST">
+				<label for="login">Login: </label>
+				<input type="text" name="login" id="login-sign-up"></input>
+				<label for="senha">Senha: </label>
+				<input type="password" name="senha" id="password-sign-up"></input>
+				<label for="email">Seu email: </label>
+				<input type="text" name="email" id="email-sign-up"></input>
+				<input type="submit" class="button" name="sign-up" value="Registrar"></input>				
+			</form>
+		</div>
+		<div class="span1 divisor"><img src="../static/images/div.png" th:src="@{images/div.png}" alt=""></img></div>
+		<div class="offset2 span3 sign-in">
+			<h2 class="sign-in">Já possui uma conta?</h2>
+			<form action="">
+				<label for="login">Login: </label>
+				<input type="text" name="login" id="login-sign-in"></input>
+				<label for="senha">Senha: </label>
+				<input type="password" name="senha" id="password-sign-in"></input>
+				<input type="submit" class="button" name="sign-in" value="Entrar"></input>
+			</form>
+		</div>
+	</div>
+
+	<div class="footer">
+		<div class="row-fluid">
+			<footer>
+				<div class="span12">
+					<span>&copy; 2016 - Rafael Klynger | Dev. Web</span>
+				</div>
+			</footer>
+		</div>
+	</div>
+
+</body>
+</html>
