@@ -14,7 +14,7 @@ import lexis.domain.Users;
 @RequestMapping("/")
 public class IndexController {
 
-	
+	//esse metodo redireciona toda url invalida para a pg error.html
 	@RequestMapping(value = "/{url}")
     public String index(@PathVariable("url") String url){
 		System.out.println("url: "+url);
