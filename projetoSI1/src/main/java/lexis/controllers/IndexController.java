@@ -14,7 +14,7 @@ import lexis.domain.Users;
 @RequestMapping("/")
 public class IndexController {
 
-	
+	//esse metodo serve para redirecionar toda entrada invalida a uma pg html adequada
 	@RequestMapping(value = "/{url}")
     public String index(@PathVariable("url") String url){
 		System.out.println("url: "+url);
