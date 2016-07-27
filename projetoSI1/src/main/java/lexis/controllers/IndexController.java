@@ -36,6 +36,7 @@ public class IndexController {
           user.setEmail(email);
           model.addAttribute("user", user);
           System.out.println("login"+ user.getLogin());
+          System.out.println("testando o git");
           return "editor";
     }
     
