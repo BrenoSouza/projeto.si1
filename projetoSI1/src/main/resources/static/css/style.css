@@ -56,7 +56,47 @@ img {
 	height: auto;
 }
 
-/* layout do site */
+
+#topbar {
+	position: absolute;
+	width: 100%;
+	height: 50px;
+	background-color: black;
+	top: 0; left: 0; right: 0;
+}
+
+
+.no-margin {
+	margin: 0px !important;
+}
+
+.no-padding {
+	padding: 0px !important;
+}
+
+.header.left-panel {
+	left: 0px;
+	top: 100px;
+	margin: auto;
+	background-color: #1f3c58;
+	height: 100px;
+}
+
+h3.explorer-header-text {
+	color: black;
+	font-weight: 500;
+}
+
+.nav-left-panel {
+	position: absolute;
+	height: calc(100% - 50px);
+	background-color: #AAAAAA;
+	left: 0px;
+}
+
+.list-files {
+	height: calc(100% - 50px);
+}
 
 .logo {
 	padding-left: 40%;
@@ -71,7 +111,6 @@ img {
 	padding-top: 10px;
 
 }
-
 
 .footer {
 	position: fixed;
