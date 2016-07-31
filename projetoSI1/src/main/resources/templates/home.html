@@ -19,10 +19,28 @@
 			<div class="span3 nav-left-panel no-margin">
 				<div class="header left-panel">
 					<h3 class="explorer-header-text">Explorer2</h3>
+					<table class="table table-striped">
+						<tr>
+							<th>name</th>
+							<th>DateCreated</th>
+							<th>DateModifiq</th>
+							<th>View</th>
+							<th>Edit</th>
+							<th>Delete</th>
+						</tr>
+						<tr th:each="folder : ${user.root.diretorio}">
+							<td th:text="${folder.name}"><a
+								th:href="${'/explorer/' + folder.name}">name</a></td>
+							<td th:text="${folder.dataCriacao}">DateCreated</td>
+							<td th:text="${folder.dataEdicao}">DateModifiq</td>
+							<td><a th:href="${'/explorer/' + folder.name}">View</a></td>
+							<td><a th:href="${'/explorer/edit/' + folder.name}">Edit</a></td>
+							<td><a th:href="${'/explorer/delete/' + folder.name}">Delete</a></td>
+						</tr>
+					</table>
 				</div>
 			</div>
-			<div class="span9 list-files">
-				<h1>fodase</h1>
+			<div class="container-fluid">
 			</div>
 			
 		</div>
@@ -31,11 +49,16 @@
 	<div id="topbar">
 		<div class="row">
 			<div class="span1">
-			<a href="" class="topbar-link">home</a>	
-				
+			<a href="/home/" class="topbar-link">home</a>				
 			</div>
 			<div class="span1">
-				<a href="" class="topbar-link">Detalhes da conta</a>	
+			<li><a href="logout" th:href="@{/}">Logout</a></li>					
+			</div>
+			<div class="span1">
+				<h5 th:text="${user.login}">Bem vindo user</h5>
+			</div>
+			<div class="span1">
+				<h5 th:text="${user.email}">email</h5>
 			</div>
 			<div class="span10"></div>
 
