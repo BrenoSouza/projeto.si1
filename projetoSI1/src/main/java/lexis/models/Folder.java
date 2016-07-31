@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 
 
@@ -15,6 +16,7 @@ public class Folder implements FileAndFolder {
 	private String name;
 	private Date dataCriacao = getPegaDataAtual();
 	private Date dataEdicao = getPegaDataAtual();
+	@ElementCollection
 	private ArrayList<FileAndFolder> diretorio = new ArrayList<FileAndFolder>();
 	
 	public Folder(String name){
