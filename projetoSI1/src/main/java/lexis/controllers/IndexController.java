@@ -44,11 +44,11 @@ public class IndexController {
     
 	@RequestMapping(value = "userCadastro", method = RequestMethod.POST)
     public ModelAndView cadastro(User userCadastro){
-    	ModelAndView cadastro = new ModelAndView("/home"); //criando o Model and view setado para o home
+    	//ModelAndView cadastro = new ModelAndView("/home"); //criando o Model and view setado para o home
     	userService.saveUser(userCadastro); // salvando usuario no BD local
-    	cadastro.addObject("user", userService.getUserById(userCadastro.getId())); //adicionando objeto para o Model
+    	//cadastro.addObject("user", userService.getUserById(userCadastro.getId())); //adicionando objeto para o Model
     	//cadastro.setViewName("index");
-    	return cadastro;//retornando o Model(com o obejto "user") para a view "Home"
+    	return login(userCadastro);//retornando o Model(com o obejto "user") para a view "Home"
     }
     
     @RequestMapping(value = "userlogin", method = RequestMethod.POST)
@@ -60,7 +60,7 @@ public class IndexController {
 		if (userTemp.getSenha().equals(userLogin.getSenha())) {
 			login.setViewName("home");
 		} else {
-			login.setViewName("index");
+			login.setViewName("redirect:/");
 		}
 		return login;
 	}
