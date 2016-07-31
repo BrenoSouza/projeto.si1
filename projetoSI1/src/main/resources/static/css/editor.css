@@ -1,0 +1,52 @@
+body {
+	background-color: #FDFCFF;
+	overflow-y: scroll;
+}
+
+.topbar-links {
+	font-weight: 300;
+}
+.center-text {
+	height: 100%;
+	margin-top: 50px;
+	position: relative;
+	background-color: #B9A3D4;
+	overflow: hidden;
+}
+
+.menu-text {
+	padding-left: 10px;
+}
+
+textarea  
+{  
+   font-family:"Indie Flower", serif;  
+   font-size: 20px;   
+}
+
+.unlabeled {
+	list-style: none;
+}
+
+ul.inline li, ol.inline li {
+	display: inline;
+	margin: 15px;
+}
+
+.input-text {
+	display: block;
+	font-weight: 500;
+	max-width: 819px;
+	min-width: 819px;
+	min-height: 750px;
+	max-height: 750px;
+	padding-bottom: 50px;
+	margin-left: auto;
+	margin-right: auto;
+	align-content: center;
+}
+
+h1.title {
+	color: red;
+	font-weight: 500;
+}
