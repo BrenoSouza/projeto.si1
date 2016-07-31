@@ -1,5 +1,7 @@
+
+
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html ng-app="listaArquivos" xmlns:th="http://www.thymeleaf.org">
 <head lang="pt-BR">
 	<title>Home | Lexis Cloud Editor</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -12,21 +14,10 @@
 	<link rel="stylesheet" type="text/css" href="../static/css/bootstrap-responsive.css" th:href="@{css/bootstrap-responsive.css}" />
 	<link rel="stylesheet" type="text/css" href="../static/css/style.css" th:href="@{css/style.css}" />
 
+
+
 </head>
-<body>
-	<div class="container-fluid">
-		<div class="row-fluid">
-			<div class="span3 nav-left-panel no-margin">
-				<div class="header left-panel">
-					<h3 class="explorer-header-text">Explorer2</h3>
-				</div>
-			</div>
-			<div class="span9 list-files">
-				<h1>fodase</h1>
-			</div>
-			
-		</div>
-	</div>
+<body ng-controller="listaArquivosCtrl">
 
 	<div id="topbar">
 		<div class="row">
@@ -41,6 +32,111 @@
 
 		</div>
 	</div>
+
+	<div style="margin-top:55px; margin-left:40px;"> 
+		
+		<table cellpadding="10">
+   			<tr>
+     			<td>
+        			<options>
+
+        			    <label for="search">Pesquisar </label>
+
+						<input style="margin-top:0px" type="text" name="search" id="search" placeholder="Nome do arquivo ou pasta" ng-model="searchFile" ></input>
+					</options>
+     			</td>
+     			<td>
+       				<label for="ordenacao">Ordenar </label>
+
+					<select name= "ordenacao" onchange="">
+						<option>Tipo</option>
+						<option>Nome</option>
+						<option>Modificação</option>
+					</select>
+     			</td>
+
+     			<td>
+
+	     			<input style="margin-top:17px" type="submit" class="button" name="createFile" value="Novo arquivo" ng-click="adicionaTxt(nome)" ng-disabled="!nome"></input>
+
+     			</td>
+
+     			<td>
+     				<label for="nomePasta">Digite o nome</label>		
+     				<input style="margin-top:0px" type="text" name="nomePasta" id="novoNome" value="Nome da pasta" ng-model="nome" placeholder="Nome da Pasta"></input>
+     				
+
+     				<input style="margin-top:17px" type="submit" class="button" name="createPath" value="Nova Pasta" ng-click="adicionaPasta(nome)" ng-disabled="!nome"></input>
+
+
+
+     				
+     			</td>
+     			<td>
+     				
+
+
+     			</td>
+
+   			</tr>
+  		</table>
+
+		
+	</div>
+
+	<div class="container" style="margin-top:10px" :>  	
+  		<div class="table-responsive">
+  			<table class="table table-striped" style="background:#B0C4DE" >
+    			<thead style="background:#1f3c58">
+      				<tr style="border:bold">
+      					<th>
+
+      						<img src="../static/images/star-marked.png" th:src="@{images/star-marked.png}" alt="" class="star-marked"></img>
+
+      					</th>
+     			    	<th><a style="color:white" href="" ng-click="sortBy('nome')"> Nome</a></th>
+        				<th><a style="color:white" href="" ng-click="sortBy('tipo')"> Tipo</a></th>
+        				<th><a style="color:white" href="" ng-click="sortBy('dataCreat')"> Data Criação</a></th>
+        				<th><a style="color:white" href="" ng-click="sortBy('ultimaModif')">Última modificação</a></th>
+        				<th style="color:white">Opções</th>
+      				</tr>
+    			</thead>
+    		
+    			<tbody>
+      				<tr ng-repeat="arquivo in arquivos | filter: {nome: searchFile} | orderBy:tipoOrdenacao:direction">
+      					<td>
+      						<a href="#"><img src="../static/images/star.png" th:src="@{images/star.png}" alt="" class="star"></img></a>
+
+      					</td>
+      					<td>
+      						<a href="#"><img src={{arquivo.folder}} th:src="@{images/{{arquivo.tipo}}.png} alt="" class="iconeFile"></img></a>
+      						<span>{{arquivo.nome}}</span>
+      					</td>
+      					<td>
+      						{{arquivo.tipo}}
+
+      					</td>
+      					<td>
+      						{{arquivo.dataCreat | date:"dd/MM/yyyy HH:mm"}}
+      					</td>
+
+      					<td>
+      						{{arquivo.ultimaModif}}
+      					</td>
+      					<td>
+        					<input style="margin-top:0px" type="submit" class="button" name="excluir" value="Excluir"></input>
+      					</td>
+
+
+      				</tr>
+     
+    			</tbody>
+  			</table>
+  		</div>
+	</div>
+
+	<script src="../static/js/angular.min.js"></script>
+	<script src="../static/js/home.js"></script>
 
 </body>
 </html>
