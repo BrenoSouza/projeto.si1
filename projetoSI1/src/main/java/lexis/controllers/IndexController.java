@@ -57,7 +57,7 @@ public class IndexController {
 		User userTemp = userService.getUserByLogin(userLogin.getLogin());
 		login.addObject("user", userTemp);
 
-		if (userTemp.getSenha().equals(userLogin.getSenha())) {
+		if (userTemp.getPassword().equals(userLogin.getPassword())) {
 			login.setViewName("home");
 		} else {
 			login.setViewName("redirect:/");

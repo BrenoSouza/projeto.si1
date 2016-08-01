@@ -12,12 +12,12 @@ public interface FileAndFolder{
 	
 	void setName(String name);
 	
-	Date getDataCriacao();
+	Date getDateCreation();
 	
-	Date getDataEdicao();
+	Date getDateEdition();
 	
-	void setDataCriacao(Date data);
+	void setDateCreation(Date date);
 	
-	void setDataEdicao(Date data);
+	void setDateEdition(Date date);
 
 }

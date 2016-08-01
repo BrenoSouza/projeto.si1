@@ -14,10 +14,10 @@ public class Folder implements FileAndFolder {
 
 	@Column//(scale = 3)
 	private String name;
-	private Date dataCriacao = getPegaDataAtual();
-	private Date dataEdicao = getPegaDataAtual();
+	private Date dataCreation = getDateCurrent();
+	private Date dataEdition = getDateCurrent();
 	@ElementCollection
-	private ArrayList<FileAndFolder> diretorio = new ArrayList<FileAndFolder>();
+	private ArrayList<FileAndFolder> directory = new ArrayList<FileAndFolder>();
 	
 	public Folder(String name){
 		this.name = name;
@@ -32,49 +32,49 @@ public class Folder implements FileAndFolder {
 	public void addFolder(String name){
 		Folder temp =  new Folder(name);
 		if(getFolder(name) == null){
-			this.diretorio.add(temp);
+			this.directory.add(temp);
 		}
 		
 	}
 	
 	public void removeFolder(Folder folder){
-		this.diretorio.remove(folder);
+		this.directory.remove(folder);
 	}
 	
 	public Folder getFolder(String name2){
 		Folder folderTemp = null;
-		for (int i = 0; i < diretorio.size(); i++) {
-			if(diretorio.get(i).getName().equals(name2)){
-				folderTemp = (Folder) diretorio.get(i);
+		for (int i = 0; i < directory.size(); i++) {
+			if(directory.get(i).getName().equals(name2)){
+				folderTemp = (Folder) directory.get(i);
 			}
 		}
 		return folderTemp;
 	}
 
-	public ArrayList<FileAndFolder> getDiretorio(){
-		return diretorio;
+	public ArrayList<FileAndFolder> getDirectory(){
+		return directory;
 	}
 	
-	public void setDiretorio(ArrayList<FileAndFolder> diretorio){
-		this.diretorio =diretorio;
+	public void setDiretorio(ArrayList<FileAndFolder> directory){
+		this.directory =directory;
 	}
 	
 	
-	public Date getDataCriacao() {
-		return dataCriacao;
+	public Date getDateCreation() {
+		return dataCreation;
 	}
 	
-	public Date getDataEdicao() {
-		return dataEdicao;
+	public Date getDateEdition() {
+		return dataEdition;
 	}
 	
-	public void setDataCriacao(Date data) {
-		this.dataCriacao = data;
+	public void setDateCreation(Date date) {
+		this.dataCreation = date;
 		
 	}
 	
-	public void setDataEdicao(Date data) {
-		this.dataEdicao = data;
+	public void setDateEdition(Date date) {
+		this.dataEdition = date;
 		
 	}
 
@@ -88,7 +88,7 @@ public class Folder implements FileAndFolder {
 		this.name = name;
 	}
 	
-	public Date getPegaDataAtual() {
+	public Date getDateCurrent() {
 		Calendar calendar = new GregorianCalendar();
 		Date date = new Date();
 		calendar.setTime(date);

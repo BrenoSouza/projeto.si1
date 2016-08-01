@@ -13,7 +13,7 @@ public class User {
     private Integer version;
     
     private String login;
-    private String senha;    
+    private String password;    
     private String email;
     @Embedded
     private static Folder ROOT = new Folder("root");
@@ -53,12 +53,12 @@ public class User {
 		this.login = login;
 	}
 
-	public String getSenha() {
-		return senha;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setSenha(String senha) {
-		this.senha = senha;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getEmail() {
@@ -71,7 +71,7 @@ public class User {
 	
 	@Override
 	public String toString(){
-		return "id: " + getId() + " login: " + getLogin() + " email: " + getEmail() + " senha: " + getSenha();
+		return "id: " + getId() + " login: " + getLogin() + " email: " + getEmail() + " password: " + getPassword();
 	}
     
    
