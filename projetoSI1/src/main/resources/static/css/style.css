@@ -121,7 +121,7 @@ h3.explorer-header-text {
 }
 
 .footer {
-	position: fixed;
+	position: absolute;
 	width: 100%;
 	background: #1f3c58;
 	color: #ebebeb;
