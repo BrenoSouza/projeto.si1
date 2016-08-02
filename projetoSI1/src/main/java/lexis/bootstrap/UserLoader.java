@@ -12,9 +12,13 @@ import lexis.repositories.UserRepository;
 @Component
 public class UserLoader implements ApplicationListener<ContextRefreshedEvent>{
 	
+	//Repositorio em que o Objeto usuario é manipulado
 	private UserRepository userRepository;
 	
+	//exemplo simples de um futuro log
 	private Logger log = Logger.getLogger(UserLoader.class);
+	
+	
 	
 	@Autowired
 	public void setUserRepository(UserRepository userRepository){
@@ -24,9 +28,10 @@ public class UserLoader implements ApplicationListener<ContextRefreshedEvent>{
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 		
+		//adicionando usuarios ao sistema
 		User admin = new User();
 	    admin.setLogin("admin");
-	    admin.setSenha("admin");
+	    admin.setPassword("admin");
 	    admin.setEmail("admin@admin");
 		admin.getRoot().addFolder("pasta1");
 		admin.getRoot().addFolder("pasta2");
@@ -36,7 +41,7 @@ public class UserLoader implements ApplicationListener<ContextRefreshedEvent>{
 
 	    User guest = new User();
 	    guest.setLogin("guest");
-	    guest.setSenha("guest");
+	    guest.setPassword("guest");
 	    guest.setEmail("guest@guest");
 	    guest.getRoot().addFolder("pastaguest");
 	    userRepository.save(guest);

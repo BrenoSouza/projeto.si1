@@ -29,31 +29,31 @@
 
 	<div class="row-fluid principal">
 		<div class="span4 offset1 sign-up" id="sign-up">
-			<h2 class="sign-up ">Cadastre-se</h2>
-			<form th:object="${userCadastro}" th:action="@{/userCadastro}" method="POST">
+			<h2 class="sign-up ">Register</h2>
+			<form th:object="${userRegister}" th:action="@{/userRegister}" method="POST">
 				<input type="hidden" th:field="*{id}"></input>
             	<input type="hidden" th:field="*{version}"></input>	
 				<label for="login">Login: </label>
 				<input type="text" name="login" id="login-sign-up" th:field="*{login}"></input>
-				<label for="senha">Senha: </label>
-				<input type="password" name="senha" id="password-sign-up" th:field="*{senha}"></input>
-				<label for="email">Seu email: </label>
+				<label for="passworda">password: </label>
+				<input type="password" name="password" id="password-sign-up" th:field="*{password}"></input>
+				<label for="email">email: </label>
 				<input type="text" name="email" id="email-sign-up" th:field="*{email}"></input>
-				<input type="submit" class="button" name="sign-up" value="Registrar"></input>				
+				<input type="submit" class="button" name="sign-up" value="Register"></input>				
 			</form>
 		</div>
 		<div class="span1 divisor"><img src="../static/images/div.png" th:src="@{images/div.png}" alt=""></img></div>
 		<div class="offset2 span3 sign-in">
-			<h2 class="sign-in">Já possui uma conta?</h2>
+			<h2 class="sign-in">Login</h2>
 			<form th:object="${userLogin}" th:action="@{userlogin}" method="POST">
 				<input type="hidden" th:field="*{id}"></input>
             	<input type="hidden" th:field="*{version}"></input>
             	<input type="hidden" th:field="*{email}"></input>	
 				<label for="login">Login: </label>
 				<input type="text" name="login" id="login-sign-in" th:field="*{login}"></input>
-				<label for="senha">Senha: </label>
-				<input type="password" name="senha" id="password-sign-in" th:field="*{senha}"></input>
-				<input type="submit" class="button" name="sign-in" value="Entrar"></input>
+				<label for="senha">password: </label>
+				<input type="password" name="password" id="password-sign-in" th:field="*{password}"></input>
+				<input type="submit" class="button" name="sign-in" value="Login"></input>
 			</form>
 		</div>
 	</div>
