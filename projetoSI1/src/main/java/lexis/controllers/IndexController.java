@@ -3,7 +3,6 @@ package lexis.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -26,7 +25,7 @@ public class IndexController {
 	@RequestMapping("/")//acessa o url "/"
     public ModelAndView index(){
     	ModelAndView index = new ModelAndView("/index");//cria um novo objeto que aponta para "index.html"
-    	index.addObject("userCadastro",new User());//adicionar um User com a chave "usercadastro"
+    	index.addObject("userRegister",new User());//adicionar um User com a chave "usercadastro"
     	index.addObject("userLogin",new User());//adiciona um User com a chave "userLogin"
         return index;//retorna o objeto para o index.html
     }
@@ -39,7 +38,7 @@ public class IndexController {
      * logo apos receber o controler salva no servico que controla User
      * e em seguida envia a requisição ao metodo Login, para que seja feita a validação
      */
-	@RequestMapping(value = "userCadastro", method = RequestMethod.POST)
+	@RequestMapping(value = "userRegister", method = RequestMethod.POST)
     public ModelAndView userRegister(User userCadastro){//recebendo o objeto user
     	userService.saveUser(userCadastro); // salvando usuario no BD local(provisorio)
     	return userLogin(userCadastro);//retornando o Model(com o obejto "user") para a view "Home"
