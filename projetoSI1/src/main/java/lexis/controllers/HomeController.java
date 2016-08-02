@@ -9,7 +9,7 @@ import lexis.models.Folder;
 import lexis.services.UserService;
 
 @Controller
-@RequestMapping("/home/")
+@RequestMapping("/")
 public class HomeController {
 
 private UserService userService;
@@ -19,11 +19,16 @@ private UserService userService;
 		this.userService = userService;
 	}
 	
-	@RequestMapping("/{folder}")
-	public void explorer(@PathVariable Folder folder){
-		
+	@RequestMapping("home")
+	public String home(){
+		return "home";
 	}
 	
+	@RequestMapping("editor")
+	public String explorer(){
+		return "editor";
+	}
+	 
 	@RequestMapping("newFolder")
 	public void newFolder(){
 		

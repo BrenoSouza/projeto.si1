@@ -41,15 +41,16 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public User getUserByLogin(String login) {
-		Iterator<User> interator = userRepository.findAll().iterator();
+		/*Iterator<User> interator = userRepository.findAll().iterator();
 		while(interator.hasNext()) {
 			User user = interator.next();
 			if(user.getLogin().equals(login)){
 				return user;
 				}
 		}
-		//return userRepository.findByLogin(login);
-		return null;
+		return null;*/
+		return userRepository.findByLogin(login);
+		
 		
 	}
 
