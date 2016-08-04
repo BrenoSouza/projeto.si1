@@ -2,79 +2,92 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head lang="pt-BR">
 
-    <title>Arquivo | Lexis Cloud Editor</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <meta charset="UTF-8"/>
-  <meta name="description" content="Bootstrap test"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link href="https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700" th:href="@{https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700}" rel="stylesheet" type="text/css" />
-  <link href='https://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'/>
+<title>Arquivo | Lexis Cloud Editor</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta charset="UTF-8" />
+<meta name="description" content="Bootstrap test" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link
+	href="https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700"
+	th:href="@{https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700}"
+	rel="stylesheet" type="text/css" />
+<link href='https://fonts.googleapis.com/css?family=Indie+Flower'
+	rel='stylesheet' type='text/css' />
 
-  
 
-  <link rel="stylesheet" href="../static/css/bootstrap.css" th:href="@{css/bootstrap.css}" />
-  <link rel="stylesheet" type="text/css" href="../static/css/bootstrap-responsive.css" th:href="@{css/bootstrap-responsive.css}" />
-  <link rel="stylesheet" type="text/css" href="../static/css/style.css" th:href="@{css/style.css}" />
-  <link rel="stylesheet" type="text/css" href="../static/css/editor.css" th:href="@{css/editor.css}" />
+
+<link rel="stylesheet" href="../static/css/bootstrap.css"
+	th:href="@{css/bootstrap.css}" />
+<link rel="stylesheet" type="text/css"
+	href="../static/css/bootstrap-responsive.css"
+	th:href="@{css/bootstrap-responsive.css}" />
+<link rel="stylesheet" type="text/css" href="../static/css/style.css"
+	th:href="@{css/style.css}" />
+<link rel="stylesheet" type="text/css" href="../static/css/editor.css"
+	th:href="@{css/editor.css}" />
 </head>
 <body>
 
 
-  <div class="navbar navbar-inverse">
-    <div class="navbar-inner">
-      <div class="container">
-        <a class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-inverse-collapse">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        </a>
-        <a class="brand topbar-links" href="home" th:action="@{/home}">Início</a>
-        <div class="nav-collapse collapse navbar-inverse-collapse">
-          <form class="navbar-search pull-left" action="#">
-            <input type="text" class="search-query span3" placeholder="Busca"></input>
-          </form>
-          <ul class="nav pull-right">
-            <li><a href="/" th:action="@{/}" >Sair</a></li>
-            <li class="divider-vertical"></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
+	<div class="navbar navbar-inverse">
+		<div class="navbar-inner">
+			<div class="container">
+				<a class="btn btn-navbar" data-toggle="collapse"
+					data-target=".navbar-inverse-collapse"> <span class="icon-bar"></span>
+					<span class="icon-bar"></span> <span class="icon-bar"></span>
+				</a> <a class="brand topbar-links" href="home" th:action="@{/home}">Início</a>
+				<div class="nav-collapse collapse navbar-inverse-collapse">
+					<form class="navbar-search pull-left" action="#">
+						<input type="text" class="search-query span3" placeholder="Busca"></input>
+					</form>
+					<ul class="nav pull-right">
+						<li><a href="/" th:action="@{/}">Sair</a></li>
+						<li class="divider-vertical"></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
 
-  <div class="container" style="">
-    <div class="row">
-      <div class="span8">
-            <ul class="menu inline unlabeled">
-                <li><a href="#">Novo Documento</a></li><!--
-             --><li><a href="#">Salvar</a></li><!--
-             --><li><a href="#">Alguma Coisa</a></li><!--
-             --><li><a href="#">Outra Coisa</a></li>
-            </ul>
-      </div>
-    </div>
-  </div>
+	<div class="container" style="">
+		<div class="row">
+			<div class="span8">
+				<ul class="menu inline unlabeled">
+					<li><a href="#">Novo Documento</a></li>
+					<!--
+             -->
+					<li><a href="#">Salvar</a></li>
+					<!--
+             -->
+					<li><a href="#">Alguma Coisa</a></li>
+					<!--
+             -->
+					<li><a href="#">Outra Coisa</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
 
-  <div class="container" style="">
-      <div class="row">
-        <div class="span12">
-          <form action="#" method="get">
-           <textarea name="textValue" class="input-text"></textarea>
-        </form>
-        </div>
+	<div class="container" style="">
+		<div class="row">
+			<div class="span12">
+				<form action="#" method="get">
+					<textarea name="textValue" class="input-text"></textarea>
+				</form>
+			</div>
 
-      </div>
-  </div>
+		</div>
+	</div>
 
 
-    <div class="footer">
-      <div class="row-fluid">
-        <footer>
-          <div class="span12">
-            <span>&copy; 2016 - Rafael Klynger | Dev. Web</span>
-          </div>
-        </footer>
-      </div>
-  </div>
+	<div class="footer">
+		<div class="row-fluid">
+			<footer>
+				<div class="span12">
+					<span>&copy; 2016 - Projeto SI - Lexis | Dev. Web</span>
+				</div>
+			</footer>
+		</div>
+	</div>
 </body>
 </html>
