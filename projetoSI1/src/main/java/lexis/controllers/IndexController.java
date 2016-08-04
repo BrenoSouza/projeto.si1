@@ -22,7 +22,7 @@ public class IndexController {
 		this.userService = userService;
 	}	
 	
-	@RequestMapping("/")//acessa o url "/"
+	@RequestMapping //acessa o url "/"
     public ModelAndView index(){
     	ModelAndView index = new ModelAndView("/index");//cria um novo objeto que aponta para "index.html"
     	index.addObject("userRegister",new User());//adicionar um User com a chave "usercadastro"
@@ -56,7 +56,19 @@ public class IndexController {
     @RequestMapping(value = "userlogin", method = RequestMethod.POST)
     public ModelAndView userLogin(User userLogin){
 		ModelAndView login = new ModelAndView();
-		User userTemp = userService.getUserByLogin(userLogin.getLogin());//buscando o usuario no bd pelo login
+		User userTemp;
+		if(userLogin.getLogin().isEmpty()){//casso login seja vazia
+			login.setViewName("redirect:/");//retorna a pagina incial
+			return login;
+		}else{
+			if(userLogin.getLogin().contains("@")){//caso o login seja um email
+				userTemp = userService.getUserByEmail(userLogin.getLogin());//busca o usuario por email
+			}else{
+				userTemp = userService.getUserByLogin(userLogin.getLogin());//caso naos seja busca pelo login
+			}
+		}
+		
+		//buscando o usuario no bd pelo login
 		login.addObject("user", userTemp);
 
 		if (userTemp.getPassword().equals(userLogin.getPassword())) {//se a senha for igual retorna a home.html
