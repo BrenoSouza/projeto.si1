@@ -80,6 +80,10 @@ td {
 	margin: 0px !important;
 }
 
+.no-margin-top {
+	margin-top: 0px;
+}
+
 .no-padding {
 	padding: 0px !important;
 }
@@ -134,10 +138,21 @@ h3.explorer-header-text {
 	bottom: 0;
 }
 
+#new-file {
+	margin-top: 17px;
+}
+
+#new-folder {
+	margin-bottom: 17px;
+}
 
 #header-menu {
 	margin-top: 55px; 
 	margin-left: 40px;
+}
+
+ul.header-menu {
+
 }
 
 .menu {

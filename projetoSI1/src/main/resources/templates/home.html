@@ -53,20 +53,20 @@
 			<tr>
 				<td><options> <label for="search">Pesquisar </label>
 
-					<input class="form-search" style="margin-top: 0px" type="text"
+					<input class="form-search no-margin-top" type="text"
 						name="search" id="search" placeholder="Nome do arquivo ou pasta"
 						ng-model="searchFile"></input> </options></td>
 
-				<td><input style="margin-top: 17px" type="submit"
+				<td><input id="new-file" type="submit"
 					class="button" name="createFile" value="Novo arquivo"
 					ng-click="adicionaTxt(nome)" ng-disabled="!nome"></input></td>
 
 				<td><label for="nomePasta">Digite o nome</label> <input
-					style="margin-top: 0px" type="text" name="nomePasta" id="novoNome"
+					class="no-margin-top" type="text" name="nomePasta" id="novoNome"
 					value="Nome da pasta" ng-model="nome" placeholder="Nome da Pasta"></input>
 
 
-					<input type="submit" class="button"
+					<input type="submit" class="button" id="new-folder"
 					name="createPath" value="Nova Pasta" ng-click="adicionaPasta(nome)"
 					ng-disabled="!nome"></input></td>
 				<td></td>
