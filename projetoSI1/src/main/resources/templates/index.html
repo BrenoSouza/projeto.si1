@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html ng-app="loginC" xmlns:th="http://www.thymeleaf.org">
 <head lang="pt-BR">
 
     <title>Lexis Cloud Editor</title>
@@ -43,7 +43,8 @@
 			</form>
 		</div>
 		<div class="span1 divisor"><img src="../static/images/div.png" th:src="@{images/div.png}" alt=""></img></div>
-		<div class="offset2 span3 sign-in">
+		
+		<div ng-controller="loginCtrl" class="offset2 span3 sign-in">
 			<h2 class="sign-in">Login</h2>
 			<form th:object="${userLogin}" th:action="@{userlogin}" method="POST">
 				<input type="hidden" th:field="*{id}"></input>
@@ -67,6 +68,9 @@
 			</footer>
 		</div>
 	</div>
+
+	<script th:src="@{/js/angular.min.js}" src="../static/js/angular.min.js"></script>
+	<script th:src="@{/js/LoginController.js}" src="../static/js/LoginController.js"></script>
 
 </body>
 </html>
