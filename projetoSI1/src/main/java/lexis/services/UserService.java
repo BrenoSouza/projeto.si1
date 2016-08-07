@@ -14,6 +14,10 @@ public interface UserService {
     
     User getUserByEmail(String email);
     
+    Boolean existsByLogin(String login);
+    
+    Boolean existsByEmail(String email);
+    
     void deleteUser(Integer id);
     
     
