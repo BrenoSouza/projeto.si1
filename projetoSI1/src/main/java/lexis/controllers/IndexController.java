@@ -69,7 +69,7 @@ public class IndexController {
 			return login; //retorna a pagina incial com a mensagem de erro
 		}
 		
-		//verifica e-mail
+		//verifica e-mail 
 		if(userCadastro.getEmail().equals("")){
 			login.setViewName("redirect:/");
 			attributes.addFlashAttribute("mensagem", "O e-mail não pode ser vazio");
