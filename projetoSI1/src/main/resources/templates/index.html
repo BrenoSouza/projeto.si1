@@ -21,6 +21,7 @@
 			<header>
 				<div class="">
 					<img src="../images/logo.png" th:src="@{../images/logo.png}" alt="" class="logo"></img>
+					<div  size="20px"  align="center" class="alert alert-danger" th:text="${mensagem}" th:if="${not #strings.isEmpty(mensagem)}"></div>
 				</div>
 			</header>
 		</div>
