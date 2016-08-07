@@ -40,23 +40,37 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public User getUserByLogin(String login) {
-		/*Iterator<User> interator = userRepository.findAll().iterator();
-		while(interator.hasNext()) {
-			User user = interator.next();
-			if(user.getLogin().equals(login)){
-				return user;
-				}
-		}
-		return null;*/
-		return userRepository.findByLogin(login);
-		
-		
+	public User getUserByLogin(String login){
+		return userRepository.findByLogin(login);	
 	}
 
 	@Override
 	public User getUserByEmail(String email) {
 		return userRepository.findByEmail(email);
+	}
+
+	@Override
+	public Boolean existsByLogin(String login) {
+		Iterator<User> interator = userRepository.findAll().iterator();
+		while(interator.hasNext()) {
+			User user = interator.next();
+			if(user.getLogin().equals(login)){
+				return true;
+				}
+		}
+		return false;
+	}
+
+	@Override
+	public Boolean existsByEmail(String email) {
+		Iterator<User> interator = userRepository.findAll().iterator();
+		while(interator.hasNext()) {
+			User user = interator.next();
+			if(user.getEmail().equals(email)){
+				return true;
+				}
+		}
+		return false;
 	}
 
 }
