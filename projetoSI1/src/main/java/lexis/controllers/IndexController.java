@@ -1,6 +1,9 @@
 package lexis.controllers;
 
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,20 +46,58 @@ public class IndexController {
     public ModelAndView userRegister(User userCadastro, RedirectAttributes attributes){//recebendo o objeto user
 		User userTemp;
 		ModelAndView login = new ModelAndView();
+		
+		//verifica se o login tem tamanho minimo 
+		if(userCadastro.getLogin().length()<=2){
+			login.setViewName("redirect:/");
+			attributes.addFlashAttribute("mensagem", "O login deve conter ao menos 3 caracteres");
+			return login;
+		}
+		
+		
 		//verifica se o login ja esta em uso
 		if(userService.existsByLogin(userCadastro.getLogin())){
 			login.setViewName("redirect:/");
-			attributes.addFlashAttribute("mensagem", "login ja em uso");//com a mensagem de erro
-			return login;//retorna a pagina incial com a mensagem de erro
+			attributes.addFlashAttribute("mensagem", "login ja em uso");//mensagem de erro
+			return login; //retorna a pagina incial com a mensagem de erro
 		}
-		//verificar se o email ja esta em uso
-		if(userService.existsByEmail(userCadastro.getEmail())){
+		
+		//verifica se a senha tem tamanho minimo 
+		if(userCadastro.getPassword().length()<=2){
 			login.setViewName("redirect:/");
-			attributes.addFlashAttribute("mensagem", "email ja em uso");//com a mensagem de erro
-			return login;//retorna a pagina incial com a mensagem de erro
+			attributes.addFlashAttribute("mensagem", "A senha deve conter ao menos 3 caracteres");
+			return login; //retorna a pagina incial com a mensagem de erro
 		}
 		
-		
+		//verifica e-mail
+		if(userCadastro.getEmail().equals("")){
+			login.setViewName("redirect:/");
+			attributes.addFlashAttribute("mensagem", "O e-mail não pode ser vazio");
+			return login;//retorna a pagina incial com a mensagem de erro
+		}else{
+			//verifica validade do e-mail utilizando expressao regular
+			
+			final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+			        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
+			final Pattern pattern = Pattern.compile(EMAIL_PATTERN, Pattern.CASE_INSENSITIVE);
+			
+			
+			Matcher matcher = pattern.matcher(userCadastro.getEmail());
+			if(!matcher.matches()){
+				login.setViewName("redirect:/");
+				attributes.addFlashAttribute("mensagem", "O e-mail informado não é válido");
+				return login;//retorna a pagina incial com a mensagem de erro
+			
+			}else{
+			//verificar se o email ja esta em uso
+				if(userService.existsByEmail(userCadastro.getEmail())){
+					login.setViewName("redirect:/");
+					attributes.addFlashAttribute("mensagem", "email ja em uso");
+					return login;//retorna a pagina incial com a mensagem de erro
+				}
+			}
+		}
     	userService.saveUser(userCadastro); // salvando usuario no BD local(provisorio)
     	return userLogin(userCadastro, attributes);//retornando o Model(com o obejto "user") para a view "Home"
     }
@@ -77,7 +118,7 @@ public class IndexController {
 		//casso login seja vazia
 		if(userLogin.getLogin().isEmpty()){
 			login.setViewName("redirect:/");
-			attributes.addFlashAttribute("mensagem", "nome de usuario nao pode ser vazio");//com a mensagem de erro
+			attributes.addFlashAttribute("mensagem", "nome de usuario nao pode ser vazio");//mensagem de erro
 			return login;//retorna a pagina incial com a mensagem de erro
 		}else{
 			//caso o login seja um email
@@ -85,14 +126,14 @@ public class IndexController {
 				//busca o usuario por email
 				userTemp = userService.getUserByEmail(userLogin.getLogin());
 			}else{
-				//caso naos seja busca pelo login
+				//caso nao seja busca pelo login
 				userTemp = userService.getUserByLogin(userLogin.getLogin());
 			}
 		}
 		//caso o usuario nao exista
 		if(userTemp == null){
 			login.setViewName("redirect:/");//retorna a pagina incial
-			attributes.addFlashAttribute("mensagem", "nome de usuario nao encontrado");//com a mensagem de erro
+			attributes.addFlashAttribute("mensagem", "nome de usuario nao encontrado");//a mensagem de erro
 			return login;
 		}
 		
