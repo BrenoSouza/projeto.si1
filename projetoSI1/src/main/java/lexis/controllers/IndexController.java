@@ -10,6 +10,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lexis.models.User;
 import lexis.services.UserService;
+import lexis.util.CheckUserLogin;
+import lexis.util.CheckUserRegister;
 
 
 @Controller
@@ -32,7 +34,7 @@ public class IndexController {
     }
     
 	
-    /* recebe o paramentro "userCastro" na url
+    /* recebe o paramentro "userCadasstro" na url
      * com o metodo POST que indica que a pagina irá enviar dados para o controller
      * esses dados sao enviados atravez de um form no index.html
      * nesse caso esses dados é um objeto do tipo User(userCadastro)
@@ -40,25 +42,19 @@ public class IndexController {
      * e em seguida envia a requisição ao metodo Login, para que seja feita a validação
      */
 	@RequestMapping(value = "userRegister", method = RequestMethod.POST)
-    public ModelAndView userRegister(User userCadastro, RedirectAttributes attributes){//recebendo o objeto user
-		User userTemp;
+    public ModelAndView userRegister(User userRegister, RedirectAttributes attributes){//recebendo o objeto user
 		ModelAndView login = new ModelAndView();
-		//verifica se o login ja esta em uso
-		if(userService.existsByLogin(userCadastro.getLogin())){
-			login.setViewName("redirect:/");
-			attributes.addFlashAttribute("mensagem", "login ja em uso");//com a mensagem de erro
-			return login;//retorna a pagina incial com a mensagem de erro
-		}
-		//verificar se o email ja esta em uso
-		if(userService.existsByEmail(userCadastro.getEmail())){
-			login.setViewName("redirect:/");
-			attributes.addFlashAttribute("mensagem", "email ja em uso");//com a mensagem de erro
-			return login;//retorna a pagina incial com a mensagem de erro
-		}
+		CheckUserRegister checkUser = new CheckUserRegister(userService);
 		
+		//verifica se a erros no usuario
+		 if(checkUser.hasErrorIn(userRegister)){
+			login.setViewName("redirect:/");//retorna a pagina incial
+			attributes.addFlashAttribute("mensagem", checkUser.getError());//com os erros
+			return login;
+		 }	
 		
-    	userService.saveUser(userCadastro); // salvando usuario no BD local(provisorio)
-    	return userLogin(userCadastro, attributes);//retornando o Model(com o obejto "user") para a view "Home"
+    	userService.saveUser(userRegister); // salvando usuario no BD local(provisorio)
+    	return userLogin(userRegister, attributes);//retornando o Model(com o obejto "user") para a view "Home"
     }
 	
     /* recebe o paramentro "userLogin" na url
@@ -73,39 +69,18 @@ public class IndexController {
     @RequestMapping(value = "userlogin", method = RequestMethod.POST)
     public ModelAndView userLogin(User userLogin , RedirectAttributes attributes ){
 		ModelAndView login = new ModelAndView();
-		User userTemp;
-		//casso login seja vazia
-		if(userLogin.getLogin().isEmpty()){
+		CheckUserLogin checkUser = new CheckUserLogin(userService);
+		
+		if(checkUser.hasErroIn(userLogin)){
 			login.setViewName("redirect:/");
-			attributes.addFlashAttribute("mensagem", "nome de usuario nao pode ser vazio");//com a mensagem de erro
-			return login;//retorna a pagina incial com a mensagem de erro
-		}else{
-			//caso o login seja um email
-			if(userLogin.getLogin().contains("@")){
-				//busca o usuario por email
-				userTemp = userService.getUserByEmail(userLogin.getLogin());
-			}else{
-				//caso naos seja busca pelo login
-				userTemp = userService.getUserByLogin(userLogin.getLogin());
-			}
-		}
-		//caso o usuario nao exista
-		if(userTemp == null){
-			login.setViewName("redirect:/");//retorna a pagina incial
-			attributes.addFlashAttribute("mensagem", "nome de usuario nao encontrado");//com a mensagem de erro
+			attributes.addFlashAttribute("mensagem", checkUser.getError());
 			return login;
 		}
 		
-		
-		login.addObject("user", userTemp);
-
-		if (userTemp.getPassword().equals(userLogin.getPassword())) {//se a senha for valida retorna a home.html
-			login.setViewName("home");
-		} else {//se nao fica no index 
-			attributes.addFlashAttribute("mensagem", "senha errada");
-			login.setViewName("redirect:/");
-		}
+		login.addObject("user", checkUser.getUser());
+		login.setViewName("home");
 		return login;
+		
 	}
     
    
