@@ -33,18 +33,20 @@
 					<span class="icon-bar"></span>
 				</a> 
 
-				<a class="brand topbar-links" href="home">
-					Início
+				<a class="brand topbar-links" style="margin-left: 0.5%">
+						<img src="..imagen/lexisName.pbg" th:src="@{../images/lexisName.png}" alt=""></img>
 				</a>
 				
 				<div class="nav-collapse collapse navbar-inverse-collapse">
 					<form class="navbar-search pull-left" action="#">
 						<input type="text" class="search-query span3" placeholder="Busca"></input>
-					</form>
+						
+
+					</form> 
 					<ul class="nav pull-right">
 						<li>
 							<a href="/">
-								Sair
+								<b style="font-size:20px">Sair</b>
 							</a>
 						</li>
 						
@@ -56,41 +58,43 @@
 	</div>
 
 
-	<div id="header-menu">
+	<div id="header-menu" style ="margin-right: 11%" align="right">
 
 		<table cellpadding="10">
 			<tr>
+				<div id="search" align="right">
+					<td>
+						<options align="right"> 
+							<label for="search">
+								Pesquisar 
+							</label>
+	
+							<input class="form-search no-margin-top" type="text" name="search" id="search" placeholder="Nome do arquivo ou pasta"
+							ng-model="searchFile"	>
+						
+							</input> 
+						</options>
+					</td>
+				</div>
+				
 				<td>
-					<options> 
-						<label for="search">
-							Pesquisar 
-						</label>
 
-						<input class="form-search no-margin-top" type="text" name="search" id="search" placeholder="Nome do arquivo ou pasta"
-						ng-model="searchFile">
-					
-						</input> 
-					</options>
+					<input style="width:50px; height:50px; " id="new-file" type="image" src="../static/images/newFile.png"
+							th:src="@{images/newFile.png}" name="createFile" ng-click="adicionaTxt()"></input>
 				</td>
 
 				<td>
-
-					<input style="width:50px; height:50px; " id="new-file" type="image" src="../static/images/add_file.png"
-							th:src="@{images/add_file.png}" name="createFile" ng-click="adicionaTxt()"></input>
+					<input style="width:50px; height:50px; " id="new-file" type="image" src="../static/images/newFolder.png"
+							th:src="@{images/newFolder.png}" name="createFile" ng-click="adicionaPasta()"></input>
 				</td>
 
 				<td>
-					<input style="width:50px; height:50px; " id="new-file" type="image" src="../static/images/add_folder.png"
-							th:src="@{images/add_folder.png}" name="createFile" ng-click="adicionaPasta()"></input>
-				</td>
-
-				<td>
-					<input type="button" value="Inicio"
-					ng-click="initialFolder()"></input>
+					<input style="width:50px; height:50px; " id="new-file" type="image" src="../static/images/home.png"
+							th:src="@{images/home.png}" ng-click="initialFolder()"></input>
 				</td>
 				<td>
-					<input type="button" value="Voltar"
-					ng-click="backFolder()"></input>
+					<input style="width:50px; height:50px; " id="new-file" type="image" src="../static/images/back.png"
+							th:src="@{images/back.png}" ng-click="backFolder()"></input>
 
 				</td>
 
@@ -173,7 +177,9 @@
 						</td>
 						
 						<td>
-							<input style="margin-top: 0px" type="submit" class="button" name="excluir" value="Excluir"></input>
+						
+							<input id="delete" type="image" src="../static/images/delete.png"
+							th:src="@{images/delete.png}"></input>
 						</td>
 
 					</tr>
