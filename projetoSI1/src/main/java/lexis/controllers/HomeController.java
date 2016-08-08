@@ -9,46 +9,46 @@ import lexis.models.Folder;
 import lexis.services.UserService;
 
 @Controller
-@RequestMapping("home")
+@RequestMapping("/")
 public class HomeController {
 
-private UserService userService;
-	
+	private UserService userService;
+
 	@Autowired
 	public void setUserService(UserService userService){
 		this.userService = userService;
 	}
-	
-	@RequestMapping
+
+	@RequestMapping("/home")
 	public String home(){
 		return "home";
 	}
-	
+
 	@RequestMapping("editor")
 	public String explorer(){
 		return "editor";
 	}
-	 
+
 	@RequestMapping("newFolder")
 	public void newFolder(){
-		
+
 	}
-	
+
 	@RequestMapping("newFile")
 	public void newFile(){
-		
+
 	}
 	@RequestMapping("view")
 	public void view(){
-		
+
 	}
 	@RequestMapping("edit")
 	public void edit(){
-		
+
 	}
 	@RequestMapping("delete")
 	public void delete(){
-		
+
 	}
-	
+
 }
