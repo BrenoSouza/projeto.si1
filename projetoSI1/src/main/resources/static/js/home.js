@@ -30,10 +30,6 @@ app.controller("listaArquivosCtrl", function($scope) {
         }
     };
 
-    $scope.apagarArquivo = function() {
-
-    }
-
     $scope.sortBy = function(valor) {
         $scope.tipoOrdenacao = valor;
         $scope.direction = !$scope.direction;
@@ -59,7 +55,6 @@ app.controller("listaArquivosCtrl", function($scope) {
                     }
                 }
             }
-            console.log(lista);
             return lista
         }
     }
