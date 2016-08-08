@@ -2,40 +2,36 @@ package lexis.models;
 
 import javax.persistence.*;
 
-
 @Entity
 public class User {
-	@Id 
-    @GeneratedValue(strategy=GenerationType.AUTO) 
-    private Integer id; 
-	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer id;
+
 	@Version
-    private Integer version;
-    
-    private String login;
-    private String password;    
-    private String email;
-    @Embedded
-    private static Folder ROOT = new Folder("root");
+	private Integer version;
+	private String login;
+	private String password;
+	private String email;
+	@Embedded
+	private static Folder ROOT = new Folder("root");
 
-    
-    public Integer getVersion() {
-        return version;
-    }
+	public Integer getVersion() {
+		return version;
+	}
 
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
-    
-    public Folder getRoot(){
-    	return ROOT.getFolder(getLogin());
-    }
-    
-   /* public void setRoot(Folder root){
-    	this.ROOT = root;
-    }
-    */
-    
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+
+	public Folder getRoot() {
+		return ROOT.getFolder(getLogin());
+	}
+
+	/*public void setRoot(Folder root) {
+		this.ROOT = root;
+	}*/
+
 	public Integer getId() {
 		return id;
 	}
@@ -49,7 +45,7 @@ public class User {
 	}
 
 	public void setLogin(String login) {
-    	ROOT.addFolder(login);
+		ROOT.addFolder(login);
 		this.login = login;
 	}
 
@@ -68,11 +64,10 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
 	@Override
-	public String toString(){
+	public String toString() {
 		return "id: " + getId() + " login: " + getLogin() + " email: " + getEmail() + " password: " + getPassword();
 	}
-    
-   
+
 }
