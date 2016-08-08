@@ -2,16 +2,14 @@ var appL = angular.module("inicial", []);
 
 appL.controller("loginCtrl", function($scope) {
 
-		$scope.login = "okk";
-		$scope.email = "";
+		$scope.login = "";
 		$scope.password = "";
 
 });
 
 appL.controller("RegisterCtrl", function($scope) {
-
-	$scope.login = "";
-	$scope.email = "jose.souza";
-	$scope.password = "";
-
+			$scope.login = "";
+			$scope.email = "";
+			$scope.password = "";
+			
 });
