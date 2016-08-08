@@ -86,6 +86,11 @@
 					ng-click="adicionaPasta()"></input>
 				</td>
 
+				<td>
+					<input type="button" value="Inicio"
+					ng-click="initialFolder()"></input>
+				</td>
+
 			</tr>
 		</table>
 
@@ -125,7 +130,7 @@
 				</thead>
 
 				<tbody>
-					<tr	ng-repeat="arquivo in arquivos | filter: {nome: searchFile} | orderBy:tipoOrdenacao:direction">
+					<tr	ng-repeat="arquivo in getLocal() | filter: {nome: searchFile} | orderBy:tipoOrdenacao:direction">
 						
 						<td>
 							<a href="#">
@@ -142,11 +147,11 @@
 							</span>
 
 							<span ng-if="!isTxt(arquivo.tipo)">
-								<a href="#" th:action="@{/home/editor}">
+								<a ng-click="changeFolder(arquivo.nome)" href="#" th:action="@{/home/editor}">
 									<img src="{{arquivo.folder}}" th:src="@{images/{{arquivo.tipo}}.png}" alt="" class="iconeFile"></img>
 								</a>
-							</span>
 
+							</span>
 
 							
 							<span>{{arquivo.nome}}</span>

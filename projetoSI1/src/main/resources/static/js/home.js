@@ -1,6 +1,7 @@
 var app = angular.module("listaArquivos", []);
 
 app.controller("listaArquivosCtrl", function($scope) {
+    $scope.local = [];
     $scope.app = "lista Arquivos";
     $scope.arquivos = [
 
@@ -12,7 +13,7 @@ app.controller("listaArquivosCtrl", function($scope) {
         if(name.length === 0){
             alert("A pasta nao pode ser criada, nome vazio!")
         } else {
-            $scope.arquivos.push({nome: name, tipo: "pasta", dataCreat: ((new Date()).toString()).substring(0, 24) , ultimaModif:"--", folder:"../static/images/pasta.png" });
+            $scope.getLocal().push({nome: name, tipo: "pasta", dataCreat: ((new Date()).toString()).substring(0, 24) , ultimaModif:"--", folder:"../static/images/pasta.png", lista: [] });
             delete $scope.nome;
         }
     };
@@ -24,7 +25,7 @@ app.controller("listaArquivosCtrl", function($scope) {
             alert("O arquivo nao pode ser criado, nome vazio!")
         } else {
 
-            $scope.arquivos.push({nome: name, tipo: ".txt", dataCreat: ((new Date()).toString()).substring(0, 24) , ultimaModif:"--", folder:"../static/images/.txt.png" });
+            $scope.getLocal().push({nome: name, tipo: ".txt", dataCreat: ((new Date()).toString()).substring(0, 24) , ultimaModif:"--", folder:"../static/images/.txt.png" });
             delete $scope.nome;
         }
     };
@@ -43,6 +44,36 @@ app.controller("listaArquivosCtrl", function($scope) {
             return true;
         }
         return false;
+    }
+
+    $scope.getLocal = function() {
+        if ($scope.local.length === 0) {
+            return $scope.arquivos;
+        }
+        else {
+            var lista = [];
+            for (var i = $scope.local.length - 1; i >= 0; i--) {
+                for (var j = $scope.arquivos.length - 1; j >= 0; j--) {
+                    if($scope.arquivos[j].nome === $scope.local[i]) {
+                        lista = $scope.arquivos[j].lista;
+                    }
+                }
+            }
+            console.log(lista);
+            return lista
+        }
+    }
+
+    $scope.changeFolder = function(nome) {
+        $scope.local.push(nome);
+    }
+
+    $scope.initialFolder = function() {
+        for (var i = $scope.local.length - 1; i >= 0; i--) {
+            $scope.local.pop();
+        }
+
+        
     }
 
 });    
