@@ -15,8 +15,8 @@ import lexis.util.UserRegisterService;
 @Controller
 @RequestMapping("/")
 public class IndexController {
-
-	private UserService userService;// objeto responsavel por manipular User
+	// objeto responsavel por manipular User
+	private UserService userService;
 
 	@Autowired
 	public void setUserService(UserService userService) {
@@ -61,15 +61,15 @@ public class IndexController {
 			//caso nao haja erro registra o usuario
 			userRegisterService.RegisterUser(userRegister);
 			
-			// retornando o Model(com o obejto "user") para view "Home"
+			// retorna para o metodo responsavel pelo login
 			return userLogin(userRegister, attributes);
 		
-			//se hoiver erros:
+			//se houver erros:
 		} catch (Exception e) {
 			// retorna a pagina incial
 			login.setViewName("redirect:/");
 			
-			// com as mensagens de erros
+			// com as mensagens de erro
 			attributes.addFlashAttribute("mensagem", e.getMessage());
 			
 			return login;
@@ -97,12 +97,12 @@ public class IndexController {
 			//tenta adicionar user interno a chave "user", aprtir do userLogin passado 
 			login.addObject("user", userLoginService.getUser(userLogin));
 			
-			//retorna para o home.html
+			//caso nao de nenhum erro retorna para o home.html
 			login.setViewName("home");
 			
 			return login;
 			
-		//caso haja erros de validacao ou sitax no obejeto passado:
+		//caso haja erros de validacao ou sintax no obejeto passado:
 		} catch (Exception e) {
 			// retorna a pagina incial
 			login.setViewName("redirect:/");
