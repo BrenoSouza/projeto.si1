@@ -9,7 +9,7 @@ import lexis.models.Folder;
 import lexis.services.UserService;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("home")
 public class HomeController {
 
 private UserService userService;
@@ -19,7 +19,7 @@ private UserService userService;
 		this.userService = userService;
 	}
 	
-	@RequestMapping("home")
+	@RequestMapping
 	public String home(){
 		return "home";
 	}
