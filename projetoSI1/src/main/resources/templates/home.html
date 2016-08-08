@@ -134,9 +134,21 @@
 						</td>
 						
 						<td id="td-name">
-							<a href="/editor" th:action="@{/home/editor}">
-								<img src="{{arquivo.folder}}" th:src="@{images/{{arquivo.tipo}}.png}" alt="" class="iconeFile"></img>
-							</a>
+
+							<span ng-if="isTxt(arquivo.tipo)">
+								<a href="/editor" th:action="@{/home/editor}">
+									<img src="{{arquivo.folder}}" th:src="@{images/{{arquivo.tipo}}.png}" alt="" class="iconeFile"></img>
+								</a>
+							</span>
+
+							<span ng-if="!isTxt(arquivo.tipo)">
+								<a href="#" th:action="@{/home/editor}">
+									<img src="{{arquivo.folder}}" th:src="@{images/{{arquivo.tipo}}.png}" alt="" class="iconeFile"></img>
+								</a>
+							</span>
+
+
+							
 							<span>{{arquivo.nome}}</span>
 						</td>
 						

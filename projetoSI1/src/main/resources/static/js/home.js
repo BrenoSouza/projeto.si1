@@ -38,5 +38,12 @@ app.controller("listaArquivosCtrl", function($scope) {
         $scope.direction = !$scope.direction;
     }
 
+    $scope.isTxt = function(tipo) {
+        if (tipo === ".txt") {
+            return true;
+        }
+        return false;
+    }
+
 });    
 
