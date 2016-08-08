@@ -8,6 +8,11 @@ import org.springframework.stereotype.Component;
 import lexis.models.User;
 import lexis.repositories.UserRepository;
 
+/**
+ * classe responsavel por inciar o sistema com usuarios padrão
+ * @author raimundoheitor
+ *
+ */
 @Component
 public class UserLoader implements ApplicationListener<ContextRefreshedEvent> {
 

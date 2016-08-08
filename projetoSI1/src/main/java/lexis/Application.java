@@ -3,6 +3,11 @@ package lexis;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+/**
+ * Classe que ira inicializar a aplicação
+ * @author raimundoheitor
+ *
+ */
 @SpringBootApplication
 public class Application {
 

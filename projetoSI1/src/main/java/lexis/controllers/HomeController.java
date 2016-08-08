@@ -19,11 +19,19 @@ public class HomeController {
 		this.userService = userService;
 	}
 
+	/**
+	 * metodo responsavel pelo home.html
+	 * @return retorna a pagina home.html
+	 */
 	@RequestMapping("/home")
 	public String home(){
 		return "home";
 	}
 
+	/**
+	 * metodo responsavel pelo editor.html
+	 * @return retorna a pagina editor.html
+	 */
 	@RequestMapping("editor")
 	public String explorer(){
 		return "editor";
