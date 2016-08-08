@@ -14,7 +14,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import lexis.models.User;
 import lexis.services.UserService;
 
-
 @Controller
 @RequestMapping("/")
 public class IndexController {
@@ -33,8 +32,7 @@ public class IndexController {
     	index.addObject("userLogin",new User());//adiciona um User com a chave "userLogin"
         return index;//retorna o objeto para o index.html
     }
-    
-	
+    	
     /* recebe o paramentro "userCastro" na url
      * com o metodo POST que indica que a pagina irá enviar dados para o controller
      * esses dados sao enviados atravez de um form no index.html
