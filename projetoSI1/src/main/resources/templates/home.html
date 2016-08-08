@@ -76,19 +76,22 @@
 				<td>
 
 					<input style="width:50px; height:50px; " id="new-file" type="image" src="../static/images/add_file.png"
-							th:src="@{images/add_file.png}" name="createFile" value="Novo arquivo"
-					ng-click="adicionaTxt()"></input>
+							th:src="@{images/add_file.png}" name="createFile" ng-click="adicionaTxt()"></input>
 				</td>
 
 				<td>
 					<input style="width:50px; height:50px; " id="new-file" type="image" src="../static/images/add_folder.png"
-							th:src="@{images/add_folder.png}" name="createFile" value="Novo arquivo"
-					ng-click="adicionaPasta()"></input>
+							th:src="@{images/add_folder.png}" name="createFile" ng-click="adicionaPasta()"></input>
 				</td>
 
 				<td>
 					<input type="button" value="Inicio"
 					ng-click="initialFolder()"></input>
+				</td>
+				<td>
+					<input type="button" value="Voltar"
+					ng-click="backFolder()"></input>
+
 				</td>
 
 			</tr>

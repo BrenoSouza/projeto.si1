@@ -55,7 +55,7 @@ app.controller("listaArquivosCtrl", function($scope) {
                     }
                 }
             }
-            return lista
+            return lista;
         }
     }
 
@@ -66,10 +66,11 @@ app.controller("listaArquivosCtrl", function($scope) {
     $scope.initialFolder = function() {
         for (var i = $scope.local.length - 1; i >= 0; i--) {
             $scope.local.pop();
-        }
+        }        
+    }
 
-        
+    $scope.backFolder = function() {
+        $scope.local.pop();
     }
 
 });    
-
