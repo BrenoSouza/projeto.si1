@@ -1,61 +1,55 @@
 package lexis.util;
 
-import lexis.exceptions.LoginEmptyException;
+import lexis.exceptions.AuthenticationErrorException;
 import lexis.models.User;
 import lexis.services.UserService;
 
-public class CheckUserLogin {
+public class UserLoginService {
 	private UserService userService;
-	private boolean hasError;
-	private String error;
 	private User userTemp;		
 	
-	public CheckUserLogin(UserService userService){
+	public UserLoginService(UserService userService){
 		this.userService = userService;
 	}
 	
-	public boolean hasErroIn(User user){
+	public void hasErroIn(User user){
 		check(user);
-		return hasError;
+		return;
 	}
 	
-	public String getError(){
-		return error;
-	}
-	
-	private void check(User user){		
-		if (user.getLogin().isEmpty()) {
-			setError(true, "Login não pode ser vazio");
-			return;
-		}
+	private void check(User user){
+		UserRegisterService userRegisterService = new UserRegisterService(userService);
 		
-		if(user.getLogin().contains("@")){			
-			this.userTemp = userService.getUserByEmail(user.getLogin());
-			if (userTemp == null) {
-				setError(true, "email nao cadastrado");
-				return;
-			}
-		}else{			
-			userTemp = userService.getUserByLogin(user.getLogin());
-			if (userTemp == null) {
-				setError(true,"usuario nao cadastrado");
-				return;
-			}
+		userRegisterService.checkLoginIsEmpty(user);
+		
+		setLoginIfRegistered(user, userRegisterService);
+		
+		authenticationPassword(user);
+		
+		
+	}
+
+	private void setLoginIfRegistered(User user, UserRegisterService userRegisterService) {
+		//se o login for o email
+		if(user.getLogin().contains("@")){	
+			userRegisterService.checkEmailIsRegistered(user);
+			this.userTemp = userService.getUserByEmail(user.getLogin());			
+		//se nao for	
+		}else{
+			userRegisterService.checkLoginIsRegistered(user);
+			this.userTemp = userService.getUserByLogin(user.getLogin());			
 		}
+	}
+
+	//verifica a validação da senha
+	private void authenticationPassword(User user) throws AuthenticationErrorException{
 		if(!(userTemp.getPassword().equals(user.getPassword()))){
-			setError(true, "senha invalida");
+			throw new  AuthenticationErrorException("senha invalida");
 		}
-		
-		
 	}
 	
-	private void setError(boolean hasError, String erro){
-		this.error = erro;
-		this.hasError = hasError;
-	}
-
-
-	public User getUser() {
+	public User getUser(User user){
+		check(user);
 		return userTemp;
 	}
 }
