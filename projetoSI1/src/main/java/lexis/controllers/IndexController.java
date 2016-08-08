@@ -23,6 +23,10 @@ public class IndexController {
 		this.userService = userService;
 	}
 
+	/**
+	 * metodo responsavel pelo index.html
+	 * @return
+	 */
 	@RequestMapping // acessa o url "/"
 	public ModelAndView index() {
 
@@ -39,16 +43,15 @@ public class IndexController {
 		return index;
 	}
 
-	/*
-	 * recebe o paramentro "userCadasstro" na url com o metodo POST que indica
-	 * que a pagina irá enviar dados para o controller esses dados sao enviados
-	 * atravez de um form no index.html nesse caso esses dados é um objeto do
-	 * tipo User(userCadastro) logo apos receber o controler salva no servico
-	 * que controla User e em seguida envia a requisição ao metodo Login, para
-	 * que seja feita a validação
+	/**
+	 * metodo resposavel pelo cadastro de um novo usuario, recebe do form do index.html um USER
+	 * e caso nao haja erro no usuario passado retorna ao metodo de login para a validação
+	 * @param userRegister -recebe o paramentro "userRegister" na url com o metodo POST
+	 * @param attributes - obejto da framework que permite o redirecionamento da pagina com mensagem de erro
+	 * @return caso o cadastro seja feito com sucesso, retorna ao metoodo userLogin com o obejto user
+	 * caso nao retorna a pagina index.html com a mensagem de erro
 	 */
-	// recebendo o objeto user
-	@RequestMapping(value = "userRegister", method = RequestMethod.POST)
+	@RequestMapping(value = "userRegister", method = RequestMethod.POST)//produces = "application/json"
 	public ModelAndView userRegister(User userRegister, RedirectAttributes attributes) {
 		ModelAndView login = new ModelAndView();
 		// cria um objeto responsavel pelo cadastro do usuario
@@ -77,14 +80,12 @@ public class IndexController {
 
 	}
 
-	/*
-	 * recebe o paramentro "userLogin" na url com o metodo POST que indica que a
-	 * pagina irá enviar dados para o controller esses dados sao enviados
-	 * atravez de um form no index.html nesse caso esses dados é um objeto do
-	 * tipo User(userLogin) logo apos receber o User o controler salva o objeto
-	 * em um ModelAndView em seguida faz uma verificação simples da senha se
-	 * forem iguais retorna para o home.html com o obejo User se forem
-	 * diferentes retorna a mesma pagina
+
+	/**
+	 * metodo resposavel pela validação dos campos e login do usuario
+	 * @param userLogin - recebe o paramentro "userLogin" na url com o metodo POST
+	 * @param attributes - obejto da framework que permite o redirecionamento da pagina com mensagem de erro
+	 * @return retona a home.html se nao houver erros,caso contrario retorna a index.html com a mensagem de erro
 	 */
 	@RequestMapping(value = "userlogin", method = RequestMethod.POST)
 	public ModelAndView userLogin(User userLogin, RedirectAttributes attributes) {

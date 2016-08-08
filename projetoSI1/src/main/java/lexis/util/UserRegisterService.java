@@ -73,7 +73,7 @@ public class UserRegisterService {
 			throw new LoginNotRegisteredException("usuario nao cadastrado");
 		}
 	}
-
+	// registra o usuario
 	public void RegisterUser(User userRegister) {
 		userService.saveUser(userRegister);
 
