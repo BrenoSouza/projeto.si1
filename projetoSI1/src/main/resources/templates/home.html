@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html ng-app="listaArquivos" xmlns:th="http://www.thymeleaf.org">
 <head lang="pt-BR">
@@ -29,16 +27,27 @@
 	<div class="navbar navbar-inverse">
 		<div class="navbar-inner">
 			<div class="container">
-				<a class="btn btn-navbar" data-toggle="collapse"
-					data-target=".navbar-inverse-collapse"> <span class="icon-bar"></span>
-					<span class="icon-bar"></span> <span class="icon-bar"></span>
-				</a> <a class="brand topbar-links" href="home">Início</a>
+				<a class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-inverse-collapse"> 
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span> 
+					<span class="icon-bar"></span>
+				</a> 
+
+				<a class="brand topbar-links" href="home">
+					Início
+				</a>
+				
 				<div class="nav-collapse collapse navbar-inverse-collapse">
 					<form class="navbar-search pull-left" action="#">
 						<input type="text" class="search-query span3" placeholder="Busca"></input>
 					</form>
 					<ul class="nav pull-right">
-						<li><a href="/">Sair</a></li>
+						<li>
+							<a href="/">
+								Sair
+							</a>
+						</li>
+						
 						<li class="divider-vertical"></li>
 					</ul>
 				</div>
@@ -51,25 +60,31 @@
 
 		<table cellpadding="10">
 			<tr>
-				<td><options> <label for="search">Pesquisar </label>
+				<td>
+					<options> 
+						<label for="search">
+							Pesquisar 
+						</label>
 
-					<input class="form-search no-margin-top" type="text"
-						name="search" id="search" placeholder="Nome do arquivo ou pasta"
-						ng-model="searchFile"></input> </options></td>
+						<input class="form-search no-margin-top" type="text" name="search" id="search" placeholder="Nome do arquivo ou pasta"
+						ng-model="searchFile">
+					
+						</input> 
+					</options>
+				</td>
 
-				<td><input id="new-file" type="submit"
-					class="button" name="createFile" value="Novo arquivo"
-					ng-click="adicionaTxt(nome)" ng-disabled="!nome"></input></td>
+				<td>
 
-				<td><label for="nomePasta">Digite o nome</label> <input
-					class="no-margin-top" type="text" name="nomePasta" id="novoNome"
-					value="Nome da pasta" ng-model="nome" placeholder="Nome da Pasta"></input>
+					<input style="width:50px; height:50px; " id="new-file" type="image" src="../static/images/add_file.png"
+							th:src="@{images/add_file.png}" name="createFile" value="Novo arquivo"
+					ng-click="adicionaTxt()"></input>
+				</td>
 
-
-					<input type="submit" class="button" id="new-folder"
-					name="createPath" value="Nova Pasta" ng-click="adicionaPasta(nome)"
-					ng-disabled="!nome"></input></td>
-				<td></td>
+				<td>
+					<input style="width:50px; height:50px; " id="new-file" type="image" src="../static/images/add_folder.png"
+							th:src="@{images/add_folder.png}" name="createFile" value="Novo arquivo"
+					ng-click="adicionaPasta()"></input>
+				</td>
 
 			</tr>
 		</table>
@@ -83,42 +98,63 @@
 				style="background: #B0C4DE">
 				<thead style="background: #1f3c58">
 					<tr style="border: bold">
-						<th><img src="../static/images/star-marked.png"
-							th:src="@{images/star-marked.png}" alt="" class="star-marked"></img>
-
+						<th>
+							<img src="../static/images/star-marked.png"	th:src="@{images/star-marked.png}" alt="" class="star-marked"></img>
 						</th>
-						<th><a href="#" style="color: white"
-							ng-click="sortBy('nome')"> Nome</a></th>
 
 						<th><a href="#" style="color: white"
-							ng-click="sortBy('tipo')"> Tipo</a></th>
+							ng-click="sortBy('nome')"> Nome</a>
+						</th>
 
-						<th><a href="#" style="color: white"
-							ng-click="sortBy('dataCreat')"> Data Criação</a></th>
+						<th>
+							<a href="#" style="color: white" ng-click="sortBy('tipo')"> Tipo</a>
+						</th>
 
-						<th><a href="#" style="color: white"
-							ng-click="sortBy('ultimaModif')">Última modificação</a></th>
+						<th>
+							<a href="#" style="color: white" ng-click="sortBy('dataCreat')"> Data Criação</a>
+						</th>
 
-						<th style="color: white">Opções</th>
+						<th>
+							<a href="#" style="color: white" ng-click="sortBy('ultimaModif')">Última modificação</a>
+						</th>
+
+						<th style="color: white">
+							Opções
+						</th>
 					</tr>
 				</thead>
 
 				<tbody>
-					<tr
-						ng-repeat="arquivo in arquivos | filter: {nome: searchFile} | orderBy:tipoOrdenacao:direction">
-						<td><a href="#"><img src="../static/images/star.png"
-								th:src="@{images/star.png}" alt="" class="star"></img></a></td>
-						<td id="td-name"><a href="/editor"
-							th:action="@{/home/editor}"><img src="{{arquivo.folder}}"
-								th:src="@{images/{{arquivo.tipo}}.png}" alt="" class="iconeFile"></img></a>
-							<span>{{arquivo.nome}}</span></td>
-						<td>{{arquivo.tipo}}</td>
-						<td>{{arquivo.dataCreat | date:"dd/MM/yyyy HH:mm"}}</td>
+					<tr	ng-repeat="arquivo in arquivos | filter: {nome: searchFile} | orderBy:tipoOrdenacao:direction">
+						
+						<td>
+							<a href="#">
+								<img src="../static/images/star.png" th:src="@{images/star.png}" alt="" class="star"></img>
+							</a>
+						</td>
+						
+						<td id="td-name">
+							<a href="/editor" th:action="@{/home/editor}">
+								<img src="{{arquivo.folder}}" th:src="@{images/{{arquivo.tipo}}.png}" alt="" class="iconeFile"></img>
+							</a>
+							<span>{{arquivo.nome}}</span>
+						</td>
+						
+						<td>
+							{{arquivo.tipo}}
+						</td>
+						
+						<td>
+							{{arquivo.dataCreat | date:"dd/MM/yyyy HH:mm"}}
+						</td>
 
-						<td>{{arquivo.ultimaModif}}</td>
-						<td><input style="margin-top: 0px" type="submit"
-							class="button" name="excluir" value="Excluir"></input></td>
-
+						<td>
+							{{arquivo.ultimaModif}}
+						</td>
+						
+						<td>
+							<input style="margin-top: 0px" type="submit" class="button" name="excluir" value="Excluir"></input>
+						</td>
 
 					</tr>
 
