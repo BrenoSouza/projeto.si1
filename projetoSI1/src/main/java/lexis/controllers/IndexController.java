@@ -25,16 +25,16 @@ public class IndexController {
 
 	@RequestMapping // acessa o url "/"
 	public ModelAndView index() {
-		
+
 		// cria um novo objeto que aponta para "index.html"
 		ModelAndView index = new ModelAndView("/index");
-		
+
 		// adicionar um User com a chave "usercadastro"
 		index.addObject("userRegister", new User());
-		
+
 		// adiciona um User com a chave "userLogin"
 		index.addObject("userLogin", new User());
-		
+
 		// retorna o objeto para o index.html
 		return index;
 	}
@@ -51,30 +51,30 @@ public class IndexController {
 	@RequestMapping(value = "userRegister", method = RequestMethod.POST)
 	public ModelAndView userRegister(User userRegister, RedirectAttributes attributes) {
 		ModelAndView login = new ModelAndView();
-		//cria um objeto responsavel pelo cadastro do usuario
+		// cria um objeto responsavel pelo cadastro do usuario
 		UserRegisterService userRegisterService = new UserRegisterService(userService);
 
 		try {
 			// verifica se a erros no usuario
 			userRegisterService.hasErrorIn(userRegister);
-			
-			//caso nao haja erro registra o usuario
+
+			// caso nao haja erro registra o usuario
 			userRegisterService.RegisterUser(userRegister);
-			
+
 			// retorna para o metodo responsavel pelo login
 			return userLogin(userRegister, attributes);
-		
-			//se houver erros:
+
+			// se houver erros:
 		} catch (Exception e) {
 			// retorna a pagina incial
 			login.setViewName("redirect:/");
-			
+
 			// com as mensagens de erro
 			attributes.addFlashAttribute("mensagem", e.getMessage());
-			
+
 			return login;
 		}
-		
+
 	}
 
 	/*
@@ -88,30 +88,31 @@ public class IndexController {
 	 */
 	@RequestMapping(value = "userlogin", method = RequestMethod.POST)
 	public ModelAndView userLogin(User userLogin, RedirectAttributes attributes) {
-		
+
 		ModelAndView login = new ModelAndView();
-		//cria um objeto resposavel pelo login do usuario
+		// cria um objeto resposavel pelo login do usuario
 		UserLoginService userLoginService = new UserLoginService(userService);
 
 		try {
-			//tenta adicionar user interno a chave "user", aprtir do userLogin passado 
+			// tenta adicionar user interno a chave "user", aprtir do userLogin
+			// passado
 			login.addObject("user", userLoginService.getUser(userLogin));
-			
-			//caso nao de nenhum erro retorna para o home.html
+
+			// caso nao de nenhum erro retorna para o home.html
 			login.setViewName("home");
-			
+
 			return login;
-			
-		//caso haja erros de validacao ou sintax no obejeto passado:
+
+			// caso haja erros de validacao ou sintax no obejeto passado:
 		} catch (Exception e) {
 			// retorna a pagina incial
 			login.setViewName("redirect:/");
-			
+
 			// com as mensagens de erros
 			attributes.addFlashAttribute("mensagem", e.getMessage());
-			
+
 			return login;
-		}	
+		}
 
 	}
 
