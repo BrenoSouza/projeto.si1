@@ -15,6 +15,7 @@ app.controller("listaArquivosCtrl", function($scope) {
         } else {
             $scope.getLocal().push({nome: name, tipo: "pasta", dataCreat: ((new Date()).toString()).substring(0, 24) , ultimaModif:"--", folder:"../static/images/pasta.png", lista: [] });
             delete $scope.nome;
+            console.log($scope.arquivos);
         }
     };
 
@@ -47,11 +48,11 @@ app.controller("listaArquivosCtrl", function($scope) {
             return $scope.arquivos;
         }
         else {
-            var lista = [];
-            for (var i = $scope.local.length - 1; i >= 0; i--) {
-                for (var j = $scope.arquivos.length - 1; j >= 0; j--) {
-                    if($scope.arquivos[j].nome === $scope.local[i]) {
-                        lista = $scope.arquivos[j].lista;
+            var lista = $scope.arquivos;
+            for (var i = 0; $scope.local.length - 1 >= i; i++) {
+                for (var j = 0; $scope.arquivos.length - 1 >= j; j++) {
+                    if(lista[j].nome === $scope.local[i]) {
+                        lista = lista[j].lista;
                     }
                 }
             }
