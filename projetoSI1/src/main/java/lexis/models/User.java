@@ -1,6 +1,10 @@
 package lexis.models;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
+
 import javax.persistence.*;
+
+import javassist.expr.Instanceof;
 
 /**
  * Classe responsavel pelo objeto usuario.
@@ -105,6 +109,16 @@ public class User {
 	 */
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public boolean equals(Object objeto) {
+		if (objeto instanceof User) {
+			User user = (User) objeto;
+			if (this.getEmail().equals(user.getEmail()) && (this.getId() == user.getId())) {
+				return true; // sao iguails.
+			}
+		}
+		return false;
 	}
 
 	@Override

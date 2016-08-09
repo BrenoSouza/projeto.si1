@@ -120,6 +120,16 @@ public class File implements FileAndFolder {
 		return calendar.getTime();
 	}
 
+	public boolean equals(Object objeto) {
+		if (objeto instanceof File) {
+			File file = (File) objeto;
+			if (this.getName().equals(file.getName())) {
+				return true; // sao iguails.
+			}
+		}
+		return false;
+	}
+
 	@Override
 	public String toString() {
 		return "name: " + getName() + " date of creation: " + getDateCreation() + " data: " + getData();

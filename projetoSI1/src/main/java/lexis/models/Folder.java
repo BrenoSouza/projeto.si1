@@ -156,6 +156,16 @@ public class Folder implements FileAndFolder {
 		return calendar.getTime();
 	}
 
+	public boolean equals(Object objeto) {
+		if (objeto instanceof Folder) {
+			Folder folder = (Folder) objeto;
+			if (this.getName().equals(folder.getName())) {
+				return true; // sao iguails.
+			}
+		}
+		return false;
+	}
+
 	public String toString() {
 		return "name: " + getName() + " date of creation: " + getDateCreation() + " directory: "
 				+ getDirectory().toString();
