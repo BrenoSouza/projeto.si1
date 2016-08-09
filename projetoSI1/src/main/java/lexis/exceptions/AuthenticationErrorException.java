@@ -1,6 +1,7 @@
 package lexis.exceptions;
 
 public class AuthenticationErrorException extends RuntimeException {
+
 	/**
 	 * 
 	 */

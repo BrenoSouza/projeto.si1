@@ -9,17 +9,19 @@ import lexis.models.User;
 import lexis.repositories.UserRepository;
 
 /**
- * classe responsavel por inciar o sistema com usuarios padrão
- * @author raimundoheitor
+ * Classe responsavel por inciar o sistema com usuarios padrão.
+ * 
+ * @author Grupo 7, Alexandre Gullo, Jose Breno, Matheus Benedito, Melisse
+ *         Cabral, Raimundo Heitor, Rafael Klyger.
  *
  */
 @Component
 public class UserLoader implements ApplicationListener<ContextRefreshedEvent> {
 
-	// Repositorio em que o Objeto usuario é manipulado
+	// Repositorio em que o Objeto usuario é manipulado.
 	private UserRepository userRepository;
 
-	// exemplo simples de um futuro log
+	// Exemplo simples de um futuro log.
 	private Logger log = Logger.getLogger(UserLoader.class);
 
 	@Autowired
@@ -30,7 +32,7 @@ public class UserLoader implements ApplicationListener<ContextRefreshedEvent> {
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 
-		// adicionando usuarios ao sistema
+		// Adicionando usuarios ao sistema.
 		User admin = new User();
 		admin.setLogin("admin");
 		admin.setPassword("admin");

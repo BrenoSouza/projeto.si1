@@ -7,8 +7,10 @@ import lexis.models.User;
 import lexis.repositories.UserRepository;
 
 /**
- * Implementacao da interface UserService
- * @author raimundoheitor
+ * Implementacao da interface UserService.
+ * 
+ * @author Grupo 7, Alexandre Gullo, Jose Breno, Matheus Benedito, Melisse
+ *         Cabral, Raimundo Heitor, Rafael Klyger.
  *
  */
 @Service
@@ -21,18 +23,20 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
-	 * metodo que lista todos os usuarios
-	 * @return todos os usuarios cadastrados
+	 * Metodo que lista todos os usuarios.
+	 * 
+	 * @return Todos os usuarios cadastrados.
 	 */
 	@Override
 	public Iterable<User> listAllUsers() {
 		return userRepository.findAll();
 	}
-	
+
 	/**
-	 * busca o usuario pelo ID
+	 * Busca o usuario pelo ID.
+	 * 
 	 * @param id
-	 * @return o Usuario associado ao Id, ou null
+	 * @return o Usuario associado ao Id, ou null.
 	 */
 	@Override
 	public User getUserById(Integer id) {
@@ -40,8 +44,10 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
-	 * salva o usuario
-	 * @param user User - o usuario que será salvo 
+	 * Salva o usuario.
+	 * 
+	 * @param user
+	 *            User - o usuario que será salvo.
 	 */
 	@Override
 	public void saveUser(User user) {
@@ -49,18 +55,22 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
-	 * deleta o usuario
-	 * @param id Integer - o id que sera passado para a remoção
+	 * Deleta o usuario.
+	 * 
+	 * @param id
+	 *            Integer - o id que sera passado para a remocao.
 	 */
 	@Override
 	public void deleteUser(Integer id) {
 		userRepository.delete(id);
 	}
-	
+
 	/**
-	 * bsuca o usuario pelo login
-	 * @param login String - o login usado para a busca
-	 * @return retorna o usuario ou null
+	 * Busca o usuario pelo login.
+	 * 
+	 * @param login
+	 *            String - o login usado para a busca.
+	 * @return retorna o usuario ou null.
 	 */
 	@Override
 	public User getUserByLogin(String login) {
@@ -68,9 +78,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
-	 * busca o usuario pelo email
-	 * @param email String - o email que sera usado pela busca
-	 * @return
+	 * Busca o usuario pelo email.
+	 * 
+	 * @param email
+	 *            String - o email que sera usado pela busca.
+	 * @return retorna o email ou null.
 	 */
 	@Override
 	public User getUserByEmail(String email) {
@@ -78,9 +90,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
-	 * verifica se existe o user pelo login
-	 * @param login String - O login que se quer verificar 
-	 * @return True se estiver ,False se nao
+	 * Verifica se existe o user pelo login.
+	 * 
+	 * @param login
+	 *            String - O login que se quer verificar
+	 * @return True se estiver ,False se nao.
 	 */
 	@Override
 	public Boolean existsByLogin(String login) {
@@ -95,9 +109,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
-	 * verifica se existe o user pelo email
-	 * @param email String - O email que se quer verificar 
-	 * @return True se estiver ,False se nao
+	 * Verifica se existe o user pelo email.
+	 * 
+	 * @param email
+	 *            String - O email que se quer verificar.
+	 * @return True se estiver ,False se nao.
 	 */
 	@Override
 	public Boolean existsByEmail(String email) {

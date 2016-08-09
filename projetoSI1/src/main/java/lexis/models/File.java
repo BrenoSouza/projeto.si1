@@ -7,8 +7,10 @@ import java.util.GregorianCalendar;
 import javax.persistence.Column;
 
 /**
- * classe responsavel pelo obejto do tipo arquivo
- * @author raimundoheitor
+ * Classe responsavel pelo obejto do tipo arquivo.
+ * 
+ * @author Grupo 7, Alexandre Gullo, Jose Breno, Matheus Benedito, Melisse
+ *         Cabral, Raimundo Heitor, Rafael Klyger.
  *
  */
 public class File implements FileAndFolder {
@@ -20,12 +22,12 @@ public class File implements FileAndFolder {
 	private static String DATAEMPTY = "";
 
 	/**
-	 * contrutor que recebe o nome como obrigatorio 
-	 * datas criadas automaticamente
-	 * e o codigo do arquivo vazio
+	 * Contrutor que recebe o nome como obrigatorio datas criadas
+	 * automaticamente e o codigo do arquivo vazio.
+	 * 
 	 * @param name
 	 */
-	public File(String name){
+	public File(String name) {
 		this.name = name;
 		this.data = DATAEMPTY;
 		dateCreation = getDateCurrent();
@@ -33,7 +35,8 @@ public class File implements FileAndFolder {
 	}
 
 	/**
-	 * retorna o codigo fonte do arquivo
+	 * Retorna o codigo fonte do arquivo.
+	 * 
 	 * @return String data
 	 */
 	public String getData() {
@@ -41,15 +44,17 @@ public class File implements FileAndFolder {
 	}
 
 	/**
-	 * atualizar a data de criação
-	 * @param date Date - nova data
+	 * Atualiza a data de criacao.
+	 * 
+	 * @param date
+	 *            Date - nova data
 	 */
 	public void setData(String data) {
 		this.data = data;
 	}
 
 	/**
-	 * @return o nome do objeto
+	 * @return O nome do objeto.
 	 */
 	@Override
 	public String getName() {
@@ -57,8 +62,10 @@ public class File implements FileAndFolder {
 	}
 
 	/**
-	 * atualiza o nome
-	 * @param name String - novo nome
+	 * Atualiza o nome.
+	 * 
+	 * @param name
+	 *            String - novo nome
 	 */
 	@Override
 	public void setName(String name) {
@@ -67,7 +74,7 @@ public class File implements FileAndFolder {
 	}
 
 	/**
-	 * @return Date - a data de criação do objeto
+	 * @return Date - a data de criação do objeto.
 	 */
 	@Override
 	public Date getDateCreation() {
@@ -75,7 +82,7 @@ public class File implements FileAndFolder {
 	}
 
 	/**
-	 * @return Date - a data de ediçao do objeto
+	 * @return Date - a data de ediçao do objeto.
 	 */
 	@Override
 	public Date getDateEdition() {
@@ -83,8 +90,10 @@ public class File implements FileAndFolder {
 	}
 
 	/**
-	 * atualizar a data de criação
-	 * @param date Date - nova data
+	 * Atualiza a data de criacao.
+	 * 
+	 * @param date
+	 *            Date - nova data
 	 */
 	@Override
 	public void setDateCreation(Date date) {
@@ -93,8 +102,10 @@ public class File implements FileAndFolder {
 	}
 
 	/**
-	 * atualizar a data de edição
-	 * @param date Date - nova data
+	 * Atualiza a data de edicao.
+	 * 
+	 * @param date
+	 *            Date - nova data
 	 */
 	@Override
 	public void setDateEdition(Date date) {
@@ -110,7 +121,7 @@ public class File implements FileAndFolder {
 	}
 
 	@Override
-	public String toString(){
+	public String toString() {
 		return "name: " + getName() + " date of creation: " + getDateCreation() + " data: " + getData();
 	}
 

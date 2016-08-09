@@ -15,47 +15,52 @@ public class HomeController {
 	private UserService userService;
 
 	@Autowired
-	public void setUserService(UserService userService){
+	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}
 
 	/**
-	 * metodo responsavel pelo home.html
-	 * @return retorna a pagina home.html
+	 * Metodo responsavel pelo home.html
+	 * 
+	 * @return Retorna a pagina home.html
 	 */
 	@RequestMapping("/home")
-	public String home(){
+	public String home() {
 		return "home";
 	}
 
 	/**
-	 * metodo responsavel pelo editor.html
-	 * @return retorna a pagina editor.html
+	 * Metodo responsavel pelo editor.html
+	 * 
+	 * @return Retorna a pagina editor.html
 	 */
 	@RequestMapping("editor")
-	public String explorer(){
+	public String explorer() {
 		return "editor";
 	}
 
 	@RequestMapping("newFolder")
-	public void newFolder(){
+	public void newFolder() {
 
 	}
 
 	@RequestMapping("newFile")
-	public void newFile(){
+	public void newFile() {
 
 	}
+
 	@RequestMapping("view")
-	public void view(){
+	public void view() {
 
 	}
+
 	@RequestMapping("edit")
-	public void edit(){
+	public void edit() {
 
 	}
+
 	@RequestMapping("delete")
-	public void delete(){
+	public void delete() {
 
 	}
 

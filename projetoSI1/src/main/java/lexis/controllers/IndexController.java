@@ -15,6 +15,7 @@ import lexis.util.UserRegisterService;
 @Controller
 @RequestMapping("/")
 public class IndexController {
+
 	// objeto responsavel por manipular User
 	private UserService userService;
 
@@ -24,7 +25,8 @@ public class IndexController {
 	}
 
 	/**
-	 * metodo responsavel pelo index.html
+	 * Metodo responsavel pelo index.html
+	 * 
 	 * @return
 	 */
 	@RequestMapping // acessa o url "/"
@@ -44,16 +46,24 @@ public class IndexController {
 	}
 
 	/**
-	 * metodo resposavel pelo cadastro de um novo usuario, recebe do form do index.html um USER
-	 * e caso nao haja erro no usuario passado retorna ao metodo de login para a validação
-	 * @param userRegister -recebe o paramentro "userRegister" na url com o metodo POST
-	 * @param attributes - obejto da framework que permite o redirecionamento da pagina com mensagem de erro
-	 * @return caso o cadastro seja feito com sucesso, retorna ao metoodo userLogin com o obejto user
-	 * caso nao retorna a pagina index.html com a mensagem de erro
+	 * Metodo resposavel pelo cadastro de um novo usuario, recebe do form do
+	 * index.html um USER e caso nao haja erro no usuario passado retorna ao
+	 * metodo de login para a validação.
+	 * 
+	 * @param userRegister
+	 *            - Recebe o paramentro "userRegister" na url com o metodo POST.
+	 * @param attributes
+	 *            - Obejto da framework que permite o redirecionamento da pagina
+	 *            com mensagem de erro.
+	 * @return Caso o cadastro seja feito com sucesso, retorna ao metoodo
+	 *         userLogin com o obejto user caso nao retorna a pagina index.html
+	 *         com a mensagem de erro.
 	 */
-	@RequestMapping(value = "userRegister", method = RequestMethod.POST)//produces = "application/json"
+	@RequestMapping(value = "userRegister", method = RequestMethod.POST) // produces = "application/json"
 	public ModelAndView userRegister(User userRegister, RedirectAttributes attributes) {
+		
 		ModelAndView login = new ModelAndView();
+		
 		// cria um objeto responsavel pelo cadastro do usuario
 		UserRegisterService userRegisterService = new UserRegisterService(userService);
 
@@ -80,17 +90,22 @@ public class IndexController {
 
 	}
 
-
 	/**
-	 * metodo resposavel pela validação dos campos e login do usuario
-	 * @param userLogin - recebe o paramentro "userLogin" na url com o metodo POST
-	 * @param attributes - obejto da framework que permite o redirecionamento da pagina com mensagem de erro
-	 * @return retona a home.html se nao houver erros,caso contrario retorna a index.html com a mensagem de erro
+	 * Metodo resposavel pela validação dos campos e login do usuario.
+	 * 
+	 * @param userLogin
+	 *            - Recebe o paramentro "userLogin" na url com o metodo POST.
+	 * @param attributes
+	 *            - Obejto da framework que permite o redirecionamento da pagina
+	 *            com mensagem de erro.
+	 * @return Retona a home.html se nao houver erros,caso contrario retorna a
+	 *         index.html com a mensagem de erro.
 	 */
 	@RequestMapping(value = "userlogin", method = RequestMethod.POST)
 	public ModelAndView userLogin(User userLogin, RedirectAttributes attributes) {
 
 		ModelAndView login = new ModelAndView();
+		
 		// cria um objeto resposavel pelo login do usuario
 		UserLoginService userLoginService = new UserLoginService(userService);
 
