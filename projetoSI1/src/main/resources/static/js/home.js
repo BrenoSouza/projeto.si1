@@ -15,7 +15,6 @@ app.controller("listaArquivosCtrl", function($scope) {
         } else {
             $scope.getLocal().push({nome: name, tipo: "pasta", dataCreat: ((new Date()).toString()).substring(0, 24) , ultimaModif:"--", folder:"../static/images/pasta.png", lista: [] });
             delete $scope.nome;
-            console.log($scope.arquivos);
         }
     };
 
