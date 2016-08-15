@@ -7,7 +7,7 @@ import javax.persistence.Embeddable;
  * Interface que dita as regras que todo arquivo e pasta tem que ter.
  * 
  * @author Grupo 7, Alexandre Gullo, Jose Breno, Matheus Benedito, Melisse
- *         Cabral, Raimundo Heitor, Rafael Klyger.
+ *         Cabral, Raimundo Heitor, Rafael Klynger.
  *
  */
 @Embeddable
@@ -16,7 +16,7 @@ public interface FileAndFolder {
 	/**
 	 * @return O nome do objeto.
 	 */
-	String getName();
+	public String getName();
 
 	/**
 	 * Atualiza o nome.
@@ -24,25 +24,25 @@ public interface FileAndFolder {
 	 * @param name
 	 *            String - novo nome.
 	 */
-	void setName(String name);
+	public void setName(String name);
 
 	/**
 	 * @return Date - a data de criação do objeto.
 	 */
-	Date getDateCreation();
+	public Date getDateCreation();
 
 	/**
 	 * @return Date - a data de ediçao do objeto.
 	 */
-	Date getDateEdition();
-
+	public Date getDateEdition();
+	
 	/**
-	 * Atualiza a data de criacao.
-	 * 
-	 * @param date
-	 *            Date - nova data.
+	 * Retorna a pasta acima do arquivo/pasta, caso 
+	 * a pasta seja o ROOT retornara null.
+	 * @return Retorna a pasta acima do arquivo ou pasta.
 	 */
-	void setDateCreation(Date date);
+	public Folder getParent();
+	
 
 	/**
 	 * Atualiza a data de edicao.
@@ -50,6 +50,7 @@ public interface FileAndFolder {
 	 * @param date
 	 *            Date - nova data.
 	 */
-	void setDateEdition(Date date);
-
+	public void setDateEdition(Date date);
+	
+	
 }

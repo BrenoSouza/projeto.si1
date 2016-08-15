@@ -10,7 +10,7 @@ import javassist.expr.Instanceof;
  * Classe responsavel pelo objeto usuario.
  * 
  * @author Grupo 7, Alexandre Gullo, Jose Breno, Matheus Benedito, Melisse
- *         Cabral, Raimundo Heitor, Rafael Klyger.
+ *         Cabral, Raimundo Heitor, Rafael Klynger.
  *
  */
 @Entity
@@ -25,7 +25,7 @@ public class User {
 	private String password;
 	private String email;
 	@Embedded
-	private static Folder ROOT = new Folder("root");
+	private static Folder ROOT = new Folder("root", null);
 
 	public Integer getVersion() {
 		return version;

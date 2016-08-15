@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * Classe que ira inicializar a aplicação
  * 
  * @author Grupo 7, Alexandre Gullo, Jose Breno, Matheus Benedito, Melisse
- *         Cabral, Raimundo Heitor, Rafael Klyger.
+ *         Cabral, Raimundo Heitor, Rafael Klynger.
  *
  */
 @EnableAutoConfiguration

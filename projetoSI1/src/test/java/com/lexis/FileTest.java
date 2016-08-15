@@ -6,11 +6,13 @@ import org.junit.Test;
 
 import junit.framework.Assert;
 import lexis.models.File;
+import lexis.models.Folder;
 
 public class FileTest {
 	
 	File file1;
 	File file2;
+	Folder parent;
 	@Before
 	public void setUp() throws Exception {
 		file1 = new File("notas");
