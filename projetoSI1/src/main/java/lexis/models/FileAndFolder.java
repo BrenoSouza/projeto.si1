@@ -37,14 +37,6 @@ public interface FileAndFolder {
 	public Date getDateEdition();
 	
 	/**
-	 * Retorna a pasta acima do arquivo/pasta, caso 
-	 * a pasta seja o ROOT retornara null.
-	 * @return Retorna a pasta acima do arquivo ou pasta.
-	 */
-	public Folder getParent();
-	
-
-	/**
 	 * Atualiza a data de edicao.
 	 * 
 	 * @param date

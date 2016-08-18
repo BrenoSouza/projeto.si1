@@ -1,10 +1,7 @@
 package com.lexis;
-import static org.junit.Assert.*;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
-import junit.framework.Assert;
 import lexis.models.User;
 
 public class UserTest {
@@ -14,31 +11,13 @@ public class UserTest {
 
 	@Before
 	public void setUp() throws Exception {
-		user1 = new User();
+		user1 = new User("admin", "admin", "admin@admin");
 		user1.setId(121313);
-		user1.setEmail("admin@admin");
-		user1.setLogin("admin");
-		user1.setPassword("admin");
 		user1.setVersion(1234);
 		
-		user2 = new User();
+		user2 = new User("user", "1234", "bubu@admin");
 		user2.setId(414141);
-		user2.setEmail("bubu@admin");
-		user2.setLogin("user");
-		user2.setPassword("1234");
 		user2.setVersion(1234);
-	}
-
-	@SuppressWarnings("deprecation")
-	@Test
-	public void testGetVersion() {
-		assertTrue(user1.getVersion().equals(1234));
-	}
-
-	@Test
-	public void testSetVersion() {
-		user1.setVersion(121212);
-		assertTrue(user1.getVersion() == 121212);
 	}
 
 //	@Test
@@ -46,57 +25,57 @@ public class UserTest {
 //		fail("Not yet implemented");
 //	}
 
+
+	
 	@Test
-	public void testGetId() {
-		assertTrue(user1.getId() == 121313);
+	public void testConstructor() throws Exception {
+		user1 = new User("rafael", "Klynger", "rafael.klynger@gmail.com");
+		
+		Assert.assertEquals("rafael", user1.getLogin());
+		Assert.assertEquals("Klynger", user1.getPassword());
+		Assert.assertEquals("rafael.klynger@gmail.com", user1.getEmail());
+	}
+	
+	@Test
+	public void testSetPassword() throws Exception {
+		user1.setPassword("87654321");
+		user2.setPassword("12345678");
+		
+		Assert.assertEquals("87654321", user1.getPassword());
+		Assert.assertEquals("12345678", user2.getPassword());
+		
+		
+		try {
+			user1.setPassword(null);
+			Assert.fail("Should get a NullPointerException");
+		} catch (NullPointerException e) {
+			
+		} catch (Exception e) {
+			Assert.fail("Shouldn't be here");
+		}
+		
 	}
 
 	@Test
-	public void testSetId() {
-		user1.setId(123);
-		assertTrue(user1.getId() == 123);
-	}
-
-	@Test
-	public void testGetLogin() {
-		assertTrue(user1.getLogin() == "admin");
-		assertTrue(user2.getLogin() == "user");
-	}
-
-	@Test
-	public void testSetLogin() {
-		user1.setLogin("test");
-		user2.setLogin("bubu");
-		assertTrue(user1.getLogin() == "test");
-		assertTrue(user2.getLogin() == "bubu");
-	}
-
-	@Test
-	public void testGetPassword() {
-		assertTrue(user1.getPassword() == "admin");
-		assertTrue(user2.getPassword() == "1234");
-	}
-
-	@Test
-	public void testSetPassword() {
-		user1.setPassword("54321");
-		user2.setPassword("12345");
-		assertTrue(user1.getPassword() == "54321");
-		assertTrue(user2.getPassword() == "12345");
-	}
-
-	@Test
-	public void testGetEmail() {
-		assertTrue(user1.getEmail() == "admin@admin");
-		assertTrue(user2.getEmail() == "bubu@admin");
-	}
-
-	@Test
-	public void testSetEmail() {
+	public void testSetEmail() throws Exception {
+		
+		Assert.assertEquals(user1.getEmail(), "admin@admin");
+		Assert.assertEquals(user2.getEmail(), "bubu@admin");
+		
 		user1.setEmail("adu@admin");
 		user2.setEmail("ded@admin");
-		assertTrue(user1.getEmail() == "adu@admin");
-		assertTrue(user2.getEmail() == "ded@admin");
+		
+		Assert.assertEquals("adu@admin", user1.getEmail());
+		Assert.assertEquals("ded@admin", user2.getEmail());
+		
+		try {
+			user2.setEmail(null);
+			Assert.fail("Should get a NullPointerException");
+		} catch (NullPointerException e) {
+			
+		} catch (Exception e) {
+			Assert.fail("Shouldn't be here");
+		}
 	}
 
 //	@Test

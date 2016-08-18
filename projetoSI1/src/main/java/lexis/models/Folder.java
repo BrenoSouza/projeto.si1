@@ -20,7 +20,6 @@ public class Folder implements FileAndFolder {
 	private String name;
 	private Date dateCreation;
 	private Date dateEdition;
-	private Folder parent;
 	@ElementCollection
 	private ArrayList<FileAndFolder> directory = new ArrayList<FileAndFolder>();
 
@@ -34,13 +33,11 @@ public class Folder implements FileAndFolder {
 	 * @param name
 	 *            String - nome da pasta.
 	 */
-	public Folder(String name, Folder parent) throws RuntimeException {
+	public Folder(String name) throws RuntimeException {
 		checkName(name);
-		checkParent(parent);
 		
 		
 		this.name = name;
-		this.parent = parent;
 		dateCreation = getCurrentDate();
 		dateEdition = getCurrentDate();
 	}
@@ -52,7 +49,7 @@ public class Folder implements FileAndFolder {
 	 *            String - nome da pasta.
 	 */
 	public void addFolder(String name) throws RuntimeException {
-		Folder temp = new Folder(name, this);
+		Folder temp = new Folder(name);
 		if (!contains(name)) {
 			//throw new DuplicatedNameException();
 		}
@@ -177,13 +174,8 @@ public class Folder implements FileAndFolder {
 	
 	@Override
 	public String toString() {
-		return "name: " + getName() + " date of creation: " + getDateCreation() + " directory: "
-				+ getDirectory().toString();
-	}
-
-	@Override
-	public Folder getParent() {
-		return parent;
+		return "Name: " + getName() + "\nDate of creation: " + getDateCreation() + "\nDirectory: "
+				+ getDirectory().toString() + "\n";
 	}
 
 	/*
@@ -199,16 +191,11 @@ public class Folder implements FileAndFolder {
 			//TODO throw new InvalidNameException();
 		}
 		
-		if(!parent.contains(name)) {
-			//TODO throw new DuplicatedNameException();
-		}
+//		if(!parent.contains(name)) {
+//			//TODO throw new DuplicatedNameException();
+//		}
 		
 	}
-		
-	private void checkParent(Folder parent) throws RuntimeException {
-		if(parent == null /*&& this != ROOT*/)
-			throw new NullPointerException();
-			
-	}
+	
 
 }

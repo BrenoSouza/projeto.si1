@@ -18,7 +18,6 @@ public class File implements FileAndFolder {
 
 	@Column // (scale = 4)
 	private String name;
-	private Folder parent;
 	private Date dateCreation;
 	private Date dateEdition;
 	private String data;
@@ -30,12 +29,10 @@ public class File implements FileAndFolder {
 	 * @param name Nome do arquivo.
 	 * @param parent Folder no qual o arquivo esta inserido.
 	 */
-	public File(String name, Folder parent) {
+	public File(String name) {
 		checkName(name);
-		checkParent(parent);
 
 		this.name = name;
-		this.parent = parent;
 		this.data = EMPTY_DATA;
 		dateCreation = getCurrentDate();
 		dateEdition = getCurrentDate();
@@ -69,10 +66,6 @@ public class File implements FileAndFolder {
 
 	}
 
-	@Override
-	public Folder getParent() {
-		return parent;
-	}
 
 	@Override
 	public Date getDateCreation() {
@@ -123,11 +116,4 @@ public class File implements FileAndFolder {
 		}
 
 	}
-	
-	private void checkParent(Folder parent) throws RuntimeException {
-		if(parent == null /*&& this != ROOT*/)
-			throw new NullPointerException();
-			
-	}
-
 }

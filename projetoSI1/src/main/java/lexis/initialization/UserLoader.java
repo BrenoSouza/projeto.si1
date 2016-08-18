@@ -33,24 +33,38 @@ public class UserLoader implements ApplicationListener<ContextRefreshedEvent> {
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 
 		// Adicionando usuarios ao sistema.
-		User admin = new User();
-		admin.setLogin("admin");
-		admin.setPassword("admin");
-		admin.setEmail("admin@admin");
-		admin.getRoot().addFolder("pasta1");
-		admin.getRoot().addFolder("pasta2");
-		userRepository.save(admin);
+		User admin;
+		try {
+			admin = new User("admin", "admin", "admin@admin");
+			
+			admin.getRoot().addFolder("pasta1");
+			admin.getRoot().addFolder("pasta2");
+			userRepository.save(admin);
+			
+			log.info("Saved admin - id: " + admin.getId());
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-		log.info("Saved admin - id: " + admin.getId());
 
-		User guest = new User();
-		guest.setLogin("guest");
-		guest.setPassword("guest");
-		guest.setEmail("guest@guest");
-		guest.getRoot().addFolder("pastaguest");
-		userRepository.save(guest);
 
-		log.info("Saved guest - id:" + guest.getId());
+
+		User guest;
+		try {
+			guest = new User("guest", "guest", "guest@guest");
+			
+			guest.getRoot().addFolder("pastaguest");
+			userRepository.save(guest);
+
+			log.info("Saved guest - id:" + guest.getId());
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 
 	}
 
