@@ -1,9 +1,8 @@
 package lexis.models;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 
@@ -18,10 +17,10 @@ public class Folder implements FileAndFolder {
 
 	@Column // (scale = 3)
 	private String name;
-	private Date dateCreation;
-	private Date dateEdition;
+	private LocalDateTime dateCreation;
+	private LocalDateTime dateEdition;
 	@ElementCollection
-	private ArrayList<FileAndFolder> directory = new ArrayList<FileAndFolder>();
+	private List<FileAndFolder> directory = new ArrayList<FileAndFolder>();
 
 	/**
 	 * Esse construtor exige apenas o nome da 
@@ -36,8 +35,8 @@ public class Folder implements FileAndFolder {
 		
 		
 		this.name = name;
-		dateCreation = getCurrentDate();
-		dateEdition = getCurrentDate();
+		dateCreation = LocalDateTime.now();
+		dateEdition = LocalDateTime.now();
 	}
 	
 	/**
@@ -104,7 +103,7 @@ public class Folder implements FileAndFolder {
 	 * @return ArrayList<FileAndFolder> - uma lista com todos os objetos dentro
 	 *         da pasta.
 	 */
-	public ArrayList<FileAndFolder> getDirectory() {
+	public List<FileAndFolder> getDirectory() {
 		return directory;
 	}
 
@@ -130,28 +129,28 @@ public class Folder implements FileAndFolder {
 	}
 	
 	@Override
-	public Date getDateCreation() {
+	public LocalDateTime getDateCreation() {
 		return dateCreation;
 	}
 	
 	@Override
-	public void setDateCreation(Date date) throws Exception {
+	public void setDateCreation(LocalDateTime date) throws Exception {
 		checkDate(date);
 		dateCreation = date;
 	}
 
 	@Override
-	public Date getDateEdition() {
+	public LocalDateTime getDateEdition() {
 		return dateEdition;
 	}
 
 	@Override
-	public void setDateEdition(Date date) throws Exception {
+	public void setDateEdition(LocalDateTime date) throws Exception {
 		checkDate(date);
 		this.dateEdition = date;
 	}
 	
-	private void checkDate(Date date) throws Exception {
+	private void checkDate(LocalDateTime date) throws Exception {
 		if(date == null)
 			throw new NullPointerException();
 		
@@ -167,12 +166,6 @@ public class Folder implements FileAndFolder {
 		this.name = name;
 	}
 
-	private Date getCurrentDate() {
-		Calendar calendar = new GregorianCalendar();
-		Date date = new Date();
-		calendar.setTime(date);
-		return calendar.getTime();
-	}
 
 	@Override
 	public boolean equals(Object objeto) {

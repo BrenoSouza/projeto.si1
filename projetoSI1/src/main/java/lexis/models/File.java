@@ -1,5 +1,6 @@
 package lexis.models;
 
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -18,8 +19,8 @@ public class File implements FileAndFolder {
 
 	@Column // (scale = 4)
 	private String name;
-	private Date dateCreation;
-	private Date dateEdition;
+	private LocalDateTime dateCreation;
+	private LocalDateTime dateEdition;
 	private String data;
 
 	/**
@@ -34,8 +35,8 @@ public class File implements FileAndFolder {
 
 		this.name = name;
 		this.data = EMPTY_DATA;
-		dateCreation = getCurrentDate();
-		dateEdition = getCurrentDate();
+		dateCreation = LocalDateTime.now();
+		dateEdition = LocalDateTime.now();
 	}
 	
 	public File() throws Exception {
@@ -73,38 +74,31 @@ public class File implements FileAndFolder {
 
 
 	@Override
-	public Date getDateCreation() {
+	public LocalDateTime getDateCreation() {
 		return dateCreation;
 	}
 	
 	@Override
-	public void setDateCreation(Date date) throws Exception {
+	public void setDateCreation(LocalDateTime date) throws Exception {
 		checkDate(date);
 		dateCreation = date;
 	}
 
 	@Override
-	public Date getDateEdition() {
+	public LocalDateTime getDateEdition() {
 		return dateEdition;
 	}
 
 	@Override
-	public void setDateEdition(Date date) {
+	public void setDateEdition(LocalDateTime date) {
 		this.dateEdition = date;
 
 	}
 
-	private Date getCurrentDate() {
-		Calendar calendar = new GregorianCalendar();
-		Date date = new Date();
-		calendar.setTime(date);
-		return calendar.getTime();
-	}
-
 	@Override
-	public boolean equals(Object objeto) {
-		if (objeto instanceof File) {
-			File file = (File) objeto;
+	public boolean equals(Object obj) {
+		if (obj instanceof File) {
+			File file = (File) obj;
 			if (this.getName().equals(file.getName())) {
 				return true; // sao iguails.
 			}
@@ -128,7 +122,7 @@ public class File implements FileAndFolder {
 
 	}
 	
-	private void checkDate(Date date) throws Exception {
+	private void checkDate(LocalDateTime date) throws Exception {
 		if(date == null)
 			throw new NullPointerException();
 		

@@ -1,5 +1,6 @@
 package lexis.models;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import javax.persistence.Embeddable;
 
@@ -29,7 +30,7 @@ public interface FileAndFolder {
 	/**
 	 * @return Date - a data de criação do objeto.
 	 */
-	public Date getDateCreation();
+	public LocalDateTime getDateCreation();
 	
 	
 	/**
@@ -39,12 +40,12 @@ public interface FileAndFolder {
 	 * @throws Exception Lanca excecao caso a data nao tenha 
 	 * sido inicializada.
 	 */
-	public void setDateCreation(Date date) throws Exception;
-
+	public void setDateCreation(LocalDateTime date) throws Exception;
+	
 	/**
 	 * @return Date - a data de ediçao do objeto.
 	 */
-	public Date getDateEdition();
+	public LocalDateTime getDateEdition();
 	
 	/**
 	 * Atualiza a data de edicao.
@@ -54,7 +55,7 @@ public interface FileAndFolder {
 	 * @throws Exception Lanca NullPointerException caso date 
 	 * nao tenha sido inicializada.
 	 */
-	public void setDateEdition(Date date) throws Exception;
+	public void setDateEdition(LocalDateTime date) throws Exception;
 	
 	
 }
