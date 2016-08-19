@@ -1,6 +1,7 @@
 package lexis.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,7 +14,6 @@ import lexis.util.UserLoginService;
 import lexis.util.UserRegisterService;
 
 @Controller
-@RequestMapping("/")
 public class IndexController {
 
 	// objeto responsavel por manipular User
@@ -29,7 +29,7 @@ public class IndexController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping // acessa o url "/"
+	@RequestMapping("/login") // acessa o url "/"
 	public ModelAndView index() {
 
 		// cria um novo objeto que aponta para "index.html"
@@ -37,9 +37,6 @@ public class IndexController {
 
 		// adicionar um User com a chave "usercadastro"
 		index.addObject("userRegister", new User());
-
-		// adiciona um User com a chave "userLogin"
-		index.addObject("userLogin", new User());
 
 		// retorna o objeto para o index.html
 		return index;
@@ -62,7 +59,7 @@ public class IndexController {
 	@RequestMapping(value = "userRegister", method = RequestMethod.POST) // produces = "application/json"
 	public ModelAndView userRegister(User userRegister, RedirectAttributes attributes) {
 		
-		ModelAndView login = new ModelAndView();
+		ModelAndView login = new ModelAndView("redirect:/login");
 		
 		// cria um objeto responsavel pelo cadastro do usuario
 		UserRegisterService userRegisterService = new UserRegisterService(userService);
@@ -74,14 +71,13 @@ public class IndexController {
 			// caso nao haja erro registra o usuario
 			userRegisterService.RegisterUser(userRegister);
 
+			attributes.addFlashAttribute("mensagem", "cadastro efetuado com sucesso");
+			
 			// retorna para o metodo responsavel pelo login
-			return userLogin(userRegister, attributes);
+			return  login;
 
 			// se houver erros:
 		} catch (Exception e) {
-			// retorna a pagina incial
-			login.setViewName("redirect:/");
-
 			// com as mensagens de erro
 			attributes.addFlashAttribute("mensagem", e.getMessage());
 
@@ -101,13 +97,15 @@ public class IndexController {
 	 * @return Retona a home.html se nao houver erros,caso contrario retorna a
 	 *         index.html com a mensagem de erro.
 	 */
-	@RequestMapping(value = "userlogin", method = RequestMethod.POST)
+	@RequestMapping("/")//(value = "userlogin", method = RequestMethod.POST)
 	public ModelAndView userLogin(User userLogin, RedirectAttributes attributes) {
-
 		ModelAndView login = new ModelAndView();
-		
+		User userTemp = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		login.addObject("user", userTemp);
+		login.setViewName("/home");
+		return login;
 		// cria um objeto resposavel pelo login do usuario
-		UserLoginService userLoginService = new UserLoginService(userService);
+		/*UserLoginService userLoginService = new UserLoginService(userService);
 
 		try {
 			// tenta adicionar user interno a chave "user", aprtir do userLogin
@@ -128,7 +126,7 @@ public class IndexController {
 			attributes.addFlashAttribute("mensagem", e.getMessage());
 
 			return login;
-		}
+		}*/
 
 	}
 
