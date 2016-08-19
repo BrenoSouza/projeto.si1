@@ -1,6 +1,7 @@
 package lexis.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,10 +31,14 @@ public class IndexController {
 	 * @return
 	 */
 	@RequestMapping("/login") // acessa o url "/"
-	public ModelAndView index() {
+	public ModelAndView index(@AuthenticationPrincipal User user) {
+		ModelAndView index = new ModelAndView("/index");
+		if(user != null){
+			index.setViewName("/home");
+		}
 
 		// cria um novo objeto que aponta para "index.html"
-		ModelAndView index = new ModelAndView("/index");
+		
 
 		// adicionar um User com a chave "usercadastro"
 		index.addObject("userRegister", new User());
