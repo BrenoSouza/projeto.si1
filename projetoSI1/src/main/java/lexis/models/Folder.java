@@ -24,11 +24,9 @@ public class Folder implements FileAndFolder {
 	private ArrayList<FileAndFolder> directory = new ArrayList<FileAndFolder>();
 
 	/**
-	 * Construdor que exige um nome e uma pasta 
-	 * na qual esse Folder estara contido. Caso 
-	 * esse Folder seja o root o Folder superior 
-	 * (ou o pai) sera null. As datas de criacao e 
-	 * edicao sao adicionadas automaticamente.
+	 * Esse construtor exige apenas o nome da 
+	 * pasta, a data de criacao e estabelecida 
+	 * na criacao do objeto.
 	 * 
 	 * @param name
 	 *            String - nome da pasta.
@@ -50,7 +48,7 @@ public class Folder implements FileAndFolder {
 	 */
 	public void addFolder(String name) throws RuntimeException {
 		Folder temp = new Folder(name);
-		if (!contains(name)) {
+		if (!containsFolder(name)) {
 			//throw new DuplicatedNameException();
 		}
 		this.directory.add(temp);
@@ -59,15 +57,17 @@ public class Folder implements FileAndFolder {
 	/**
 	 * Metodo que remove uma pasta.
 	 * 
-	 * @param folder
-	 *            Folder - pasta a ser removida.
+	 * @param folder Nome da pasta a ser removida
+	 * @return true caso a pasta seja removida e false 
+	 * caso a pasta nao seja encontrada.
 	 */
 	public boolean removeFolder(Folder folder) {
 		return directory.remove(folder);
 	}
 
 	/**
-	 * Metodo que retorna a pasta solicitada.
+	 * Metodo que retorna a pasta solicitada. Caso 
+	 * a pasta nao exista o metodo retorna null.
 	 * 
 	 * @param name
 	 *            String - nome da pasta.
@@ -125,13 +125,19 @@ public class Folder implements FileAndFolder {
 	 * @return Retorna True caso o arquivo/pasta esteja 
 	 * dentro do diretorio.
 	 */
-	public boolean contains(String name) {
+	public boolean containsFolder(String name) {
 		return getFolder(name) != null;
 	}
 	
 	@Override
 	public Date getDateCreation() {
 		return dateCreation;
+	}
+	
+	@Override
+	public void setDateCreation(Date date) throws Exception {
+		checkDate(date);
+		dateCreation = date;
 	}
 
 	@Override
@@ -140,10 +146,17 @@ public class Folder implements FileAndFolder {
 	}
 
 	@Override
-	public void setDateEdition(Date date) {
+	public void setDateEdition(Date date) throws Exception {
+		checkDate(date);
 		this.dateEdition = date;
-
 	}
+	
+	private void checkDate(Date date) throws Exception {
+		if(date == null)
+			throw new NullPointerException();
+		
+	}
+	
 	@Override
 	public String getName() {
 		return name;

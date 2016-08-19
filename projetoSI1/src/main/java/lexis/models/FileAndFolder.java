@@ -30,6 +30,16 @@ public interface FileAndFolder {
 	 * @return Date - a data de criação do objeto.
 	 */
 	public Date getDateCreation();
+	
+	
+	/**
+	 * Estabelece uma data de criacao. Esse metodo so 
+	 * pode ser usado uma vez para cada pasta ou arquivo.
+	 * @param date Data da criacao
+	 * @throws Exception Lanca excecao caso a data nao tenha 
+	 * sido inicializada.
+	 */
+	public void setDateCreation(Date date) throws Exception;
 
 	/**
 	 * @return Date - a data de ediçao do objeto.
@@ -41,8 +51,10 @@ public interface FileAndFolder {
 	 * 
 	 * @param date
 	 *            Date - nova data.
+	 * @throws Exception Lanca NullPointerException caso date 
+	 * nao tenha sido inicializada.
 	 */
-	public void setDateEdition(Date date);
+	public void setDateEdition(Date date) throws Exception;
 	
 	
 }

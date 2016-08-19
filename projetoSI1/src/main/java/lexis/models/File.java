@@ -29,13 +29,18 @@ public class File implements FileAndFolder {
 	 * @param name Nome do arquivo.
 	 * @param parent Folder no qual o arquivo esta inserido.
 	 */
-	public File(String name) {
+	public File(String name) throws Exception {
 		checkName(name);
 
 		this.name = name;
 		this.data = EMPTY_DATA;
 		dateCreation = getCurrentDate();
 		dateEdition = getCurrentDate();
+	}
+	
+	public File() throws Exception {
+		this(null);
+		
 	}
 
 	/**
@@ -70,6 +75,12 @@ public class File implements FileAndFolder {
 	@Override
 	public Date getDateCreation() {
 		return dateCreation;
+	}
+	
+	@Override
+	public void setDateCreation(Date date) throws Exception {
+		checkDate(date);
+		dateCreation = date;
 	}
 
 	@Override
@@ -107,13 +118,23 @@ public class File implements FileAndFolder {
 				+ "\n";
 	}
 
-	private void checkName(String name) throws RuntimeException {
-		if (name == null)
-			throw new NullPointerException();
+	private void checkName(String name) throws Exception {
+//		if (name == null)
+//			throw new NullPointerException();
 
 		if (name.equals("")) {
 			// TODO throw new InvalidNameException();
 		}
 
 	}
+	
+	private void checkDate(Date date) throws Exception {
+		if(date == null)
+			throw new NullPointerException();
+		
+//		if(date ja passou)
+//			throw new InvalidDateException();
+	}
+	
+	
 }
