@@ -51,13 +51,13 @@ public class UserLoginService {
 
 	private void setLoginIfRegistered(User user, UserRegisterService userRegisterService) {
 		// se o login for o email
-		if (user.getLogin().contains("@")) {
+		if (user.getUsername().contains("@")) {
 			userRegisterService.checkEmailIsRegistered(user);
-			this.userTemp = userService.getUserByEmail(user.getLogin());
+			this.userTemp = userService.getUserByEmail(user.getUsername());
 			// se nao for
 		} else {
 			userRegisterService.checkLoginIsRegistered(user);
-			this.userTemp = userService.getUserByLogin(user.getLogin());
+			this.userTemp = userService.getUserByLogin(user.getUsername());
 		}
 	}
 

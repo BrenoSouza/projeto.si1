@@ -31,7 +31,7 @@ public class UserTest {
 	public void testConstructor() throws Exception {
 		user1 = new User("rafael", "Klynger", "rafael.klynger@gmail.com");
 		
-		Assert.assertEquals("rafael", user1.getLogin());
+		Assert.assertEquals("rafael", user1.getUsername());
 		Assert.assertEquals("Klynger", user1.getPassword());
 		Assert.assertEquals("rafael.klynger@gmail.com", user1.getEmail());
 	}

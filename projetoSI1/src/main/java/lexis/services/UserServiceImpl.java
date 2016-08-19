@@ -101,7 +101,7 @@ public class UserServiceImpl implements UserService {
 		Iterator<User> interator = userRepository.findAll().iterator();
 		while (interator.hasNext()) {
 			User user = interator.next();
-			if (user.getLogin().equals(login)) {
+			if (user.getUsername().equals(login)) {
 				return true;
 			}
 		}

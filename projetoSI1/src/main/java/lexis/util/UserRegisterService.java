@@ -38,7 +38,7 @@ public class UserRegisterService {
 
 	// verifica se o login esta em uso
 	private void checksLoginIsUsed(User user) throws LoginIsUsedException {
-		if (userService.existsByLogin(user.getLogin())) {
+		if (userService.existsByLogin(user.getUsername())) {
 			throw new LoginIsUsedException("login ja em uso");
 		}
 	}
@@ -53,14 +53,14 @@ public class UserRegisterService {
 	// verifica se o login é vazio
 
 	public void checkLoginIsEmpty(User user) throws LoginEmptyException {
-		if (user.getLogin().isEmpty()) {
+		if (user.getUsername().isEmpty()) {
 			throw new LoginEmptyException("Login não pode ser vazio");
 		}
 	}
 
 	// verifica se o email esta cadastrado
 	public void checkEmailIsRegistered(User user) throws EmailNotRegisteredException {
-		this.userTemp = userService.getUserByEmail(user.getLogin());
+		this.userTemp = userService.getUserByEmail(user.getUsername());
 		if (userTemp == null) {
 			throw new EmailNotRegisteredException("email nao cadastrado");
 		}
@@ -68,7 +68,7 @@ public class UserRegisterService {
 
 	// verifica se o login esta cadastrado
 	public void checkLoginIsRegistered(User user) throws LoginNotRegisteredException {
-		userTemp = userService.getUserByLogin(user.getLogin());
+		userTemp = userService.getUserByLogin(user.getUsername());
 		if (userTemp == null) {
 			throw new LoginNotRegisteredException("usuario nao cadastrado");
 		}
