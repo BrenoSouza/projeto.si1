@@ -2,7 +2,13 @@ package lexis.models;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 
+import java.util.Collection;
+
 import javax.persistence.*;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javassist.expr.Instanceof;
 
@@ -14,7 +20,7 @@ import javassist.expr.Instanceof;
  *
  */
 @Entity
-public class User {
+public class User implements UserDetails{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
@@ -31,8 +37,10 @@ public class User {
 	private String login;
 	private String password;
 	private String email;
+	//private BCryptPasswordEncoder crypt = new BCryptPasswordEncoder();
 	@Embedded
 	private static Folder ROOT = new Folder("root");
+	
 	
 	public User() {
 		login = null;
@@ -42,9 +50,10 @@ public class User {
 		checkLogin(login);
 		checkPassword(password);
 		checkEmail(email);
+		BCryptPasswordEncoder crypt = new BCryptPasswordEncoder();
 		
 		this.login = login.toLowerCase();
-		this.password = password;
+		this.password = crypt.encode(password);
 		this.email = email.toLowerCase();
 		
 		ROOT.addFolder(login.toLowerCase());
@@ -62,7 +71,7 @@ public class User {
 	 * @return - Retorna a pasta do usuario.
 	 */
 	public Folder getRoot() {
-		return ROOT.getFolder(getLogin());
+		return ROOT.getFolder(getUsername());
 	}
 
 	/**
@@ -84,12 +93,6 @@ public class User {
 		this.id = id;
 	}
 
-	/**
-	 * @return Retorna o login do usuario.
-	 */
-	public String getLogin() {
-		return login;
-	}
 	
 	public void setLogin(String login) throws Exception {
 		if(this.login == null) {
@@ -101,12 +104,7 @@ public class User {
 		
 	}
 
-	/**
-	 * @return Retorna a senha do usuario.
-	 */
-	public String getPassword() {
-		return password;
-	}
+
 
 	/**
 	 * Set uma nova senha para o usuario.
@@ -115,9 +113,9 @@ public class User {
 	 *            String - nova senha.
 	 */
 	public void setPassword(String password) throws Exception {
-		
 		checkPassword(password);
-		this.password = password;
+		BCryptPasswordEncoder crypt = new BCryptPasswordEncoder();
+		this.password = crypt.encode(password);
 	}
 	
 	/**
@@ -162,12 +160,12 @@ public class User {
 			
 		User otherUser = (User) obj;
 			
-		return this.getLogin().equals(otherUser.getLogin());
+		return this.getUsername().equals(otherUser.getUsername());
 	}
 	
 	@Override
 	public String toString() {
-		return "Id: " + getId() + "\nLogin: " + getLogin() + "\nEmail: " + getEmail() + "\nPassword: " + getPassword() + "\n";
+		return "Id: " + getId() + "\nLogin: " + getUsername() + "\nEmail: " + getEmail() + "\nPassword: " + getPassword() + "\n";
 	}
 	
 
@@ -197,6 +195,47 @@ public class User {
 			//throw new InvalidLoginException();
 		}
 			
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		
+		return null;
+	}
+	/**
+	 * @return Retorna a senha do usuario.
+	 */
+	@Override
+	public String getPassword() {
+		return password;
+	}
+
+	/**
+	 * @return Retorna o login do usuario.
+	 */
+	@Override
+	public String getUsername() {
+		return login;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true;
 	}
 	
 }
