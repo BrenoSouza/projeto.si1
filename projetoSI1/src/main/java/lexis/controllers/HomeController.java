@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import lexis.models.File;
 import lexis.models.FileAndFolder;
@@ -54,37 +55,49 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "explorer/{folderName}", method = RequestMethod.GET)
-	public Folder getFolder(@PathVariable String folderName) {
+	public Folder viewFolder(@PathVariable String folderName) {
 		Folder folderTemp = currentFolder().getFolder(folderName);
 		return folderTemp;
 	}
-
-	@RequestMapping(value = "newFolder", method = RequestMethod.POST)
-	@ResponseBody
-	public void newFolder(@RequestBody String NameFolder) {
-		currentFolder.addFolder(NameFolder);
+	
+	@RequestMapping(value = "viewFile/{fileName}", method = RequestMethod.GET)
+	public File viewFile(@PathVariable String fileName) {
+		File fileTemp = currentFolder.getFile(fileName);
+		return EditorController.fileEditor(currentFolder,fileTemp);
 	}
 
-	@RequestMapping(value = "newFile", method = RequestMethod.POST)
-	@ResponseBody
-	public void newFile(@RequestBody File file) throws Exception {
-		System.out.println("teste file");
-		//currentFolder.addFile(file);
+	@RequestMapping(value = "newFolder/{folderName}", method = RequestMethod.GET)
+	public void newFolder(@PathVariable String folderName) {
+		currentFolder.addFolder(folderName);
 	}
 
-	@RequestMapping("view")
-	public void view() {
+	@RequestMapping(value = "newFile/{fileName}", method = RequestMethod.GET)
+	public void newFile(@PathVariable String fileName) throws Exception {
+		currentFolder.getDirectory().add(new File(fileName))
+;	}
 
+	@RequestMapping(value = "renameFolder/{oldName}/{newName}",method = RequestMethod.GET)
+	public String renameFolder(@PathVariable String oldName,@PathVariable String newName) {
+		currentFolder.getFolder(oldName).setName(newName);
+		return "pasta renomeada com sucesso, antigo nome: "+ oldName +" novo nome:" + newName;
+	}
+	
+	@RequestMapping(value = "renameFile/{oldName}/{newName}",method = RequestMethod.GET)
+	public String renameFile(@PathVariable String oldName,@PathVariable String newName) {
+		currentFolder.getFile(oldName).setName(newName);
+		return "arquivo renomeado com sucesso, antigo nome: "+ oldName +" novo nome:" + newName;
 	}
 
-	@RequestMapping("edit")
-	public void edit() {
-
+	@RequestMapping(value = "deleteFolder/{folderName}", method = RequestMethod.GET)
+	public String deleteFolder(@PathVariable String folderName) {
+		currentFolder.getDirectory().remove(currentFolder.getFolder(folderName));
+		return "pasta: "+ folderName +" deletada com sucesso";
 	}
-
-	@RequestMapping("delete")
-	public void delete() {
-
+	
+	@RequestMapping(value = "deleteFile/{fileName}", method = RequestMethod.GET)
+	public String deleteFile(@PathVariable String fileName) {
+		currentFolder.getDirectory().remove(currentFolder.getFile(fileName));
+		return "arquivo: "+ fileName +" deletado com sucesso";
 	}
 	
 	private User userLogged(){
