@@ -57,6 +57,13 @@ public interface FileAndFolder {
 	public void setDateEdition(LocalDateTime date) throws Exception;
 	
 	
+	public Permission getPermission();
+	
+	public void setPermission(Permission permission);
+		
+	
+	
+	
 	
 	
 }

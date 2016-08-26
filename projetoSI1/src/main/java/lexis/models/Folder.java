@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 
+
 /**
  * Classe responsavel pelo objeto do tipo pasta.
  * 
@@ -14,15 +15,18 @@ import javax.persistence.ElementCollection;
  *
  */
 public class Folder implements FileAndFolder {
+	
+	public static final String UNAMED_FOLDER = "semTitulo";
 
 	@Column // (scale = 3)
 	private String name;
 	private LocalDateTime dateCreation;
 	private LocalDateTime dateEdition;
+	private Permission permission;
 	
 	@ElementCollection
-	private List<Folder> folderDirectory = new ArrayList<Folder>();
-	private List<File> fileDirectory = new ArrayList<File>();
+	private List<Folder> folderDirectory;
+	private List<File> fileDirectory;
 
 	/**
 	 * Esse construtor exige apenas o nome da pasta, a data de criacao e
@@ -31,28 +35,53 @@ public class Folder implements FileAndFolder {
 	 * @param name
 	 *            String - nome da pasta.
 	 */
-	public Folder(String name) {
-		checkName(name);
+	public Folder(String name, Permission permission) {
+		
+		folderDirectory = new ArrayList<Folder>();
+	
+		if(!Util.isAValidName(name))
+			name = getANewName(UNAMED_FOLDER);
+		
+		if(permission == null)
+			permission = Permission.PRIVATE;
 
 		this.name = name;
 		dateCreation = LocalDateTime.now();
 		dateEdition = LocalDateTime.now();
+		this.permission = permission;
+		fileDirectory = new ArrayList<File>();
 
 	}
-
+	
+	
 	/**
-	 * Metodo que adiciona uma nova pasta.
+	 * Metodo que adiciona uma nova pasta, caso 
+	 * o nome da pasta seja invalido a pasta tera 
+	 * um nome default. Caso haja uma pasta com o 
+	 * mesmo nome passado no parametro sera criado um 
+	 * novo nome para ela tambem a partir do nome passado 
+	 * no parametro.
 	 * 
 	 * @param name
 	 *            String - nome da pasta.
 	 */
-	public void addFolder(String name) {
-		Folder temp = new Folder(name);
-		if (!containsFolder(name)) {
-			// throw new DuplicatedNameException();
-		}
+	public void addFolder(String name, Permission permission) {
+		
+		if(permission == null)
+			permission = Permission.PRIVATE;
+		
+		if(!Util.isAValidName(name))
+			name = UNAMED_FOLDER;
+		
+		Folder temp;
+		if(containsFolder(name)) 
+			temp = new Folder(getANewName(name), permission);
+		 else
+			temp = new Folder(name, permission);
+
 		this.folderDirectory.add(temp);
 	}
+	
 
 	/**
 	 * Metodo que remove uma pasta.
@@ -76,28 +105,108 @@ public class Folder implements FileAndFolder {
 	 */
 	public Folder getFolder(String name) {
 
-		Folder folderTemp = null;
-		for (int i = 0; i < folderDirectory.size(); i++) {
-			if (folderDirectory.get(i).getName().equals(name)) {
-				folderTemp = folderDirectory.get(i);
-				break;
-			}
+		Folder folderTemp = new Folder(name, permission);
+		for (Folder folder : folderDirectory) {
+			if (folder.equals(folderTemp)) 
+				return folder;
+			
 		}
+		return null;
+	}
+	
+	/**
+	 * Procura por uma pasta com o nome passado no 
+	 * parametro, caso a pasta nao exista, cria uma 
+	 * nova pasta vazia e privada com o nome passado. 
+	 * @param name Nome da pasta. 
+	 * @return retorna a pasta encontrada ou uma pasta vazia.
+	 */
+	public Folder getOrCreateFolder(String name) {
+		
+		Folder folderTemp = new Folder(name, Permission.PRIVATE);
+		for(Folder folder : folderDirectory) {
+			if(folder.equals(folderTemp))
+				return folder;
+		}
+		
+		folderDirectory.add(folderTemp);
+		
 		return folderTemp;
 	}
-
-	public File getFile(String name) {
-
-		File fileTemp = null;
-		for (int i = 0; i < folderDirectory.size(); i++) {
-			if (fileDirectory.get(i).getName().equals(name)) {
-				fileTemp = fileDirectory.get(i);
-				break;
-			}
-
+	
+	
+	/**
+	 * Metodo responsavel por recuperar um arquivo, 
+	 * caso o arquivo nao exista ele criara um novo 
+	 * arquivo vazio com permissao privada.
+	 * 
+	 * @param name Nome do arquivo.
+	 * @param type Tipo do arquivo.
+	 * @return Retorna o arquivo procurado caso ele exista 
+	 * ou um arquivo vazio caso contrario.
+	 * @throws Exception NullPointerException caso o nome 
+	 * ou o tipo do arquivo sejam null.
+	 */
+	public File getOrCreateFile(String name, Type type) {
+		
+		File fileTemp = new File(name, type, Permission.PRIVATE);
+		for (File file : fileDirectory) {
+			if (file.equals(fileTemp)) 
+				return file;
 		}
+		
+		fileDirectory.add(fileTemp);
 		return fileTemp;
 	}
+	
+	/**
+	 * Procura pelo arquivo dentro da pasta que possua 
+	 * o mesmo nome e o mesmo tipo.
+	 * @param name Nome do arquivo.
+	 * @param type Tipo do arquivo.
+	 * @return Retorna o arquivo procurado caso ele exista 
+	 * e null caso contrario
+	 * @throws Exception
+	 */
+	public File getFile(String name, Type type) {
+		
+		File fileTemp = new File(name, type, Permission.PRIVATE);
+		for (File file : fileDirectory) {
+			if (file.equals(fileTemp)) 
+				return file;
+			
+
+		}
+		return null;
+	}
+	
+	
+	/**
+	 * Procura por arquivos apenas pelo nome deles.
+	 * 
+	 * @param name Nome a ser procurado.
+	 * @return Retorna uma lista de arquivos contendo 
+	 * todos os arquivos que possuem aquele nome. O 
+	 * tamanho maximo da lista e a quantidade de tipos de 
+	 * arquivos. Caso o nome do arquivo seja null o metodo 
+	 * retorna uma lista vazia.
+	 */
+	public List<File> getFilesOnlyByName(String name) throws Exception {
+		
+		List<File> files = new ArrayList<File>();
+		
+		if(name == null)
+			return files;
+		
+		for (File file : fileDirectory) {
+			if(file.getName().equals(name))
+				files.add(file);
+		}
+		
+		return files;
+			
+	}
+	
 
 	/**
 	 * Recupera o diretorio de pastas
@@ -117,6 +226,16 @@ public class Folder implements FileAndFolder {
 		return fileDirectory;
 	}
 
+	@Override
+	public Permission getPermission() {
+		return permission;
+	}
+	
+	@Override
+	public void setPermission(Permission permission) {
+		this.permission = permission;	
+	}
+	
 	/**
 	 * Estabelece um novo diretorio de pastas.
 	 * 
@@ -182,6 +301,10 @@ public class Folder implements FileAndFolder {
 
 	@Override
 	public void setName(String name) {
+		
+		if(!Util.isAValidName(name))
+			name = getANewName(UNAMED_FOLDER);
+		
 		this.name = name;
 	}
 
@@ -202,26 +325,18 @@ public class Folder implements FileAndFolder {
 				+ getFolderDirectory().toString() + "\nFiles: " + getFileDirectory() + "\n";
 	}
 
-	/*
-	 * Talvez seja interessante criar uma nova classe para esses metodos de
-	 * verificacao.
-	 */
 
-	private void checkName(String name) {
-		if (name == null)
-			throw new NullPointerException();
-
-		if (name.equals("")) {
-			// TODO throw new InvalidNameException();
+	public String getANewName(String name) {
+		Integer countSameNameFolders = 0;
+		String auxName = name.substring(0);
+		
+		while(containsFolder(auxName)){
+			countSameNameFolders++;
+			auxName = name.substring(0) + " (" + countSameNameFolders.toString() + ")";
+			
 		}
-
-//		 if(containsFolder(name)) {
-//		 throw new DuplicatedNameException();
-//		 }
-
+		
+		return auxName;
 	}
-
-
-
-
+	
 }
