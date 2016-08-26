@@ -19,10 +19,10 @@ public class Folder implements FileAndFolder {
 	private String name;
 	private LocalDateTime dateCreation;
 	private LocalDateTime dateEdition;
-	private final Types type;
 	
 	@ElementCollection
-	private List<FileAndFolder> directory = new ArrayList<FileAndFolder>();
+	private List<Folder> folderDirectory = new ArrayList<Folder>();
+	private List<File> fileDirectory = new ArrayList<File>();
 
 	/**
 	 * Esse construtor exige apenas o nome da pasta, a data de criacao e
@@ -37,7 +37,7 @@ public class Folder implements FileAndFolder {
 		this.name = name;
 		dateCreation = LocalDateTime.now();
 		dateEdition = LocalDateTime.now();
-		type = Types.FOLDER;
+
 	}
 
 	/**
@@ -46,12 +46,12 @@ public class Folder implements FileAndFolder {
 	 * @param name
 	 *            String - nome da pasta.
 	 */
-	public void addFolder(String name) throws Exception {
+	public void addFolder(String name) {
 		Folder temp = new Folder(name);
 		if (!containsFolder(name)) {
 			// throw new DuplicatedNameException();
 		}
-		this.directory.add(temp);
+		this.folderDirectory.add(temp);
 	}
 
 	/**
@@ -63,7 +63,7 @@ public class Folder implements FileAndFolder {
 	 *         encontrada.
 	 */
 	public boolean removeFolder(Folder folder) {
-		return directory.remove(folder);
+		return folderDirectory.remove(folder);
 	}
 
 	/**
@@ -77,9 +77,9 @@ public class Folder implements FileAndFolder {
 	public Folder getFolder(String name) {
 
 		Folder folderTemp = null;
-		for (int i = 0; i < directory.size(); i++) {
-			if (equals(directory.get(i), name, Folder.class)) {
-				folderTemp = (Folder) directory.get(i);
+		for (int i = 0; i < folderDirectory.size(); i++) {
+			if (folderDirectory.get(i).getName().equals(name)) {
+				folderTemp = folderDirectory.get(i);
 				break;
 			}
 		}
@@ -89,11 +89,10 @@ public class Folder implements FileAndFolder {
 	public File getFile(String name) {
 
 		File fileTemp = null;
-		for (int i = 0; i < directory.size(); i++) {
-			if (equals(directory.get(i), name, File.class)) {
-				fileTemp = (File) directory.get(i);
+		for (int i = 0; i < folderDirectory.size(); i++) {
+			if (fileDirectory.get(i).getName().equals(name)) {
+				fileTemp = fileDirectory.get(i);
 				break;
-				// TODO
 			}
 
 		}
@@ -101,23 +100,39 @@ public class Folder implements FileAndFolder {
 	}
 
 	/**
-	 * Metodo que retorna todo o diretorio local.
+	 * Recupera o diretorio de pastas
 	 * 
-	 * @return ArrayList<FileAndFolder> - uma lista com todos os objetos dentro
-	 *         da pasta.
+	 * @return List<Folder>  
 	 */
-	public List<FileAndFolder> getDirectory() {
-		return directory;
+	public List<Folder> getFolderDirectory() {
+		return folderDirectory;
+	}
+	
+	
+	/**
+	 * Recupera o diretorio de arquivos.
+	 * @return List<File> 
+	 */
+	public List<File> getFileDirectory() {
+		return fileDirectory;
 	}
 
 	/**
-	 * Metodo que modifica o diretorio da pasta.
+	 * Estabelece um novo diretorio de pastas.
 	 * 
 	 * @param directory
 	 *            ArrayList<FileAndFolder> - novo diretorio.
 	 */
-	public void setDiretorio(ArrayList<FileAndFolder> directory) {
-		this.directory = directory;
+	public void setFolderDirectory(List<Folder> directory) {
+		this.folderDirectory = directory;
+	}
+	
+	/**
+	 * Estabelece um novo diretorio de arquivos.
+	 * @param directory Novo diretorio.
+	 */
+	public void setFileDirectory(List<File> directory) {
+		this.fileDirectory = directory;
 	}
 
 	/**
@@ -163,6 +178,7 @@ public class Folder implements FileAndFolder {
 	public String getName() {
 		return name;
 	}
+	
 
 	@Override
 	public void setName(String name) {
@@ -182,8 +198,8 @@ public class Folder implements FileAndFolder {
 
 	@Override
 	public String toString() {
-		return "Name: " + getName() + "\nDate of creation: " + getDateCreation() + "\nDirectory: "
-				+ getDirectory().toString() + "\n";
+		return "Name: " + getName() + "\nDate of creation: " + getDateCreation() + "\nFolders: "
+				+ getFolderDirectory().toString() + "\nFiles: " + getFileDirectory() + "\n";
 	}
 
 	/*
@@ -205,14 +221,7 @@ public class Folder implements FileAndFolder {
 
 	}
 
-	private boolean equals(FileAndFolder fileOrFolder, String fileName, Class<?> classToCompare) {
-		return fileOrFolder.getName().equals(fileName) && fileOrFolder.getClass().equals(classToCompare);
 
-	}
 
-	@Override
-	public Types getType() {
-		return type;
-	}
 
 }

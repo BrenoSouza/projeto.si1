@@ -1,6 +1,5 @@
 package lexis.models;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
 
 import java.util.Collection;
 
@@ -10,7 +9,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import javassist.expr.Instanceof;
 
 /**
  * Classe responsavel pelo objeto usuario.
@@ -20,7 +18,7 @@ import javassist.expr.Instanceof;
  *
  */
 @Entity
-public class User implements UserDetails{
+public class User implements UserDetails {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
