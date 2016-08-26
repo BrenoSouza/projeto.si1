@@ -23,32 +23,30 @@ public class Folder implements FileAndFolder {
 	private List<FileAndFolder> directory = new ArrayList<FileAndFolder>();
 
 	/**
-	 * Esse construtor exige apenas o nome da 
-	 * pasta, a data de criacao e estabelecida 
-	 * na criacao do objeto.
+	 * Esse construtor exige apenas o nome da pasta, a data de criacao e
+	 * estabelecida na criacao do objeto.
 	 * 
 	 * @param name
 	 *            String - nome da pasta.
 	 */
-	public Folder(String name) throws RuntimeException {
+	public Folder(String name) throws Exception {
 		checkName(name);
-		
-		
+
 		this.name = name;
 		dateCreation = LocalDateTime.now();
 		dateEdition = LocalDateTime.now();
 	}
-	
+
 	/**
 	 * Metodo que adiciona uma nova pasta.
 	 * 
 	 * @param name
 	 *            String - nome da pasta.
 	 */
-	public void addFolder(String name) throws RuntimeException {
+	public void addFolder(String name) throws Exception {
 		Folder temp = new Folder(name);
 		if (!containsFolder(name)) {
-			//throw new DuplicatedNameException();
+			// throw new DuplicatedNameException();
 		}
 		this.directory.add(temp);
 	}
@@ -56,43 +54,45 @@ public class Folder implements FileAndFolder {
 	/**
 	 * Metodo que remove uma pasta.
 	 * 
-	 * @param folder Nome da pasta a ser removida
-	 * @return true caso a pasta seja removida e false 
-	 * caso a pasta nao seja encontrada.
+	 * @param folder
+	 *            Nome da pasta a ser removida
+	 * @return true caso a pasta seja removida e false caso a pasta nao seja
+	 *         encontrada.
 	 */
 	public boolean removeFolder(Folder folder) {
 		return directory.remove(folder);
 	}
 
 	/**
-	 * Metodo que retorna a pasta solicitada. Caso 
-	 * a pasta nao exista o metodo retorna null.
+	 * Metodo que retorna a pasta solicitada. Caso a pasta nao exista o metodo
+	 * retorna null.
 	 * 
 	 * @param name
 	 *            String - nome da pasta.
 	 * @return Folder - a pasta solicitada.
 	 */
 	public Folder getFolder(String name) {
-		
+
 		Folder folderTemp = null;
 		for (int i = 0; i < directory.size(); i++) {
-			if (directory.get(i).getName().equals(name)) {
+			if (equals(directory.get(i), name, Folder.class)) {
 				folderTemp = (Folder) directory.get(i);
 				break;
 			}
 		}
 		return folderTemp;
 	}
-	
+
 	public File getFile(String name) {
-		
+
 		File fileTemp = null;
-		for(int i = 0; i < directory.size(); i++) {
-			if(directory.get(i).getName().equals(name)) {
+		for (int i = 0; i < directory.size(); i++) {
+			if (equals(directory.get(i), name, File.class)) {
 				fileTemp = (File) directory.get(i);
 				break;
+				// TODO
 			}
-			
+
 		}
 		return fileTemp;
 	}
@@ -116,23 +116,23 @@ public class Folder implements FileAndFolder {
 	public void setDiretorio(ArrayList<FileAndFolder> directory) {
 		this.directory = directory;
 	}
-	
+
 	/**
-	 * Verifica se o arquivo ou pasta esta no diretorio 
-	 * atual.
-	 * @param name Nome do arquivo.
-	 * @return Retorna True caso o arquivo/pasta esteja 
-	 * dentro do diretorio.
+	 * Verifica se o arquivo ou pasta esta no diretorio atual.
+	 * 
+	 * @param name
+	 *            Nome do arquivo.
+	 * @return Retorna True caso o arquivo/pasta esteja dentro do diretorio.
 	 */
 	public boolean containsFolder(String name) {
 		return getFolder(name) != null;
 	}
-	
+
 	@Override
 	public LocalDateTime getDateCreation() {
 		return dateCreation;
 	}
-	
+
 	@Override
 	public void setDateCreation(LocalDateTime date) throws Exception {
 		checkDate(date);
@@ -149,13 +149,13 @@ public class Folder implements FileAndFolder {
 		checkDate(date);
 		this.dateEdition = date;
 	}
-	
+
 	private void checkDate(LocalDateTime date) throws Exception {
-		if(date == null)
+		if (date == null)
 			throw new NullPointerException();
-		
+
 	}
-	
+
 	@Override
 	public String getName() {
 		return name;
@@ -165,7 +165,6 @@ public class Folder implements FileAndFolder {
 	public void setName(String name) {
 		this.name = name;
 	}
-
 
 	@Override
 	public boolean equals(Object objeto) {
@@ -177,7 +176,7 @@ public class Folder implements FileAndFolder {
 		}
 		return false;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Name: " + getName() + "\nDate of creation: " + getDateCreation() + "\nDirectory: "
@@ -185,23 +184,27 @@ public class Folder implements FileAndFolder {
 	}
 
 	/*
-	 * Talvez seja interessante criar uma nova classe para esses metodos 
-	 * de verificacao.
+	 * Talvez seja interessante criar uma nova classe para esses metodos de
+	 * verificacao.
 	 */
-	
-	private void checkName(String name) throws RuntimeException {
-		if(name == null)
+
+	private void checkName(String name) throws Exception {
+		if (name == null)
 			throw new NullPointerException();
-		
-		if(name.equals("")) {
-			//TODO throw new InvalidNameException();
+
+		if (name.equals("")) {
+			// TODO throw new InvalidNameException();
 		}
-		
-//		if(!parent.contains(name)) {
-//			//TODO throw new DuplicatedNameException();
-//		}
-		
+
+//		 if(containsFolder(name)) {
+//		 throw new DuplicatedNameException();
+//		 }
+
 	}
-	
+
+	private boolean equals(FileAndFolder fileOrFolder, String fileName, Class<?> classToCompare) {
+		return fileOrFolder.getName().equals(fileName) && fileOrFolder.getClass().equals(classToCompare);
+
+	}
 
 }
