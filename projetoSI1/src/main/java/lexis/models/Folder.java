@@ -29,7 +29,7 @@ public class Folder implements FileAndFolder {
 	 * @param name
 	 *            String - nome da pasta.
 	 */
-	public Folder(String name) throws Exception {
+	public Folder(String name) {
 		checkName(name);
 
 		this.name = name;
@@ -188,7 +188,7 @@ public class Folder implements FileAndFolder {
 	 * verificacao.
 	 */
 
-	private void checkName(String name) throws Exception {
+	private void checkName(String name) {
 		if (name == null)
 			throw new NullPointerException();
 

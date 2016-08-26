@@ -22,6 +22,7 @@ public class File implements FileAndFolder {
 	private LocalDateTime dateCreation;
 	private LocalDateTime dateEdition;
 	private String data;
+	private TypesOfFiles type;
 
 	/**
 	 * Contrutor que recebe o nome como obrigatorio datas criadas
@@ -30,18 +31,28 @@ public class File implements FileAndFolder {
 	 * @param name Nome do arquivo.
 	 * @param parent Folder no qual o arquivo esta inserido.
 	 */
-	public File(String name) throws Exception {
+	public File(String name, TypesOfFiles type) throws Exception {
 		checkName(name);
 
 		this.name = name;
 		this.data = EMPTY_DATA;
+		this.type = type;
 		dateCreation = LocalDateTime.now();
 		dateEdition = LocalDateTime.now();
 	}
 	
 	public File() throws Exception {
-		this(null);
+		this(null, TypesOfFiles.TXT);
 		
+	}
+	
+	public TypesOfFiles getType() {
+		return type;
+	}
+	
+	
+	public void setType(TypesOfFiles type) {
+		this.type = type;
 	}
 
 	/**
