@@ -19,6 +19,8 @@ public class Folder implements FileAndFolder {
 	private String name;
 	private LocalDateTime dateCreation;
 	private LocalDateTime dateEdition;
+	private final Types type;
+	
 	@ElementCollection
 	private List<FileAndFolder> directory = new ArrayList<FileAndFolder>();
 
@@ -35,6 +37,7 @@ public class Folder implements FileAndFolder {
 		this.name = name;
 		dateCreation = LocalDateTime.now();
 		dateEdition = LocalDateTime.now();
+		type = Types.FOLDER;
 	}
 
 	/**
@@ -205,6 +208,11 @@ public class Folder implements FileAndFolder {
 	private boolean equals(FileAndFolder fileOrFolder, String fileName, Class<?> classToCompare) {
 		return fileOrFolder.getName().equals(fileName) && fileOrFolder.getClass().equals(classToCompare);
 
+	}
+
+	@Override
+	public Types getType() {
+		return type;
 	}
 
 }

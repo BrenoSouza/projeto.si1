@@ -58,4 +58,8 @@ public interface FileAndFolder {
 	public void setDateEdition(LocalDateTime date) throws Exception;
 	
 	
+	
+	public Types getType();
+	
+	
 }
