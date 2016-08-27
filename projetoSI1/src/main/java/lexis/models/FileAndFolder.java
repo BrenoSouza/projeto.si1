@@ -1,7 +1,6 @@
 package lexis.models;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import javax.persistence.Embeddable;
 
 /**
@@ -56,6 +55,15 @@ public interface FileAndFolder {
 	 * nao tenha sido inicializada.
 	 */
 	public void setDateEdition(LocalDateTime date) throws Exception;
+	
+	
+	public Permission getPermission();
+	
+	public void setPermission(Permission permission);
+		
+	
+	
+	
 	
 	
 }

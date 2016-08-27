@@ -1,6 +1,5 @@
 package lexis.models;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
 
 import java.util.Collection;
 
@@ -10,7 +9,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import javassist.expr.Instanceof;
 
 /**
  * Classe responsavel pelo objeto usuario.
@@ -20,7 +18,11 @@ import javassist.expr.Instanceof;
  *
  */
 @Entity
-public class User implements UserDetails{
+public class User implements UserDetails {
+
+	private static final long serialVersionUID = 1L;
+
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
@@ -38,8 +40,6 @@ public class User implements UserDetails{
 	private String password;
 	private String email;
 	//private BCryptPasswordEncoder crypt = new BCryptPasswordEncoder();
-	@Embedded
-	private static Folder ROOT = new Folder("root");
 	
 	
 	public User() {
@@ -56,7 +56,6 @@ public class User implements UserDetails{
 		this.password = crypt.encode(password);
 		this.email = email.toLowerCase();
 		
-		ROOT.addFolder(login.toLowerCase());
 	}
 
 	public Integer getVersion() {
@@ -65,13 +64,6 @@ public class User implements UserDetails{
 
 	public void setVersion(Integer version) {
 		this.version = version;
-	}
-
-	/**
-	 * @return - Retorna a pasta do usuario.
-	 */
-	public Folder getRoot() {
-		return ROOT.getFolder(getUsername());
 	}
 
 	/**
@@ -99,7 +91,6 @@ public class User implements UserDetails{
 			checkLogin(login);
 			this.login = login.toLowerCase();
 			
-			ROOT.addFolder(login.toLowerCase());
 		}
 		
 	}

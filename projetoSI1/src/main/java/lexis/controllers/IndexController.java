@@ -30,7 +30,7 @@ public class IndexController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping("/login") // acessa o url "/"
+	@RequestMapping(value = {"/","login","index"}) // acessa o url "/"
 	public ModelAndView index(@AuthenticationPrincipal User user) {
 		ModelAndView index = new ModelAndView("/index");
 		if(user != null){
@@ -64,7 +64,7 @@ public class IndexController {
 	@RequestMapping(value = "userRegister", method = RequestMethod.POST) // produces = "application/json"
 	public ModelAndView userRegister(User userRegister, RedirectAttributes attributes) {
 		
-		ModelAndView login = new ModelAndView("redirect:/login");
+		ModelAndView login = new ModelAndView("redirect:/");
 		
 		// cria um objeto responsavel pelo cadastro do usuario
 		UserRegisterService userRegisterService = new UserRegisterService(userService);
@@ -102,11 +102,11 @@ public class IndexController {
 	 * @return Retona a home.html se nao houver erros,caso contrario retorna a
 	 *         index.html com a mensagem de erro.
 	 */
-	@RequestMapping("/")//(value = "userlogin", method = RequestMethod.POST)
+	@RequestMapping("/home")//(value = "userlogin", method = RequestMethod.POST)
 	public ModelAndView userLogin(User userLogin, RedirectAttributes attributes) {
 		ModelAndView login = new ModelAndView();
-		User userTemp = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		login.addObject("user", userTemp);
+		
+		//login.addObject("user", userTemp);
 		login.setViewName("/home");
 		return login;
 		// cria um objeto resposavel pelo login do usuario

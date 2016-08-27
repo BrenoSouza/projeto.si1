@@ -5,6 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
+
+import lexis.models.DataBase;
+import lexis.models.Explorer;
+import lexis.models.Permission;
 import lexis.models.User;
 import lexis.repositories.UserRepository;
 
@@ -36,9 +40,9 @@ public class UserLoader implements ApplicationListener<ContextRefreshedEvent> {
 		User admin;
 		try {
 			admin = new User("admin", "admin", "admin@admin");
-			
-			admin.getRoot().addFolder("pasta1");
-			admin.getRoot().addFolder("pasta2");
+			Explorer explorer = DataBase.getInstance().addNewUser(admin);
+			explorer.addFolderInCurrentFolder("pasta1", Permission.PRIVATE);
+			explorer.addFolderInCurrentFolder("pasta2", Permission.PRIVATE);
 			userRepository.save(admin);
 			
 			log.info("Saved admin - id: " + admin.getId());
@@ -54,8 +58,9 @@ public class UserLoader implements ApplicationListener<ContextRefreshedEvent> {
 		User guest;
 		try {
 			guest = new User("guest", "guest", "guest@guest");
-			
-			guest.getRoot().addFolder("pastaguest");
+			Explorer explorer = DataBase.getInstance().addNewUser(guest);
+			explorer.addFolderInCurrentFolder("geustpasta1", Permission.PRIVATE);
+			explorer.addFolderInCurrentFolder("geustpasta2", Permission.PRIVATE);
 			userRepository.save(guest);
 
 			log.info("Saved guest - id:" + guest.getId());
