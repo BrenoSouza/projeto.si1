@@ -76,7 +76,7 @@ public class IndexController {
 			// caso nao haja erro registra o usuario
 			userRegisterService.RegisterUser(userRegister);
 
-			attributes.addFlashAttribute("mensagem", "cadastro efetuado com sucesso");
+			attributes.addFlashAttribute("mensagemsuccess", "cadastro efetuado com sucesso");
 			
 			// retorna para o metodo responsavel pelo login
 			return  register;
@@ -84,7 +84,7 @@ public class IndexController {
 			// se houver erros:
 		} catch (Exception e) {
 			// com as mensagens de erro
-			attributes.addFlashAttribute("mensagem", e.getMessage());
+			attributes.addFlashAttribute("mensagemerror", e.getMessage());
 
 			return register;
 		}

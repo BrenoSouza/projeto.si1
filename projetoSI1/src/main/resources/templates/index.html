@@ -42,7 +42,8 @@
 		</div>
 	</div>
 	
-	<div  size="20px"  align="center" class="alert alert-danger" th:text="${mensagem}" th:if="${not #strings.isEmpty(mensagem)}"></div>
+	<div  size="20px"  align="center" class="alert alert-danger" th:text="${mensagemerror}" th:if="${not #strings.isEmpty(mensagemerror)}"></div>
+	<div  size="20px"  align="center" class="alert alert-success" th:text="${mensagemsuccess}" th:if="${not #strings.isEmpty(mensagemsuccess)}"></div>
 	<div  align="center" class="alert alert-danger" th:if="${#bools.isTrue(param.error)}">erro de login</div>
 
 	<div class="row-fluid principal" >
