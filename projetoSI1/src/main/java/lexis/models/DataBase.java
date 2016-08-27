@@ -21,17 +21,16 @@ public class DataBase {
 	}
 	
 	
-	public boolean addNewUser(User user) {
+	public Explorer addNewUser(User user) {
 		
-		boolean result = true;
+		Explorer result = null;
 		
-		if(user == null) {
-			result = false;
+		if(user == null) 
+			result = null;
 		
-		} else if(data.containsKey(user.getUsername())) {
-			result = false;
+		result = data.get(user.getUsername());
 		
-		} else {
+		 if(result == null) {
 			
 			Explorer explorer = new Explorer(user);
 			data.put(explorer.getUser().getUsername(), explorer);
