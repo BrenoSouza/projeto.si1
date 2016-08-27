@@ -66,4 +66,10 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     	});
     }
 
+    $scope.backFolder = function() {
+    	$http.get("http://localhost:8080/home/explorer/back").success(function(data, status) {
+			loadingFolder();
+    	});
+    }
+
 });    
