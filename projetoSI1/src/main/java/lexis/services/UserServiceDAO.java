@@ -9,7 +9,7 @@ import lexis.models.User;
  *         Cabral, Raimundo Heitor, Rafael Klyger.
  *
  */
-public interface UserService {
+public interface UserServiceDAO {
 
 	/**
 	 * Metodo que lista todos os usuarios.

@@ -2,7 +2,7 @@ package lexis.util;
 
 import lexis.exceptions.AuthenticationErrorException;
 import lexis.models.User;
-import lexis.services.UserService;
+import lexis.services.UserServiceDAO;
 
 /**
  * Classe responsavel pelo serviço de login da aplicacao.
@@ -12,7 +12,7 @@ import lexis.services.UserService;
  *
  */
 public class UserLoginService {
-	private UserService userService;
+	private UserServiceDAO userService;
 	private User userTemp;
 
 	/**
@@ -21,7 +21,7 @@ public class UserLoginService {
 	 * @param userService
 	 *            UserService - objeto resposavel pelo servico do usuario.
 	 */
-	public UserLoginService(UserService userService) {
+	public UserLoginService(UserServiceDAO userService) {
 		this.userService = userService;
 	}
 

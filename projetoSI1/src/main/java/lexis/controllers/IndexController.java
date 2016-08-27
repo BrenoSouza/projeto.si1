@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lexis.models.User;
-import lexis.services.UserService;
+import lexis.services.UserServiceDAO;
 import lexis.util.UserLoginService;
 import lexis.util.UserRegisterService;
 
@@ -18,10 +18,10 @@ import lexis.util.UserRegisterService;
 public class IndexController {
 
 	// objeto responsavel por manipular User
-	private UserService userService;
+	private UserServiceDAO userService;
 
 	@Autowired
-	public void setUserService(UserService userService) {
+	public void setUserService(UserServiceDAO userService) {
 		this.userService = userService;
 	}
 
