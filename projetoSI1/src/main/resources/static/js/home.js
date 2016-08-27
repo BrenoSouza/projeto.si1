@@ -18,7 +18,7 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     loadingFolder();
 
 
-    $scope.adicionaPasta = function(nome) {
+    $scope.addFolder = function(nome) {
         var name = prompt("Nome da pasta:");
 
         if (name.length != 0) {
@@ -33,14 +33,14 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
 
 
     $scope.adicionaTxt = function() {
-        var name = window.prompt("Nome da arquivo:");
+        var nome = window.prompt("Nome da arquivo:");
 
-        if(name.length === 0){
+        if(nome.length === 0){
             alert("O arquivo nao pode ser criado, nome vazio!")
         } else {
 
-            $scope.getLocal().push({nome: name, tipo: ".txt", dataCreat: ((new Date()).toString()).substring(0, 24) , ultimaModif:"--", folder:"../static/images/.txt.png" });
-            delete $scope.nome;
+            $scope.getLocal().push({name: nome, tipo: ".txt", dataCreat: ((new Date()).toString()).substring(0, 24) , ultimaModif:"--", folder:"../static/images/.txt.png" });
+            delete $scope.name;
         }
     };
 
@@ -64,7 +64,7 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
             var lista = $scope.arquivos;
             for (var i = 0; $scope.local.length - 1 >= i; i++) {
                 for (var j = 0; $scope.arquivos.length - 1 >= j; j++) {
-                    if(lista[j].nome === $scope.local[i]) {
+                    if(lista[j].name === $scope.local[i]) {
                         lista = lista[j].lista;
                     }
                 }
@@ -74,7 +74,7 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     }
 
     $scope.changeFolder = function(nome) {
-        $scope.local.push(nome);
+        $scope.local.push(name);
     }
 
     $scope.initialFolder = function() {

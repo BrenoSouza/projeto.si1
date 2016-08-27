@@ -86,7 +86,7 @@
 
 				<td>
 					<input style="width:50px; height:50px; " id="new-file" type="image" src="../static/images/newFolder.png"
-							th:src="@{images/newFolder.png}" name="createFile" ng-click="adicionaPasta()"></input>
+							th:src="@{images/newFolder.png}" name="createFile" ng-click="addFolder()"></input>
 				</td>
 
 				<td>
@@ -116,7 +116,7 @@
 						</th>
 
 						<th><a href="#" style="color: white"
-							ng-click="sortBy('nome')"> Nome</a>
+							ng-click="sortBy('name')"> Nome</a>
 						</th>
 
 						<th>
@@ -138,7 +138,7 @@
 				</thead>
 
 				<tbody>
-					<tr	ng-repeat="arquivo in getLocal() | filter: {nome: searchFile} | orderBy:tipoOrdenacao:direction">
+					<tr	ng-repeat="arquivo in getLocal() | filter: {name: searchFile} | orderBy:tipoOrdenacao:direction">
 						
 						<td>
 							<a href="#">
