@@ -32,8 +32,8 @@ public class DataBase {
 		
 		 if(result == null) {
 			
-			Explorer explorer = new Explorer(user);
-			data.put(explorer.getUser().getUsername(), explorer);
+			Explorer explorer = new Explorer(user.getUsername());
+			data.put(user.getUsername(), explorer);
 		}
 		
 		return result;

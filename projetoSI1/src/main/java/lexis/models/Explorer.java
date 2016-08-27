@@ -8,19 +8,18 @@ public class Explorer implements Comparable<Explorer> {
 	private Folder root;
 	private Stack<Folder> stackFolder;
 	
-	private User user;
+
 	
 	
 	public Explorer() {
 		
 	}
 	
-	public Explorer(User user) {
-		if(user == null)
+	public Explorer(String rootName) {
+		if(rootName == null)
 			throw new NullPointerException();
 			
-		this.user = user;
-		root = new Folder(user.getUsername(), Permission.PRIVATE);
+		root = new Folder(rootName, Permission.PRIVATE);
 		stackFolder = new Stack<Folder>();
 		stackFolder.push(root);
 		
@@ -68,14 +67,6 @@ public class Explorer implements Comparable<Explorer> {
 	}
 	
 	
-	public User getUser() {
-		return user;
-	}
-	
-	public void setUser(User user) {
-		this.user = user;
-	}
-
 	public Folder currentFolder() {
 		return stackFolder.peek();
 	}
@@ -85,10 +76,14 @@ public class Explorer implements Comparable<Explorer> {
 		stackFolder.peek().addFolder(name, permission);
 	
 	}
+	
+	public Folder getRoot() {
+		return root;
+	}
 
 	@Override
 	public int compareTo(Explorer otherExplorer) {
-		return getUser().getUsername().compareTo(otherExplorer.getUser().getUsername());
+		return root.getName().compareTo(otherExplorer.getRoot().getName());
 	}
 	
 	
