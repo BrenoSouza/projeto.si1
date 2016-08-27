@@ -1,6 +1,7 @@
 package lexis.util;
 
 import lexis.exceptions.*;
+import lexis.models.DataBase;
 import lexis.models.User;
 import lexis.services.UserService;
 
@@ -75,6 +76,7 @@ public class UserRegisterService {
 	}
 	// registra o usuario
 	public void RegisterUser(User userRegister) {
+		DataBase.getInstance().addNewUser(userRegister);
 		userService.saveUser(userRegister);
 
 	}
