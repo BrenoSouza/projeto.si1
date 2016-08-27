@@ -7,6 +7,8 @@ import org.junit.Test;
 import junit.framework.Assert;
 import lexis.models.File;
 import lexis.models.Folder;
+import lexis.models.Permission;
+import lexis.models.Type;
 
 public class FileTest {
 	
@@ -15,8 +17,8 @@ public class FileTest {
 	Folder parent;
 	@Before
 	public void setUp() throws Exception {
-		file1 = new File("notas");
-		file2  = new File("work");
+		file1 = new File("notas", Type.TXT, Permission.PRIVATE);
+		file2  = new File("work", Type.TXT, Permission.PRIVATE);
 		
 	}
 

@@ -64,11 +64,11 @@ public class IndexController {
 	@RequestMapping(value = "userRegister", method = RequestMethod.POST) // produces = "application/json"
 	public ModelAndView userRegister(User userRegister, RedirectAttributes attributes) {
 		
-		ModelAndView login = new ModelAndView("redirect:/");
+		ModelAndView register = new ModelAndView("redirect:login");
 		
 		// cria um objeto responsavel pelo cadastro do usuario
 		UserRegisterService userRegisterService = new UserRegisterService(userService);
-
+		
 		try {
 			// verifica se a erros no usuario
 			userRegisterService.hasErrorIn(userRegister);
@@ -79,14 +79,14 @@ public class IndexController {
 			attributes.addFlashAttribute("mensagem", "cadastro efetuado com sucesso");
 			
 			// retorna para o metodo responsavel pelo login
-			return  login;
+			return  register;
 
 			// se houver erros:
 		} catch (Exception e) {
 			// com as mensagens de erro
 			attributes.addFlashAttribute("mensagem", e.getMessage());
 
-			return login;
+			return register;
 		}
 
 	}

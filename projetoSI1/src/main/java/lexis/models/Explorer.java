@@ -80,11 +80,6 @@ public class Explorer implements Comparable<Explorer> {
 	}
 	
 	
-	public void addFolderInCurrentFolder(String name, Permission permission) {
-		stackFolder.peek().addFolder(name, permission);
-	
-	}
-	
 	public Folder getRoot() {
 		return root;
 	}
