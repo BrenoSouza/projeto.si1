@@ -1,11 +1,19 @@
 var app = angular.module("listaArquivos", []);
 
-app.controller("listaArquivosCtrl", function($scope) {
-    $scope.local = [];
+app.controller("listaArquivosCtrl", function($scope, $http) {
     $scope.app = "lista Arquivos";
+    $scope.local = [];
     $scope.arquivos = [
 
     ];
+
+    var loadingFolder = function() {
+    	$http.get("http://localhost:8080/home/explorer").success(function(data, status) {
+    		
+    	});
+    };
+
+    loadingFolder();
 
     $scope.adicionaPasta = function(nome) {
         var name = prompt("Nome da pasta:");
