@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import lexis.models.Explorer;
 import lexis.models.File;
 import lexis.models.Folder;
 import lexis.models.User;
@@ -20,7 +21,7 @@ public class EditorController {
 	
 
 	@RequestMapping("fileEditor")
-	public static File fileEditor(Folder currentFolder,File file) {
+	public static File fileEditor(Explorer explorer,File file) {
 		ModelAndView editor = new ModelAndView("/editor");
 		return file;
 	}
