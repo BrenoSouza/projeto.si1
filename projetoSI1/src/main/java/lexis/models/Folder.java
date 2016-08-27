@@ -91,8 +91,14 @@ public class Folder implements FileAndFolder {
 	 * @return true caso a pasta seja removida e false caso a pasta nao seja
 	 *         encontrada.
 	 */
-	public boolean removeFolder(Folder folder) {
+	public boolean removeFolder(String folderName) {
+		Folder folder = new Folder(folderName, Permission.PRIVATE);
 		return folderDirectory.remove(folder);
+	}
+	
+	public boolean removeFile(String fileName, Type type) {
+		File file = new File(fileName, type, Permission.PRIVATE);
+		return fileDirectory.remove(file);
 	}
 
 	/**

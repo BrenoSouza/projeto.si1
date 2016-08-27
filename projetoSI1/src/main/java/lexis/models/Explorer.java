@@ -48,6 +48,14 @@ public class Explorer implements Comparable<Explorer> {
 		return stackFolder.peek().getOrCreateFile(name, type);
 	}
 	
+	public boolean removeFolder(String name) {
+		return stackFolder.peek().removeFolder(name);
+	}
+	
+	public boolean removeFile(String name, Type type) {
+		return stackFolder.peek().removeFile(name, type);
+	}
+	
 	
 	public void renameAFolder(String oldName, String newName) {
 		Folder temp = stackFolder.peek().getFolder(oldName);
