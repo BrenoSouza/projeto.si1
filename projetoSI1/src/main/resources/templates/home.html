@@ -154,9 +154,9 @@
 								</a>
 							</span>
 
-							<span ng-if="!isTxt(arquivo.tipo)">
-								<a ng-click="changeFolder(arquivo.nome)" href="#" th:action="@{/home/editor}">
-									<img src="{{arquivo.folder}}" th:src="@{images/{{arquivo.tipo}}.png}" alt="" class="iconeFile"></img>
+							<span ng-if="!isTxt(arquivo.type)">
+								<a ng-click="changeFolder(arquivo.name)" href="#" th:action="@{/home/editor}">
+									<img src="../static/images/folder.png" th:src="@{images/{{arquivo.type}}.png}" alt="" class="iconeFile"></img>
 								</a>
 
 							</span>

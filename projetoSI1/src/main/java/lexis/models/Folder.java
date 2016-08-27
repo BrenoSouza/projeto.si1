@@ -16,7 +16,7 @@ import javax.persistence.ElementCollection;
  */
 public class Folder implements FileAndFolder {
 	
-	public static final String UNAMED_FOLDER = "semTitulo";
+	public static final String UNAMED_FOLDER = "folder";
 
 	@Column // (scale = 3)
 	private String name;
@@ -343,6 +343,10 @@ public class Folder implements FileAndFolder {
 		}
 		
 		return auxName;
+	}
+	
+	public String getType() {
+		return "folder"; 
 	}
 	
 }

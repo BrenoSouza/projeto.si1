@@ -73,8 +73,10 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
         }
     }
 
-    $scope.changeFolder = function(nome) {
-        $scope.local.push(name);
+    $scope.changeFolder = function(name) {
+        $http.get("http://localhost:8080/home/explorer/" + name).success(function(data, status) {
+				loadingFolder();
+    	});
     }
 
     $scope.initialFolder = function() {
