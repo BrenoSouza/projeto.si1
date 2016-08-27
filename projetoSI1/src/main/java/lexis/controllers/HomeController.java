@@ -14,9 +14,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import lexis.models.DataBase;
+import lexis.models.Explorer;
 import lexis.models.File;
 import lexis.models.FileAndFolder;
 import lexis.models.Folder;
+import lexis.models.Permission;
+import lexis.models.Type;
 import lexis.models.User;
 import lexis.services.UserService;
 
@@ -25,7 +29,7 @@ import lexis.services.UserService;
 public class HomeController {
 
 	private UserService userService;
-	private Folder currentFolder;
+	private Explorer explorer;
 	
 
 	@Autowired
@@ -49,54 +53,81 @@ public class HomeController {
 	 * @return Retorna a pagina editor.html
 	 */
 	@RequestMapping(value = "explorer", method = RequestMethod.GET)
-	public List<FileAndFolder> explorer() {
-		setCurrentFolder();
-		return currentFolder().getDirectory();
+	public Folder index() {
+		setExplorer();
+		return explorer.currentFolder();
 	}
 	
 	@RequestMapping(value = "explorer/{folderName}", method = RequestMethod.GET)
 	public Folder viewFolder(@PathVariable String folderName) {
-		Folder folderTemp = currentFolder().getFolder(folderName);
+		Folder folderTemp = explorer.goDown(folderName);
 		return folderTemp;
 	}
 	
-	@RequestMapping(value = "viewFile/{fileName}", method = RequestMethod.GET)
-	public File viewFile(@PathVariable String fileName) {
-		File fileTemp = currentFolder.getFile(fileName);
-		return EditorController.fileEditor(currentFolder,fileTemp);
+	@RequestMapping(value = "explorer/back", method = RequestMethod.GET)
+	public Folder backFolder() {
+		Folder folderTemp = explorer.goUp();
+		return folderTemp;
+	}
+	
+	@RequestMapping(value = "viewFile/{fileName}/{fileType}", method = RequestMethod.GET)
+	public File viewFile(@PathVariable String fileName,@PathVariable String fileType) {
+		File fileTemp;
+		if(fileType.equals("txt")){
+			fileTemp = explorer.openFile(fileName,Type.TXT);
+		}else{
+			fileTemp = explorer.openFile(fileName,Type.MD);
+		}
+		return EditorController.fileEditor(explorer,fileTemp);
 	}
 
 	@RequestMapping(value = "newFolder/{folderName}", method = RequestMethod.GET)
 	public void newFolder(@PathVariable String folderName) {
-		currentFolder.addFolder(folderName);
+		explorer.addFolderInCurrentFolder(folderName,Permission.PRIVATE);
 	}
 
-	@RequestMapping(value = "newFile/{fileName}", method = RequestMethod.GET)
-	public void newFile(@PathVariable String fileName) throws Exception {
-		currentFolder.getDirectory().add(new File(fileName))
-;	}
+	@RequestMapping(value = "newFile/{fileName}/{fileType}", method = RequestMethod.GET)
+	public File newFile(@PathVariable String fileName,@PathVariable String fileType) throws Exception {
+		File fileTemp;
+		if(fileType.equals("txt")){
+			fileTemp = explorer.openFile(fileName,Type.TXT);
+		}else{
+			fileTemp = explorer.openFile(fileName,Type.MD);
+		}
+		return EditorController.fileEditor(explorer,fileTemp);
+	}
 
 	@RequestMapping(value = "renameFolder/{oldName}/{newName}",method = RequestMethod.GET)
 	public String renameFolder(@PathVariable String oldName,@PathVariable String newName) {
-		currentFolder.getFolder(oldName).setName(newName);
+		explorer.renameAFolder(oldName,newName);
 		return "pasta renomeada com sucesso, antigo nome: "+ oldName +" novo nome:" + newName;
 	}
 	
-	@RequestMapping(value = "renameFile/{oldName}/{newName}",method = RequestMethod.GET)
-	public String renameFile(@PathVariable String oldName,@PathVariable String newName) {
-		currentFolder.getFile(oldName).setName(newName);
+	@RequestMapping(value = "renameFile/{oldName}/{fileType}/{newName}",method = RequestMethod.GET)
+	public String renameFile(@PathVariable String oldName,@PathVariable String fileType,@PathVariable String newName) {
+		if(fileType.equals("txt")){
+			explorer.renameAFile(oldName,newName,Type.TXT);
+		}else{
+			explorer.renameAFile(oldName,newName,Type.MD);
+		}
+		
 		return "arquivo renomeado com sucesso, antigo nome: "+ oldName +" novo nome:" + newName;
 	}
 
 	@RequestMapping(value = "deleteFolder/{folderName}", method = RequestMethod.GET)
 	public String deleteFolder(@PathVariable String folderName) {
-		currentFolder.getDirectory().remove(currentFolder.getFolder(folderName));
+		explorer.removeFolder(folderName);
 		return "pasta: "+ folderName +" deletada com sucesso";
 	}
 	
-	@RequestMapping(value = "deleteFile/{fileName}", method = RequestMethod.GET)
-	public String deleteFile(@PathVariable String fileName) {
-		currentFolder.getDirectory().remove(currentFolder.getFile(fileName));
+	@RequestMapping(value = "deleteFile/{fileName}/{fileType}", method = RequestMethod.GET)
+	public String deleteFile(@PathVariable String fileName,@PathVariable String fileType) {
+		if(fileType.equals("txt")){
+			explorer.removeFile(fileName, Type.TXT);
+		}else{
+			explorer.removeFile(fileName, Type.MD);
+		}
+		
 		return "arquivo: "+ fileName +" deletado com sucesso";
 	}
 	
@@ -104,11 +135,12 @@ public class HomeController {
 		return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	}
 	
-	public Folder currentFolder(){
-		return currentFolder;
+	public Explorer getExplorer(){
+		return explorer;
 	}
-	public void setCurrentFolder(){
-		this.currentFolder = userLogged().getRoot();
+	public void setExplorer(){
+		
+		this.explorer = DataBase.getInstance().getUser(userLogged().getUsername());
 	}
 	
 }
