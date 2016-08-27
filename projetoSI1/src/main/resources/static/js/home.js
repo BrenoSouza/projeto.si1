@@ -21,13 +21,16 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     $scope.adicionaPasta = function(nome) {
         var name = prompt("Nome da pasta:");
 
-        if(name.length === 0){
-            alert("A pasta nao pode ser criada, nome vazio!")
-        } else {
-            $scope.getLocal().push({nome: name, tipo: "pasta", dataCreat: ((new Date()).toString()).substring(0, 24) , ultimaModif:"--", folder:"../static/images/pasta.png", lista: [] });
-            delete $scope.nome;
-        }
-    };
+        if (name.length != 0) {
+			$http.get("http://localhost:8080/home/newFolder/" + name).success(function(data, status) {
+				loadingFolder();
+    		});
+    	}   
+    	else {
+    		alert("Nome não pode ser vazio!");
+    	} 
+	};
+
 
     $scope.adicionaTxt = function() {
         var name = window.prompt("Nome da arquivo:");
