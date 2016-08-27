@@ -2,7 +2,7 @@ package lexis.models;
 
 import java.util.Stack;
 
-public class Explorer {
+public class Explorer implements Comparable<Explorer> {
 	
 
 	private Folder root;
@@ -29,7 +29,7 @@ public class Explorer {
 	public Folder goUp() {
 		if(stackFolder.size() != 1)
 			stackFolder.pop();
-		
+
 		return stackFolder.peek();
 	}
 	
@@ -84,6 +84,11 @@ public class Explorer {
 	public void addFolderInCurrentFolder(String name, Permission permission) {
 		stackFolder.peek().addFolder(name, permission);
 	
+	}
+
+	@Override
+	public int compareTo(Explorer otherExplorer) {
+		return getUser().getUsername().compareTo(otherExplorer.getUser().getUsername());
 	}
 	
 	
