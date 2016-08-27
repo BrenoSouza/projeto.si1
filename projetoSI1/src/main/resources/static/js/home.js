@@ -9,11 +9,14 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
 
     var loadingFolder = function() {
     	$http.get("http://localhost:8080/home/explorer").success(function(data, status) {
-    		
+
+    		$scope.arquivos = data.folderDirectory;
+
     	});
     };
 
     loadingFolder();
+
 
     $scope.adicionaPasta = function(nome) {
         var name = prompt("Nome da pasta:");
