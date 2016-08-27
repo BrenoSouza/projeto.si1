@@ -29,11 +29,11 @@ public class DataBase {
 			result = null;
 		
 		result = data.get(user.getUsername());
-		
 		 if(result == null) {
 			
 			Explorer explorer = new Explorer(user.getUsername());
 			data.put(user.getUsername(), explorer);
+			result = data.get(user.getUsername());
 		}
 		
 		return result;
