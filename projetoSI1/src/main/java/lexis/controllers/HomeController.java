@@ -83,7 +83,7 @@ public class HomeController {
 
 	@RequestMapping(value = "newFolder/{folderName}", method = RequestMethod.GET)
 	public void newFolder(@PathVariable String folderName) {
-		explorer.addFolderInCurrentFolder(folderName,Permission.PRIVATE);
+		explorer.currentFolder().addFolder(folderName,Permission.PRIVATE);
 	}
 
 	@RequestMapping(value = "newFile/{fileName}/{fileType}", method = RequestMethod.GET)

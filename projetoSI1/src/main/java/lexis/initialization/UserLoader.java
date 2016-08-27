@@ -57,8 +57,8 @@ public class UserLoader implements ApplicationListener<ContextRefreshedEvent> {
 		try {
 			guest = new User("guest", "guest", "guest@guest");
 			Explorer explorer = DataBase.getInstance().addNewUser(guest);
-			explorer.addFolderInCurrentFolder("geustpasta1", Permission.PRIVATE);
-			explorer.addFolderInCurrentFolder("geustpasta2", Permission.PRIVATE);
+			explorer.currentFolder().addFolder("geustpasta1", Permission.PRIVATE);
+			explorer.currentFolder().addFolder("geustpasta2", Permission.PRIVATE);
 			userRepository.save(guest);
 
 			log.info("Saved guest - id:" + guest.getId());
