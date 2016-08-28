@@ -132,17 +132,19 @@ public class UserServiceDAOImpl implements UserServiceDAO,UserDetailsService{
 
 	@Override
 	public UserDetails loadUserByUsername(String arg0) throws UsernameNotFoundException {
-		try {
-			User userTemp;
-			if(arg0.contains("@")){
-				userTemp = userRepository.findByEmail(arg0);
-			}else{
-				userTemp = userRepository.findByLogin(arg0);
-			}
-			return userTemp;
-		} catch (Exception e) {
+		User userTemp;
+		if(arg0.contains("@")){
+			userTemp = userRepository.findByEmail(arg0);
+		}else{
+			userTemp = userRepository.findByLogin(arg0);
+		}
+		
+		if(userTemp == null){
 			throw new UsernameNotFoundException("O usuario "+ arg0+ " não existe");
 		}
+		return userTemp;
+			
+		
 	}
 
 }
