@@ -3,14 +3,14 @@ package lexis.util;
 import lexis.exceptions.*;
 import lexis.models.DataBase;
 import lexis.models.User;
-import lexis.services.UserService;
+import lexis.services.UserServiceDAO;
 
 public class UserRegisterService {
 
-	private UserService userService;
+	private UserServiceDAO userService;
 	private User userTemp;
 
-	public UserRegisterService(UserService userService) {
+	public UserRegisterService(UserServiceDAO userService) {
 		this.userService = userService;
 	}
 

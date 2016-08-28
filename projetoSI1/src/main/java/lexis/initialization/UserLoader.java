@@ -46,7 +46,6 @@ public class UserLoader implements ApplicationListener<ContextRefreshedEvent> {
 			log.info("Saved admin - id: " + admin.getId());
 			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

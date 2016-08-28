@@ -22,18 +22,18 @@ import lexis.models.Folder;
 import lexis.models.Permission;
 import lexis.models.Type;
 import lexis.models.User;
-import lexis.services.UserService;
+import lexis.services.UserServiceDAO;
 
 @RestController
 @RequestMapping("/home")
 public class HomeController {
 
-	private UserService userService;
+	private UserServiceDAO userService;
 	private Explorer explorer;
 	
 
 	@Autowired
-	public void setUserService(UserService userService) {
+	public void setUserService(UserServiceDAO userService) {
 		this.userService = userService;
 	}
 

@@ -2,6 +2,9 @@ package lexis.services;
 
 import java.util.Iterator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import lexis.models.User;
 import lexis.repositories.UserRepository;
@@ -14,7 +17,7 @@ import lexis.repositories.UserRepository;
  *
  */
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceDAOImpl implements UserServiceDAO,UserDetailsService{
 	private UserRepository userRepository;
 
 	@Autowired
@@ -125,6 +128,23 @@ public class UserServiceImpl implements UserService {
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String arg0) throws UsernameNotFoundException {
+		User userTemp;
+		if(arg0.contains("@")){
+			userTemp = userRepository.findByEmail(arg0);
+		}else{
+			userTemp = userRepository.findByLogin(arg0);
+		}
+		
+		if(userTemp == null){
+			throw new UsernameNotFoundException("O usuario "+ arg0+ " não existe");
+		}
+		return userTemp;
+			
+		
 	}
 
 }

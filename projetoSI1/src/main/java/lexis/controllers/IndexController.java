@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lexis.models.User;
-import lexis.services.UserService;
+import lexis.services.UserServiceDAO;
 import lexis.util.UserLoginService;
 import lexis.util.UserRegisterService;
 
@@ -18,10 +18,10 @@ import lexis.util.UserRegisterService;
 public class IndexController {
 
 	// objeto responsavel por manipular User
-	private UserService userService;
+	private UserServiceDAO userService;
 
 	@Autowired
-	public void setUserService(UserService userService) {
+	public void setUserService(UserServiceDAO userService) {
 		this.userService = userService;
 	}
 
@@ -76,7 +76,7 @@ public class IndexController {
 			// caso nao haja erro registra o usuario
 			userRegisterService.RegisterUser(userRegister);
 
-			attributes.addFlashAttribute("mensagem", "cadastro efetuado com sucesso");
+			attributes.addFlashAttribute("mensagemsuccess", "cadastro efetuado com sucesso");
 			
 			// retorna para o metodo responsavel pelo login
 			return  register;
@@ -84,7 +84,7 @@ public class IndexController {
 			// se houver erros:
 		} catch (Exception e) {
 			// com as mensagens de erro
-			attributes.addFlashAttribute("mensagem", e.getMessage());
+			attributes.addFlashAttribute("mensagemerror", e.getMessage());
 
 			return register;
 		}
