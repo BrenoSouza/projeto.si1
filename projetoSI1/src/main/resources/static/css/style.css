@@ -148,8 +148,8 @@ h3.explorer-header-text {
 }
 
 #header-menu {
-	margin-top: 55px; 
-	margin-left: 40px;
+	margin-top: 1px; 
+	margin-left: 1px;
 }
 
 ul.header-menu {
@@ -211,4 +211,42 @@ ul.header-menu {
 
 #td-name {
 	text-align-last: initial;	
+}
+
+.table-external {
+	width: 90%;
+	padding-left: 5%;
+
+
+}
+
+.menu-lateral{
+	width: 20%;
+	background-color: blue;
+	padding-left:5%;
+	margin:left;
+
+}
+
+.principalmenu{
+	height: 100%;
+}
+
+.explorer{
+	margin-left: 2%;
+	margin-right: 2%;
+}
+
+.tabelaprincipal {
+	height:100%;
+	width:100%;
+}
+
+.coluna1TabelaPrincipal {
+	height:1000px;
+	width:20%;
+	background-color: blue;
+}
+.coluna2TabelaPrincipal{
+	
 }
