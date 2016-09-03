@@ -27,30 +27,25 @@
 	<div class="navbar navbar-inverse">
 		<div class="navbar-inner">
 			<div class="container">
-				<a class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-inverse-collapse"> 
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span> 
-					<span class="icon-bar"></span>
-				</a> 
-
-				<a class="brand topbar-links" style="margin-left: 0.5%">
-						<input style="height:20px; " id="home" type="image" src="../static/images/lexisName.png"
-								th:src="@{images/lexisName.png}" ng-click="initialFolder()"></input>
+				<a class="btn btn-navbar" data-toggle="collapse"
+					data-target=".navbar-inverse-collapse"> <span class="icon-bar"></span>
+					<span class="icon-bar"></span> <span class="icon-bar"></span>
+				</a> <a class="brand topbar-links" style="margin-left: 0.5%"> <input
+					style="height: 20px;" id="home" type="image"
+					src="../static/images/lexisName.png"
+					th:src="@{images/lexisName.png}" ng-click="initialFolder()"></input>
 				</a>
-				
+
 				<div class="nav-collapse collapse navbar-inverse-collapse">
 					<form class="navbar-search pull-left" action="#">
 						<input type="text" class="search-query span3" placeholder="Busca"></input>
-						
 
-					</form> 
+
+					</form>
 					<ul class="nav pull-right">
-						<li>
-							<a th:href="@{logout}">
-								<b style="font-size:20px">Sair</b>
-							</a>
-						</li>
-						
+						<li><a th:href="@{logout}"> <b style="font-size: 20px">Sair</b>
+						</a></li>
+
 						<li class="divider-vertical"></li>
 					</ul>
 				</div>
@@ -62,165 +57,151 @@
 
 		<table class="tabelaprincipal">
 
-			<td class="coluna1TabelaPrincipal">
-			
-			Tesste
-			
-			</td>
-			
-			<td class="coluna2TabelaPrincipal" valign=top>
+			<td class="coluna1TabelaPrincipal " valign="top">
 				
-			<div id="header-menu" style ="margin-right: 11%" align="right">
+			        <table width="331" height="453" border="1" >
+			          <tbody>
+			            <tr>
+			              <td  style="color: white" width="297" height="95">Meus Arquivos</td>
+		                </tr>
+			            <tr>
+			              <td style="color: white" height="118">Arquivos Compartilhados Comigo</td>
+		                </tr>
+			            <tr>
+			              <td style="color: white" height="107">Arquivos Compartilhados Com Outros</td>
+		                </tr>
+                        <tr>
+                           <td style="color: white" height="107">Lixeira</td>
+                        </tr>
+		              </tbody>
+	          </table></td>
 
-		<table cellpadding="10">
-			<tr>
-				<div id="search" align="right">
-					<td>
-						<options align="right"> 
-							<label for="search">
-								Pesquisar 
-							</label>
-	
-							<input class="form-search no-margin-top" type="text" name="search" id="search" placeholder="Nome do arquivo ou pasta"
-							ng-model="searchFile"	>
-						
-							</input> 
-						</options>
-					</td>
+			<td class="coluna2TabelaPrincipal" valign="top">
+				
+
+				<div id="header-menu" style="margin-right: 11%" align="right">
+
+					<table cellpadding="10">
+						<tr>
+							<div id="search" align="right">
+								<td><options align="right"> <label for="search">
+										Pesquisar </label> <input class="form-search no-margin-top"
+										type="text" name="search" id="search"
+										placeholder="Nome do arquivo ou pasta" ng-model="searchFile">
+
+									</input> </options></td>
+							</div>
+
+							<td><input style="width: 50px; height: 50px;" id="new-file"
+								type="image" src="../static/images/newFile.png"
+								th:src="@{images/newFile.png}" name="createFile"
+								ng-click="addTxt()"></input></td>
+
+							<td><input style="width: 50px; height: 50px;" id="new-file"
+								type="image" src="../static/images/newFolder.png"
+								th:src="@{images/newFolder.png}" name="createFile"
+								ng-click="addFolder()"></input></td>
+
+							<td><input style="width: 50px; height: 50px;" id="new-file"
+								type="image" src="../static/images/home.png"
+								th:src="@{images/home.png}" ng-click="initialFolder()"></input>
+							</td>
+							<td><input style="width: 50px; height: 50px;" id="new-file"
+								type="image" src="../static/images/back.png"
+								th:src="@{images/back.png}" ng-click="backFolder()"></input></td>
+
+						</tr>
+					</table>
+
+
 				</div>
-				
-				<td>
 
-					<input style="width:50px; height:50px; " id="new-file" type="image" src="../static/images/newFile.png"
-							th:src="@{images/newFile.png}" name="createFile" ng-click="addTxt()"></input>
-				</td>
+				<div class="container explorer" style="margin-top: 10px">
+					<div class="tudo">
 
-				<td>
-					<input style="width:50px; height:50px; " id="new-file" type="image" src="../static/images/newFolder.png"
-							th:src="@{images/newFolder.png}" name="createFile" ng-click="addFolder()"></input>
-				</td>
+						<div class="table-responsive">
+							<table class="table table-striped table table-bordered"
+								style="background: #B0C4DE">
+								<thead style="background: #1f3c58">
+									<tr style="border: bold">
+										<th><img src="../static/images/star-marked.png"
+											th:src="@{images/star-marked.png}" alt="" class="star-marked"></img>
+										</th>
 
-				<td>
-					<input style="width:50px; height:50px; " id="new-file" type="image" src="../static/images/home.png"
-							th:src="@{images/home.png}" ng-click="initialFolder()"></input>
-				</td>
-				<td>
-					<input style="width:50px; height:50px; " id="new-file" type="image" src="../static/images/back.png"
-							th:src="@{images/back.png}" ng-click="backFolder()"></input>
+										<th><a href="#" style="color: white"
+											ng-click="sortBy('name')"> Nome</a></th>
 
-				</td>
+										<th><a href="#" style="color: white"
+											ng-click="sortBy('type')"> Tipo</a></th>
 
-			</tr>
-		</table>
+										<th><a href="#" style="color: white"
+											ng-click="sortBy('dataCreat')"> Data Criação</a></th>
+
+										<th><a href="#" style="color: white"
+											ng-click="sortBy('ultimaModif')">Última modificação</a></th>
+
+										<th style="color: white">Opções</th>
+									</tr>
+								</thead>
+
+								<tbody>
+									<tr
+										ng-repeat="arquivo in arquivos | filter: {name: searchFile} | orderBy:tipoOrdenacao:direction">
+
+										<td><a href="#"> <img src="../static/images/star.png"
+												th:src="@{images/star.png}" alt="" class="star"></img>
+										</a></td>
+
+										<td id="td-name"><span ng-if="isTxt(arquivo.type)">
+												<a href="/editor" th:action="@{/home/editor}"> <img
+													src="../static/images/TXT.png" th:src="@{images/TXT.png}"
+													alt="" class="iconeFile"></img>
+											</a>
+										</span> <span ng-if="!isTxt(arquivo.type)"> <a
+												ng-click="changeFolder(arquivo.name)" href="#"
+												th:action="@{/home/editor}"> <img
+													src="../static/images/folder.png"
+													th:src="@{images/{{arquivo.type}}.png}" alt=""
+													class="iconeFile"></img>
+											</a>
+
+										</span> <span>{{arquivo.name}}</span></td>
+
+										<td>{{arquivo.type}}</td>
+
+										<td>Falta formatar o objeto data</td>
+
+										<td>Falta formatar o objeto data</td>
+
+										<td><input id="rename" type="image"
+											src="../static/images/rename.png"
+											th:src="@{images/rename.png}" name="renameFile"
+											ng-click="renameTxt()"></input> <input id="share"
+											type="image" src="../static/images/share.png"
+											th:src="@{images/share.png}" name="shareFile"
+											ng-click="shareTxtOrFolder()"></input> <input id="delete"
+											type="image" src="../static/images/delete.png"
+											th:src="@{images/delete.png}" name="removeFile"
+											ng-click="removeTxt()"></input></td>
+
+									</tr>
+
+								</tbody>
+							</table>
+						</div>
 
 
-	</div>
 
-			<div class="container explorer" style="margin-top: 10px">
-		<div class="tudo">
-				
-					<div class="table-responsive">
-					<table class="table table-striped table table-bordered"
-							style="background: #B0C4DE">
-						<thead style="background: #1f3c58">
-					<tr style="border: bold">
-						<th>
-							<img src="../static/images/star-marked.png"	th:src="@{images/star-marked.png}" alt="" class="star-marked"></img>
-						</th>
+					</div>
 
-						<th><a href="#" style="color: white"
-							ng-click="sortBy('name')"> Nome</a>
-						</th>
+				</div>
 
-						<th>
-							<a href="#" style="color: white" ng-click="sortBy('type')"> Tipo</a>
-						</th>
-
-						<th>
-							<a href="#" style="color: white" ng-click="sortBy('dataCreat')"> Data Criação</a>
-						</th>
-
-						<th>
-							<a href="#" style="color: white" ng-click="sortBy('ultimaModif')">Última modificação</a>
-						</th>
-
-						<th style="color: white">
-							Opções
-						</th>
-					</tr>
-					</thead>
-
-					<tbody>
-					<tr	ng-repeat="arquivo in arquivos | filter: {name: searchFile} | orderBy:tipoOrdenacao:direction">
-						
-						<td>
-							<a href="#">
-								<img src="../static/images/star.png" th:src="@{images/star.png}" alt="" class="star"></img>
-							</a>
-						</td>
-						
-						<td id="td-name">
-
-							<span ng-if="isTxt(arquivo.type)">
-								<a href="/editor" th:action="@{/home/editor}">
-									<img src="../static/images/TXT.png" th:src="@{images/TXT.png}" alt="" class="iconeFile"></img>
-								</a>
-							</span>
-
-							<span ng-if="!isTxt(arquivo.type)">
-								<a ng-click="changeFolder(arquivo.name)" href="#" th:action="@{/home/editor}">
-									<img src="../static/images/folder.png" th:src="@{images/{{arquivo.type}}.png}" alt="" class="iconeFile"></img>
-								</a>
-
-							</span>
-
-							
-							<span>{{arquivo.name}}</span>
-						</td>
-						
-						<td>
-							{{arquivo.type}}
-						</td>
-						
-						<td>
-							Falta formatar o objeto data
-						</td>
-
-						<td>
-							Falta formatar o objeto data
-						</td>
-						
-						<td>
-							
-							<input id="rename" type="image" src="../static/images/rename.png"
-							th:src="@{images/rename.png}" name="renameFile" ng-click="renameTxt()"></input>
-							
-							<input id="share" type="image" src="../static/images/share.png"
-							th:src="@{images/share.png}" name="shareFile" ng-click="shareTxtOrFolder()"></input>
-							
-							<input id="delete" type="image" src="../static/images/delete.png"
-							th:src="@{images/delete.png}" name="removeFile" ng-click="removeTxt()"></input>
-							
-						</td>
-
-					</tr>
-
-				</tbody>
-			</table>
-		</div>
-			
-					
-		
-		</div>
-		
-	</div>
-		
 			</td>
-			
+
 		</table>
-		
+
 	</div>
-	
+
 	<script th:src="@{/js/angular.min.js}"
 		src="../static/js/angular.min.js"></script>
 	<script th:src="@{/js/home.js}" src="../static/js/home.js"></script>
