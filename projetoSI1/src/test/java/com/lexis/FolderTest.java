@@ -2,6 +2,8 @@ package com.lexis;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,7 +16,7 @@ public class FolderTest {
 
 	@Before
 	public void criaFolder() {
-		folder = new Folder("home", Permission.PRIVATE);
+		folder = new Folder("home", Permission.PRIVATE, new ArrayList<String>());
 	}
 
 	@Test
@@ -41,13 +43,13 @@ public class FolderTest {
 
 	@Test
 	public void testGetDateCreation() {
-		Folder folder2 = new Folder("home2", Permission.PRIVATE);
+		Folder folder2 = new Folder("home2", Permission.PRIVATE, new ArrayList<String>());
 		assertEquals(folder.getDateEdition(), folder2.getDateEdition());
 	}
 
 	@Test
 	public void testGetDateEdition() {
-		Folder folder2 = new Folder("home2", Permission.PRIVATE);
+		Folder folder2 = new Folder("home2", Permission.PRIVATE, new ArrayList<String>());
 		assertEquals(folder.getDateCreation(), folder2.getDateCreation());
 	}
 

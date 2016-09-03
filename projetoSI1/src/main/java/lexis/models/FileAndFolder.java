@@ -1,6 +1,8 @@
 package lexis.models;
 
 import java.time.LocalDateTime;
+import java.util.List;
+
 import javax.persistence.Embeddable;
 
 /**
@@ -60,6 +62,12 @@ public interface FileAndFolder {
 	public Permission getPermission();
 	
 	public void setPermission(Permission permission);
+	
+	public List<String> getPath();
+	
+	public void setPath(List<String> path);
+	
+	public String getStringPath();
 		
 	
 	

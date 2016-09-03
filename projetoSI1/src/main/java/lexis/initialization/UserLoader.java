@@ -40,7 +40,7 @@ public class UserLoader implements ApplicationListener<ContextRefreshedEvent> {
 		User admin;
 		try {
 			admin = new User("admin", "admin", "admin@admin");
-			Explorer explorer = DataBase.getInstance().addNewUser(admin);
+			DataBase.getInstance().addNewUser(admin);
 			userRepository.save(admin);
 			
 			log.info("Saved admin - id: " + admin.getId());

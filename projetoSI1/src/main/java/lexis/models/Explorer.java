@@ -1,5 +1,6 @@
 package lexis.models;
 
+import java.util.ArrayList;
 import java.util.Stack;
 
 public class Explorer implements Comparable<Explorer> {
@@ -19,7 +20,7 @@ public class Explorer implements Comparable<Explorer> {
 		if(rootName == null)
 			throw new NullPointerException();
 			
-		root = new Folder(rootName, Permission.PRIVATE);
+		root = new Folder(rootName, Permission.PRIVATE, new ArrayList<String>());
 		stackFolder = new Stack<Folder>();
 		stackFolder.push(root);
 		

@@ -1,9 +1,11 @@
 package lexis.models;
 
 import java.time.LocalDateTime;
-
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 
 
 /**
@@ -14,6 +16,9 @@ import javax.persistence.Column;
  *
  */
 public class File implements FileAndFolder {
+	
+	private static final String SEP = "/";
+	
 	public static final String EMPTY_DATA = "";
 	public static final String UNAMED_FILE = "semTitulo";
 
@@ -24,7 +29,17 @@ public class File implements FileAndFolder {
 	private String data;
 	private Type type;
 	private Permission permission;
-
+	
+	
+	@ElementCollection
+	private List<String> path;
+	
+	
+	
+	public File(String name, Type type, Permission permission, List<String> path) {
+		this(name, type, permission, path, LocalDateTime.now());
+	}
+	
 	/**
 	 * Contrutor que recebe o nome como obrigatorio datas criadas
 	 * automaticamente e o conteudo do arquivo vazio.
@@ -32,24 +47,28 @@ public class File implements FileAndFolder {
 	 * @param name Nome do arquivo.
 	 * @param parent Folder no qual o arquivo esta inserido.
 	 */
-	public File(String name, Type type, Permission permission) {
+	public File(String name, Type type, Permission permission, List<String> path, LocalDateTime dateCreation) {
 
 		if(!Util.isAValidName(name)) 
 			name = UNAMED_FILE;
 		
 		if(type == null)
 			type = Type.TXT;
+		
+		if(path == null)
+			throw new NullPointerException();
 
 		this.name = name;
 		this.data = EMPTY_DATA;
 		this.type = type;
-		dateCreation = LocalDateTime.now();
-		dateEdition = LocalDateTime.now();
+		this.dateCreation = dateCreation;
+		this.dateEdition = dateCreation;
 		this.permission = permission;
+		this.path = path;
 	}
 	
 	public File()  {
-		this(UNAMED_FILE, Type.TXT, Permission.PRIVATE);
+		this(UNAMED_FILE, Type.TXT, Permission.PRIVATE, new ArrayList<String>());
 		
 	}
 	
@@ -112,6 +131,11 @@ public class File implements FileAndFolder {
 	}
 	
 	@Override
+	public List<String> getPath() {
+		return path;
+	}
+	
+	@Override
 	public void setDateCreation(LocalDateTime date) {
 		if(date != null)
 			dateCreation = date;
@@ -128,6 +152,14 @@ public class File implements FileAndFolder {
 			this.dateEdition = date;
 
 	}
+	
+	@Override
+	public void setPath(List<String> path) {
+		if(path == null)
+			throw new NullPointerException();
+		
+		this.path = path;
+	}
 
 	@Override
 	public boolean equals(Object obj) {
@@ -138,7 +170,8 @@ public class File implements FileAndFolder {
 
 		
 		return this.getName().equals(otherFile.getName()) && 
-				this.getType().equals(otherFile.getType());
+				this.getType().equals(otherFile.getType()) && 
+				this.getPath().equals(otherFile.getPath());
 	}
 
 	@Override
@@ -149,6 +182,21 @@ public class File implements FileAndFolder {
 				"\nData: " + data + "\n";
 
 	}
+
+	@Override
+	public String getStringPath() {
+		String stringPath = "";
+		
+		for(String folder : path) {
+			stringPath += (folder + SEP);
+		}
+		
+		return stringPath;
+	}
+
+
+
+
 	
 
 }

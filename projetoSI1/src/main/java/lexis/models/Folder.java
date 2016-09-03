@@ -16,6 +16,7 @@ import javax.persistence.ElementCollection;
  */
 public class Folder implements FileAndFolder {
 	
+	private static final String SEP = "/";
 	public static final String UNAMED_FOLDER = "folder";
 
 	@Column // (scale = 3)
@@ -27,7 +28,15 @@ public class Folder implements FileAndFolder {
 	@ElementCollection
 	private List<Folder> folderDirectory;
 	private List<File> fileDirectory;
-
+	private List<String> path;
+	
+	
+	
+	
+	public Folder(String name, Permission permission, List<String> path) {
+		this(name, permission, path, LocalDateTime.now());
+	}
+	
 	/**
 	 * Esse construtor exige apenas o nome da pasta, a data de criacao e
 	 * estabelecida na criacao do objeto.
@@ -35,7 +44,11 @@ public class Folder implements FileAndFolder {
 	 * @param name
 	 *            String - nome da pasta.
 	 */
-	public Folder(String name, Permission permission) {
+	public Folder(String name, Permission permission, List<String> path, 
+			LocalDateTime dateCreation) {
+		
+		if(path == null || dateCreation == null)
+			throw new NullPointerException();
 		
 		folderDirectory = new ArrayList<Folder>();
 	
@@ -46,13 +59,35 @@ public class Folder implements FileAndFolder {
 			permission = Permission.PRIVATE;
 
 		this.name = name;
-		dateCreation = LocalDateTime.now();
-		dateEdition = LocalDateTime.now();
+		this.dateCreation = dateCreation;
+		this.dateEdition = dateCreation;
 		this.permission = permission;
-		fileDirectory = new ArrayList<File>();
+		this.path = path;
+		this.fileDirectory = new ArrayList<File>();
 
 	}
 	
+	
+
+	public void addFolder(String name, Permission permission, 
+			LocalDateTime dateCreation) {
+		
+		if(permission == null)
+			permission = Permission.PRIVATE;
+		
+		if(!Util.isAValidName(name))
+			name = UNAMED_FOLDER;
+		
+		Folder temp;
+		List<String> newPath = getPathWithThisFolder();
+		
+		if(containsFolder(name)) 
+			temp = new Folder(getANewName(name), permission, newPath, dateCreation);
+		 else
+			temp = new Folder(name, permission, newPath, dateCreation);
+
+		this.folderDirectory.add(temp);
+	}
 	
 	/**
 	 * Metodo que adiciona uma nova pasta, caso 
@@ -74,13 +109,17 @@ public class Folder implements FileAndFolder {
 			name = UNAMED_FOLDER;
 		
 		Folder temp;
+		List<String> newPath = getPathWithThisFolder();
+		
 		if(containsFolder(name)) 
-			temp = new Folder(getANewName(name), permission);
+			temp = new Folder(getANewName(name), permission, newPath, dateCreation);
 		 else
-			temp = new Folder(name, permission);
+			temp = new Folder(name, permission, newPath, dateCreation);
 
 		this.folderDirectory.add(temp);
 	}
+	
+
 	
 
 	/**
@@ -92,12 +131,20 @@ public class Folder implements FileAndFolder {
 	 *         encontrada.
 	 */
 	public boolean removeFolder(String folderName) {
-		Folder folder = new Folder(folderName, Permission.PRIVATE);
+		
+		LocalDateTime aux = LocalDateTime.now();
+		
+		Folder folder = new Folder(folderName, Permission.PRIVATE, 
+				getPathWithThisFolder(), aux);
 		return folderDirectory.remove(folder);
 	}
 	
 	public boolean removeFile(String fileName, Type type) {
-		File file = new File(fileName, type, Permission.PRIVATE);
+		
+		LocalDateTime aux = LocalDateTime.now();
+		
+		File file = new File(fileName, type, Permission.PRIVATE, path, 
+				aux);
 		return fileDirectory.remove(file);
 	}
 
@@ -110,8 +157,9 @@ public class Folder implements FileAndFolder {
 	 * @return Folder - a pasta solicitada.
 	 */
 	public Folder getFolder(String name) {
-
-		Folder folderTemp = new Folder(name, permission);
+		
+		LocalDateTime aux = LocalDateTime.now();
+		Folder folderTemp = new Folder(name, permission, getPathWithThisFolder(), aux);
 		for (Folder folder : folderDirectory) {
 			if (folder.equals(folderTemp)) 
 				return folder;
@@ -123,13 +171,15 @@ public class Folder implements FileAndFolder {
 	/**
 	 * Procura por uma pasta com o nome passado no 
 	 * parametro, caso a pasta nao exista, cria uma 
-	 * nova pasta vazia e privada com o nome passado. 
+	 * nova pasta vazia, com a data de criacao do momento 
+	 * em que o metodo foi criado e privada com o nome passado. 
 	 * @param name Nome da pasta. 
 	 * @return retorna a pasta encontrada ou uma pasta vazia.
 	 */
 	public Folder getOrCreateFolder(String name) {
 		
-		Folder folderTemp = new Folder(name, Permission.PRIVATE);
+		LocalDateTime aux = LocalDateTime.now();
+		Folder folderTemp = new Folder(name, Permission.PRIVATE, getPathWithThisFolder(), aux);
 		for(Folder folder : folderDirectory) {
 			if(folder.equals(folderTemp))
 				return folder;
@@ -155,7 +205,7 @@ public class Folder implements FileAndFolder {
 	 */
 	public File getOrCreateFile(String name, Type type) {
 		
-		File fileTemp = new File(name, type, Permission.PRIVATE);
+		File fileTemp = new File(name, type, Permission.PRIVATE, getPathWithThisFolder());
 		for (File file : fileDirectory) {
 			if (file.equals(fileTemp)) 
 				return file;
@@ -176,7 +226,7 @@ public class Folder implements FileAndFolder {
 	 */
 	public File getFile(String name, Type type) {
 		
-		File fileTemp = new File(name, type, Permission.PRIVATE);
+		File fileTemp = new File(name, type, Permission.PRIVATE, getPathWithThisFolder(), LocalDateTime.now());
 		for (File file : fileDirectory) {
 			if (file.equals(fileTemp)) 
 				return file;
@@ -211,6 +261,17 @@ public class Folder implements FileAndFolder {
 		
 		return files;
 			
+	}
+	
+	@Override
+	public String getStringPath() {
+		String stringPath = "";
+		
+		for(String folder : path) {
+			stringPath += (folder + SEP);
+		}
+		
+		return stringPath;
 	}
 	
 
@@ -298,6 +359,11 @@ public class Folder implements FileAndFolder {
 			throw new NullPointerException();
 
 	}
+	
+	@Override
+	public List<String> getPath() {
+		return path;
+	}
 
 	@Override
 	public String getName() {
@@ -313,17 +379,31 @@ public class Folder implements FileAndFolder {
 		
 		this.name = name;
 	}
+	
+	@Override
+	public void setPath(List<String> path) {
+		if(path == null)
+			throw new NullPointerException();
+		
+		this.path = path;
+	}
 
 	@Override
-	public boolean equals(Object objeto) {
-		if (objeto instanceof Folder) {
-			Folder folder = (Folder) objeto;
-			if (this.getName().equals(folder.getName())) {
-				return true; // sao iguails.
-			}
-		}
-		return false;
+	public boolean equals(Object obj) {
+		
+		if(obj == null)
+			return false;
+		
+		if(!(obj instanceof Folder))
+			return false;
+		
+		Folder otherFolder = (Folder) obj;
+		
+		return this.getName().equals(otherFolder.getName()) && 
+				this.path.equals(otherFolder.getPath());
 	}
+	
+	
 
 	@Override
 	public String toString() {
@@ -347,6 +427,12 @@ public class Folder implements FileAndFolder {
 	
 	public String getType() {
 		return "folder"; 
+	}
+	
+	public List<String> getPathWithThisFolder() {
+		List<String> newPath = path.subList(0, path.size());
+		newPath.add(this.getName());
+		return newPath;
 	}
 	
 }
