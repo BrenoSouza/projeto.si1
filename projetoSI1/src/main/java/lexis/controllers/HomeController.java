@@ -42,8 +42,11 @@ public class HomeController {
 	 * 
 	 * @return Retorna a pagina home.html
 	 */
-	@RequestMapping("/userjson")
-	public User home() {
+	@RequestMapping(value = "/userTest", method = RequestMethod.POST)
+	public User home(@RequestBody User user) {
+		System.out.println(user.getLogin());
+		System.out.println(user.getEmail());
+		System.out.println(user.getPassword());
 		return userLogged();
 	}
 
