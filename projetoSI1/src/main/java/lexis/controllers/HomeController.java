@@ -84,51 +84,50 @@ public class HomeController {
 		return EditorController.fileEditor(explorer,fileTemp);
 	}
 
-	@RequestMapping(value = "newFolder/{folderName}", method = RequestMethod.GET)
-	public void newFolder(@PathVariable String folderName) {
-		explorer.currentFolder().addFolder(folderName,Permission.PRIVATE);
+	@RequestMapping(value = "newFolder", method = RequestMethod.POST)
+	public void newFolder(@RequestBody Folder folder) {
+		explorer.currentFolder().getFolderDirectory().add(folder);
 	}
 
-	@RequestMapping(value = "newFile/{fileName}/{fileType}", method = RequestMethod.GET)
-	public File newFile(@PathVariable String fileName,@PathVariable String fileType) throws Exception {
-		File fileTemp;
+	@RequestMapping(value = "newFile", method = RequestMethod.POST)
+	public File newFile(@RequestBody File file){
+		/*File fileTemp;
 		if(fileType.equals("txt")){
 			fileTemp = explorer.openFile(fileName,Type.TXT);
 		}else{
 			fileTemp = explorer.openFile(fileName,Type.MD);
-		}
-		return EditorController.fileEditor(explorer,fileTemp);
+		}*/
+		return EditorController.fileEditor(explorer,file);
 	}
 
-	@RequestMapping(value = "renameFolder/{oldName}/{newName}",method = RequestMethod.GET)
-	public String renameFolder(@PathVariable String oldName,@PathVariable String newName) {
-		explorer.renameAFolder(oldName,newName);
-		return "pasta renomeada com sucesso, antigo nome: "+ oldName +" novo nome:" + newName;
+	@RequestMapping(value = "renameFolder",method = RequestMethod.POST)
+	public String renameFolder(@RequestBody String[] names) {
+		explorer.renameAFolder(names[0],names[1]);
+		return "pasta renomeada com sucesso, antigo nome: "+ names[0] +" novo nome:" + names[1];
 	}
 	
-	@RequestMapping(value = "renameFile/{oldName}/{fileType}/{newName}",method = RequestMethod.GET)
-	public String renameFile(@PathVariable String oldName,@PathVariable String fileType,@PathVariable String newName) {
-		if(fileType.equals("txt")){
-			explorer.renameAFile(oldName,newName,Type.TXT);
+	@RequestMapping(value = "renameFile",method = RequestMethod.POST)
+	public String renameFile(@RequestBody String[] names) {
+		if(names[3].equals("txt")){
+			explorer.renameAFile(names[0],names[1],Type.TXT);
 		}else{
-			explorer.renameAFile(oldName,newName,Type.MD);
-		}
-		
-		return "arquivo renomeado com sucesso, antigo nome: "+ oldName +" novo nome:" + newName;
+			explorer.renameAFile(names[0],names[1],Type.MD);
+		}		
+		return "arquivo renomeado com sucesso, antigo nome: "+ names[0] +" novo nome:" + names[1];
 	}
 
-	@RequestMapping(value = "deleteFolder/{folderName}", method = RequestMethod.GET)
-	public String deleteFolder(@PathVariable String folderName) {
+	@RequestMapping(value = "deleteFolder", method = RequestMethod.POST)
+	public String deleteFolder(@RequestBody String folderName) {
 		explorer.removeFolder(folderName);
 		return "pasta: "+ folderName +" deletada com sucesso";
 	}
 	
-	@RequestMapping(value = "deleteFile/{fileName}/{fileType}", method = RequestMethod.GET)
-	public String deleteFile(@PathVariable String fileName,@PathVariable String fileType) {
-		if(fileType.equals("txt")){
-			explorer.removeFile(fileName, Type.TXT);
+	@RequestMapping(value = "deleteFile", method = RequestMethod.POST)
+	public String deleteFile(@RequestBody String[] fileName) {
+		if(fileName[1].equals("txt")){
+			explorer.removeFile(fileName[0], Type.TXT);
 		}else{
-			explorer.removeFile(fileName, Type.MD);
+			explorer.removeFile(fileName[0], Type.MD);
 		}
 		
 		return "arquivo: "+ fileName +" deletado com sucesso";
