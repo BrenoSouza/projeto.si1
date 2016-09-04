@@ -1,33 +1,33 @@
 var app = angular.module("listaArquivos", []);
 
 app.controller("listaArquivosCtrl", function($scope, $http) {
-    $scope.app = "lista Arquivos";
-    $scope.arquivos = [
-
-    ];
     
-    $scope.mySharedFiles = [
-                            
-    ];
+    $scope.arquivos = [];
     
-    $scope.filesSharedWithMe = [
-                                
-    ];
+    $scope.myFilesAndFolders = [];
     
-    $scope.deletedFilesAndFolders = [
-                                     
-    ];
+    $scope.mySharedFilesAndFolders = [];
+    
+    $scope.filesAndFoldersSharedWithMe = [];
+    
+    $scope.deletedFilesAndFolders = [];
     
     
     var loadingFolder = function() {
     	$http.get("http://localhost:8080/home/explorer").success(function(data, status) {
 
-    		$scope.arquivos = data.folderDirectory;
+    		$scope.myFilesAndFolders = data.folderDirectory;
 
     		for (var i = data.fileDirectory.length - 1; i >= 0; i--) {
-    			$scope.arquivos.push(data.fileDirectory[i]);
+    			$scope.myFilesAndFolders.push(data.fileDirectory[i]);
     		}
     	});
+    };
+    
+    $scope.showOnTable = function(list) {
+    	for (var i = 0; i < list.length; i++) {
+        	$scope.arquivos.push(lista[i]);
+		}
     };
 
 
@@ -171,7 +171,8 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     
     
     $scope.showSharedFilesWithMe() = function() {
-    	//Vai alterar o $scope.arquivos para a lista de arquivos que foram compartilhados com o usuario    	
+    	//Vai alterar o $scope.arquivos para a lista de arquivos que foram compartilhados com o usuario
+    	$scope.showOnTable($scope.filesAndFoldersSharedWithMe);
     	
     }
     
@@ -182,11 +183,12 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
 				$scope.mySharedFiles.push(arquivos[i]);
 			}
 		}
+    	
+    	$showOnTable($scope.mySharedFilesAndFolders);
     }
     
     $scope.showDeletedFilesAndFolders = function() {
-    	
-    	
+    	$showOnTable($scope.deletedFilesAndFolders);
     }
     
 });    
