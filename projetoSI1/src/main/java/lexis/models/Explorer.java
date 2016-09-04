@@ -1,6 +1,7 @@
 package lexis.models;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
 public class Explorer implements Comparable<Explorer> {
@@ -42,6 +43,35 @@ public class Explorer implements Comparable<Explorer> {
 		
 		return temp;
 		
+	}
+	
+	public Folder goToRoot() {
+		while(stackFolder.size() > 1)
+			stackFolder.pop();
+		
+		return stackFolder.peek();
+	}
+	
+	public List<FileAndFolder> find(String name) {
+		return root.find(name);
+	}
+	
+	public Folder goTo(String path) {
+		
+		goToRoot();
+		
+		if(path == null)
+			return stackFolder.peek();
+		
+		String[] arrayPath = path.split(Folder.SEP);
+	
+		return auxGoTo(arrayPath);
+	}
+	
+	public Folder goTo(List<String> listPath) {
+		String[] arrayPath = (String[]) listPath.toArray();
+		
+		return auxGoTo(arrayPath);
 	}
 	
 	
@@ -90,5 +120,23 @@ public class Explorer implements Comparable<Explorer> {
 		return root.getName().compareTo(otherExplorer.getRoot().getName());
 	}
 	
+	
+	private Folder auxGoTo(String[] arrayPath) {
+		if(arrayPath.length != 0) {
+			Folder aux;
+			if(arrayPath[0].equals(stackFolder.peek().getName())) {
+				for(int i = 1; i < arrayPath.length; i++) {
+					aux = stackFolder.peek().getFolder(arrayPath[i]);
+					
+					if(aux == null)
+						break;
+					else
+						stackFolder.push(aux);
+				}
+			}
+		}
+			
+		return stackFolder.peek();
+	}
 	
 }
