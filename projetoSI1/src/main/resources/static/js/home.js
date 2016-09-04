@@ -14,6 +14,10 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
                                 
     ];
     
+    $scope.deletedFilesAndFolders = [
+                                     
+    ];
+    
     
     var loadingFolder = function() {
     	$http.get("http://localhost:8080/home/explorer").success(function(data, status) {
@@ -178,6 +182,11 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
 				$scope.mySharedFiles.push(arquivos[i]);
 			}
 		}
+    }
+    
+    $scope.showDeletedFilesAndFolders = function() {
+    	
+    	
     }
     
 });    
