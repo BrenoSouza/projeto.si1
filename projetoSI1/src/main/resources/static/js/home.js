@@ -5,7 +5,7 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     $scope.arquivos = [
 
     ];
-
+    
     var loadingFolder = function() {
     	$http.get("http://localhost:8080/home/explorer").success(function(data, status) {
 
@@ -22,16 +22,39 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
 
 
     $scope.addFolder = function(nome) {
-        var name = prompt("Nome da pasta:");
+        var nome = prompt("Nome da pasta:");
 
-        if (name.length != 0) {
-			$http.get("http://localhost:8080/home/newFolder/" + name).success(function(data, status) {
-				loadingFolder();
-    		});
-    	}   
-    	else {
-    		alert("Nome não pode ser vazio!");
-    	} 
+        //if (name.length != 0) {
+			//$http.get("http://localhost:8080/home/newFolder/" + name).success(function(data, status) {
+				//loadingFolder();
+    		//});
+    	//}   
+    	//else {
+    		//alert("Nome não pode ser vazio!");
+    	//}
+
+        var folder = {
+            	name:nome,
+            	
+            	Permission: {
+                
+            		value:"private"
+            			
+            	},
+            	
+            	path: [],
+            	
+            	dateCreation: new Date()
+
+        };
+
+        console.log(folder);
+        
+        $http.post('http://localhost:8080/home/newFolder', folder).success(function(data, status) {
+        	
+        	console.log(folder);
+        });
+
 	};
 
 
@@ -71,5 +94,4 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
 			loadingFolder();
     	});
     }
-
 });    
