@@ -94,4 +94,11 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
 			loadingFolder();
     	});
     }
+    
+    $scope.deleteFolder = function(name) {
+    	
+    	$http.name("http://localhost:8080/home/deleteFolder", name).success(function(data, status) {
+			loadingFolder();
+    	});
+    }
 });    
