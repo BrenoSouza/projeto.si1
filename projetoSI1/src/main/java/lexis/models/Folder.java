@@ -16,7 +16,7 @@ import javax.persistence.ElementCollection;
  */
 public class Folder implements FileAndFolder {
 	
-	private static final String SEP = "/";
+	public static final String SEP = "/";
 	public static final String UNAMED_FOLDER = "folder";
 
 	@Column // (scale = 3)
@@ -167,6 +167,17 @@ public class Folder implements FileAndFolder {
 		}
 		return null;
 	}
+	
+	public List<FileAndFolder> find(String name) {
+		List<FileAndFolder> results = new ArrayList<FileAndFolder>();
+		
+		if(name != null) {
+			auxFind(name, results, this);
+		}
+		
+		return results;
+	}
+	
 	
 	/**
 	 * Procura por uma pasta com o nome passado no 
@@ -433,6 +444,22 @@ public class Folder implements FileAndFolder {
 		List<String> newPath = path.subList(0, path.size());
 		newPath.add(this.getName());
 		return newPath;
+	}
+	
+	private static void auxFind(String name, List<FileAndFolder> results, Folder folder) {
+		
+		for(Folder f : folder.getFolderDirectory()) {
+			if(f.getName().toLowerCase().equals(name.toLowerCase())) 
+				results.add(f);
+			
+			if(!f.getFolderDirectory().isEmpty())
+				auxFind(name, results, f);
+		}
+		
+		for(File file : folder.getFileDirectory()) {
+			if(file.getName().toLowerCase().equals(name.toLowerCase()))
+				results.add(file);
+		}
 	}
 	
 }
