@@ -105,8 +105,8 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     $scope.deleteFile = function(fileName, fileType) {
     	
     	var file = {
-    		name = fileName,
-    		type = fileType
+    		name: fileName,
+    		type: fileType
     	}
     	
     	$http.post("http://localhost:8080/home/deleteFile", file).success(function(data, status) {
@@ -114,4 +114,26 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     	});
     	
     }
+    
+    $scope.renameFile = function(name, nName, type, nType){
+    	
+    	if(nName.length != 0) {
+    	
+    		data = {
+    			oldName: name,
+    			newName: nName,
+    			oldType: type,
+    			newType: nType
+    		}
+    	
+    		$http.post("http://localhost:8080/home/renameFile", data).success(function(data, status) {
+    			loadingFolder();
+    		});
+    	}
+    	else {
+    		alert("Nome não pode ser vazio!!")
+    		
+    	}
+    } 
+    
 });    
