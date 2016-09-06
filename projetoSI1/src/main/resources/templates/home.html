@@ -39,9 +39,11 @@
 				<div class="nav-collapse collapse navbar-inverse-collapse">
 					<form class="navbar-search pull-left" action="#">
 						<input type="text" class="search-query span3" placeholder="Busca"></input>
-
-
+				
 					</form>
+					
+				<div class="menuUsuario">
+				</div>
 					<ul class="nav pull-right">
 						<li><a th:href="@{logout}"> <b style="font-size: 20px">Sair</b>
 						</a></li>
@@ -57,15 +59,15 @@
 
 		<table class="tabelaprincipal">
 
-			<td class="coluna1TabelaPrincipal " valign="top">
+			<td class="coluna1TabelaPrincipal " valign="top" >
 				
-			        <table width="331" height="453" border="1" >
+			        <table class="menuCompartilhamento" width="331" height="453" border="1" cellpadding="5">
 			          <tbody>
 			            <tr>
-			              <td  style="color: white" width="297" height="95">Meus Arquivos</td>
+			              <td  style="color: white" width="107" height="95">Meus Arquivos</td>
 		                </tr>
 			            <tr>
-			              <td style="color: white" height="118">Arquivos Compartilhados Comigo</td>
+			              <td style="color: white" height="107">Arquivos Compartilhados Comigo</td>
 		                </tr>
 			            <tr>
 			              <td style="color: white" height="107">Arquivos Compartilhados Com Outros</td>
@@ -79,7 +81,7 @@
 			<td class="coluna2TabelaPrincipal" valign="top">
 				
 
-				<div id="header-menu" style="margin-right: 11%" align="right">
+				<div id="header-menu" style="margin-right: 20%" align="right">
 
 					<table cellpadding="10">
 						<tr>

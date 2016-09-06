@@ -4242,7 +4242,6 @@ input[type="submit"].btn.btn-mini {
 .navbar {
   *position: relative;
   *z-index: 2;
-  margin-bottom: 20px;
   overflow: visible;
 }
 
@@ -6193,3 +6192,5 @@ a.badge:hover {
 .affix {
   position: fixed;
 }
+
+

@@ -244,9 +244,17 @@ ul.header-menu {
 
 .coluna1TabelaPrincipal {
 	height:1000px;
-	width:20%;
-	background: #1f3c58;
+	width:15%;
+	background: black;
 }
 .coluna2TabelaPrincipal{
+	
+}
+
+.menuUsuario{
+	background: white;
+}
+
+.menuCompartilhamento{
 	
 }
