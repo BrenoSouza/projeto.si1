@@ -3,6 +3,7 @@ package lexis.models;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
+import java.util.TreeMap;
 
 public class Explorer implements Comparable<Explorer> {
 	
@@ -10,6 +11,7 @@ public class Explorer implements Comparable<Explorer> {
 	private Folder root;
 	private Stack<Folder> stackFolder;
 	
+	private TreeMap<String, List<File>> sharedFiles;
 
 	
 	
@@ -25,6 +27,30 @@ public class Explorer implements Comparable<Explorer> {
 		stackFolder = new Stack<Folder>();
 		stackFolder.push(root);
 		
+		sharedFiles = new TreeMap<String, List<File>>();
+		
+	}
+	
+	/**
+	 * Adiciona arquivos de terceiros para esse explorer.
+	 * @param owner Criador do arquivo.
+	 * @param file Arquivo a ser compartilhado
+	 */
+	public void addSharedFile(String owner, File file) {
+		if(!sharedFiles.containsKey(owner)) {
+			sharedFiles.put(owner, new ArrayList<File>());
+		}
+		
+		sharedFiles.get(owner).add(file);
+	}
+	
+	
+	public TreeMap<String, List<File>> getSharedFiles() {
+		return sharedFiles;
+	}
+	
+	public void setSharedFiles(TreeMap<String, List<File>> sharedFiles) {
+		this.sharedFiles = sharedFiles;
 	}
 	
 	public Folder goUp() {
