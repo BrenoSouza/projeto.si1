@@ -37,28 +37,12 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     $scope.addFolder = function(nome) {
         var nome = prompt("Nome da pasta:");
 
-        //if (name.length != 0) {
-			//$http.get("http://localhost:8080/home/newFolder/" + name).success(function(data, status) {
-				//loadingFolder();
-    		//});
-    	//}   
-    	//else {
-    		//alert("Nome não pode ser vazio!");
-    	//}
-
         var folder = {
             	name:nome,
             	
-            	Permission: {
-                
-            		value:"private"
-            			
-            	},
-            	
-            	path: [],
-            	
+            	permission: "private",
+            	            	
             	dateCreation: new Date()
-
         };
 
         console.log(folder);
