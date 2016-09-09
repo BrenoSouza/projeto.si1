@@ -22,11 +22,11 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     	$http.get("http://localhost:8080/home/explorer").success(function(data, status) {
     		
     		for (var int = 0; int < data.folderDirectory.length; int++) {
-				$scope.arquivos.push(folderDirectory[i]);
+				$scope.arquivos.push(data.folderDirectory[i]);
 			}
     		
     		for (var int = 0; int < data.fileDirectory.length; int++) {
-				$scope.arquivos.push(fileDirectory[i]);
+				$scope.arquivos.push(data.fileDirectory[i]);
 			}
     		
     	});
