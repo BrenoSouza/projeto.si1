@@ -20,7 +20,15 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     
     var loadingFolder = function() {
     	$http.get("http://localhost:8080/home/explorer").success(function(data, status) {
-    		$scope.arquivos = data.folderDirectory;
+    		
+    		for (var int = 0; int < data.folderDirectory.length; int++) {
+				$scope.arquivos.push(folderDirectory[i]);
+			}
+    		
+    		for (var int = 0; int < data.fileDirectory.length; int++) {
+				$scope.arquivos.push(fileDirectory[i]);
+			}
+    		
     	});
     };
     
@@ -58,13 +66,13 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     $scope.addTxt = function() {
         var nome = window.prompt("Nome da arquivo:");
 
-        if(name.length === 0){
+        if(nome.length === 0){
             alert("O arquivo nao pode ser criado, nome vazio!")
         } else {
             var date = new Date();
         	
         	var file = {
-        		name: nome,
+        		fileName: nome,
         		
         		type: "MD",
         		
