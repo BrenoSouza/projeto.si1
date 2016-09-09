@@ -1,6 +1,15 @@
 package lexis.controllers;
 
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -13,6 +22,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lexis.models.DataBase;
 import lexis.models.Explorer;
@@ -85,9 +100,25 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "newFolder", method = RequestMethod.POST)
-	public void newFolder(@RequestBody Folder folder) {
-		explorer.currentFolder().getFolderDirectory().add(folder);
+	public void newFolder(@RequestBody Object json) {	
+		Map<String, Object> map = jsonToMap(json);
+		
+		String name = (String) map.get("name");
+		Permission permission = Permission.create((String) map.get("permission"));	
+		String date = (String) map.get("dateCreation");
+		
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		LocalDateTime dateCreation = LocalDateTime.parse(date, formatter);
+		
+		
+		System.out.println(name);
+		System.out.println(permission);
+		System.out.println(dateCreation);
+		
+		explorer.currentFolder().addFolder(name, permission, dateCreation);
 	}
+
+	
 
 	@RequestMapping(value = "newFile", method = RequestMethod.POST)
 	public File newFile(@RequestBody File file){
@@ -140,9 +171,30 @@ public class HomeController {
 	public Explorer getExplorer(){
 		return explorer;
 	}
+	
 	public void setExplorer(){
-		
 		this.explorer = DataBase.getInstance().getUser(userLogged().getUsername());
+	}
+	
+	private Map<String, Object> jsonToMap(Object json) {
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			String jsonToString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(json);
+		
+			Map<String, Object> map = new HashMap<String, Object>();
+
+			// convert JSON string to Map
+			map = mapper.readValue(jsonToString, new TypeReference<Map<String, String>>(){});
+			return map;
+
+		} catch (JsonGenerationException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 }
