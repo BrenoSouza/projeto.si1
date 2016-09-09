@@ -12,6 +12,11 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     
     $scope.deletedFilesAndFolders = [];
     
+    console.log($scope.arquivos);
+    console.log($scope.myFilesAndFolders);
+    console.log($scope.mySharedFilesAndFolders);
+    console.log($scope.filesAndFoldersSharedWithMe);
+    
     
     var loadingFolder = function() {
     	$http.get("http://localhost:8080/home/explorer").success(function(data, status) {
@@ -37,15 +42,15 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     $scope.addFolder = function(nome) {
         var nome = prompt("Nome da pasta:");
 
+        var date = new Date();
+
         var folder = {
             	name:nome,
             	
             	permission: "private",
             	            	
-            	dateCreation: new Date()
-        };
-
-        console.log(folder);
+            	dateCreation: date.toISOString().substring(0, 10) + " " + date.toString().substring(16, 25)
+         };
         
         $http.post('http://localhost:8080/home/newFolder', folder).success(function(data, status) {
         	
@@ -56,13 +61,27 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
 
 
     $scope.addTxt = function() {
-        var name = window.prompt("Nome da arquivo:");
+        var nome = window.prompt("Nome da arquivo:");
 
         if(name.length === 0){
             alert("O arquivo nao pode ser criado, nome vazio!")
         } else {
-        	$http.get("http://localhost:8080/home/newFile/" + name + "/" + "MD").success(function(data, status) {
-				loadingFolder();
+        	
+        	var file = {
+        		name: nome,
+        		
+        		type: "MD",
+        		
+        		permission: "private",
+        		
+            	dateCreation: new Date()
+        			
+        	}
+
+			console.log(file);
+        	
+        	$http.post("http://localhost:8080/home/newFile", file).success(function(data, status) {
+        		loadingFolder();
     		});
         }
         console.log($scope.arquivos);
