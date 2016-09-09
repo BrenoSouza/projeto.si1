@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -62,7 +63,7 @@ public class IndexController {
 	 *         com a mensagem de erro.
 	 */
 	@RequestMapping(value = "userRegister", method = RequestMethod.POST) // produces = "application/json"
-	public ModelAndView userRegister(User userRegister, RedirectAttributes attributes) {
+	public ModelAndView userRegister(@RequestBody User userRegister, RedirectAttributes attributes) {
 		
 		ModelAndView register = new ModelAndView("redirect:login");
 		
