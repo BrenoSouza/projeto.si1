@@ -110,31 +110,33 @@ public class HomeController {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		LocalDateTime dateCreation = LocalDateTime.parse(date, formatter);
 		
-		
-		System.out.println(name);
-		System.out.println(permission);
-		System.out.println(dateCreation);
-		
 		explorer.currentFolder().addFolder(name, permission, dateCreation);
 	}
 
 	
 
 	@RequestMapping(value = "newFile", method = RequestMethod.POST)
-	public File newFile(@RequestBody File file){
-		/*File fileTemp;
-		if(fileType.equals("txt")){
-			fileTemp = explorer.openFile(fileName,Type.TXT);
-		}else{
-			fileTemp = explorer.openFile(fileName,Type.MD);
-		}*/
-		return EditorController.fileEditor(explorer,file);
+	public void newFile(@RequestBody Object json){
+		Map<String, Object> map = jsonToMap(json);
+		
+		String name = (String) map.get("fileName");
+		Permission permission = (Permission) map.get("permission");
+		Type type = Type.valueOf((String) map.get("type"));
+		String date = (String) map.get("dateCreation");
+		
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		LocalDateTime dateCreation = LocalDateTime.parse(date, formatter);
+		
+		explorer.currentFolder().addFile(name, type, permission, dateCreation);
 	}
 
 	@RequestMapping(value = "renameFolder",method = RequestMethod.POST)
-	public String renameFolder(@RequestBody String[] names) {
-		explorer.renameAFolder(names[0],names[1]);
-		return "pasta renomeada com sucesso, antigo nome: "+ names[0] +" novo nome:" + names[1];
+	public String renameFolder(@RequestBody Object json) {
+		Map<String, Object> map = jsonToMap(json);
+		String oldName = (String) map.get("oldName");
+		String newName = (String) map.get("newName");
+		explorer.renameAFolder(oldName,newName);
+		return "pasta renomeada com sucesso, antigo nome: "+ oldName +" novo nome:" + newName;
 	}
 	
 	@RequestMapping(value = "renameFile",method = RequestMethod.POST)
@@ -148,7 +150,9 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "deleteFolder", method = RequestMethod.POST)
-	public String deleteFolder(@RequestBody String folderName) {
+	public String deleteFolder(@RequestBody Object json) {
+		Map<String, Object> map = jsonToMap(json);
+		String folderName = (String) map.get("folderName");
 		explorer.removeFolder(folderName);
 		return "pasta: "+ folderName +" deletada com sucesso";
 	}

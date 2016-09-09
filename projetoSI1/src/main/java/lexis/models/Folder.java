@@ -119,6 +119,12 @@ public class Folder implements FileAndFolder {
 		this.folderDirectory.add(temp);
 	}
 	
+	public void addFile(String name,Type type,Permission permission,LocalDateTime dateCreation){
+		List<String> newPath = getPathWithThisFolder();
+		File fileTemp = new File(name,type,permission,newPath,dateCreation);
+		this.fileDirectory.add(fileTemp);
+	}
+	
 
 	
 
