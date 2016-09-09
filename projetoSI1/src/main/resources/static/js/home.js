@@ -56,13 +56,27 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
 
 
     $scope.addTxt = function() {
-        var name = window.prompt("Nome da arquivo:");
+        var nome = window.prompt("Nome da arquivo:");
 
         if(name.length === 0){
             alert("O arquivo nao pode ser criado, nome vazio!")
         } else {
-        	$http.get("http://localhost:8080/home/newFile/" + name + "/" + "MD").success(function(data, status) {
-				loadingFolder();
+        	
+        	var file = {
+        		name: nome,
+        		
+        		type: "MD",
+        		
+        		permission: "private",
+        		
+            	dateCreation: new Date()
+        			
+        	}
+
+			console.log(file);
+        	
+        	$http.post("http://localhost:8080/home/newFile", file).success(function(data, status) {
+        		loadingFolder();
     		});
         }
         console.log($scope.arquivos);
