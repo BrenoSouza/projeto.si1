@@ -88,14 +88,16 @@ public class HomeController {
 		return folderTemp;
 	}
 	
-	@RequestMapping(value = "viewFile/{fileName}/{fileType}", method = RequestMethod.GET)
-	public File viewFile(@PathVariable String fileName,@PathVariable String fileType) {
+	@RequestMapping(value = "viewFile", method = RequestMethod.POST)
+	public File viewFile(@RequestBody Object json) {
+		Map<String, Object> map = jsonToMap(json);
+		
 		File fileTemp;
-		if(fileType.equals("txt")){
-			fileTemp = explorer.openFile(fileName,Type.TXT);
-		}else{
-			fileTemp = explorer.openFile(fileName,Type.MD);
-		}
+		
+		String fileName = (String) map.get("fileName");
+		Type type = Type.valueOf((String) map.get("type"));
+		
+		fileTemp = explorer.openFile(fileName,Type.TXT);
 		return EditorController.fileEditor(explorer,fileTemp);
 	}
 
