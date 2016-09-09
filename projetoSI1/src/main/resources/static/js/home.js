@@ -21,12 +21,14 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     var loadingFolder = function() {
     	$http.get("http://localhost:8080/home/explorer").success(function(data, status) {
     		
+    		$scope.arquivos = [];
+    		
     		for (var int = 0; int < data.folderDirectory.length; int++) {
-				$scope.arquivos.push(data.folderDirectory[i]);
+				$scope.arquivos.push(data.folderDirectory[int]);
 			}
     		
     		for (var int = 0; int < data.fileDirectory.length; int++) {
-				$scope.arquivos.push(data.fileDirectory[i]);
+				$scope.arquivos.push(data.fileDirectory[int]);
 			}
     		
     	});
@@ -197,5 +199,21 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     $scope.showDeletedFilesAndFolders = function() {
     	$showOnTable($scope.deletedFilesAndFolders);
     }
+    
+    $scope.viewFile = function(arquivo) {
+
+    	var file = {
+    		fileName: arquivo.name,
+    		type: arquivo.type
+    		
+    	}
+    	
+    	$http.post("http://localhost:8080/home/viewFile", file).success(function(data, status) {
+    		alert(file.fileName);
+    	});
+    	
+    	
+    }
+    
     
 });    
