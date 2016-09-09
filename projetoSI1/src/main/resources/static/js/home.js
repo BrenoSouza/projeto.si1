@@ -20,17 +20,12 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     
     var loadingFolder = function() {
     	$http.get("http://localhost:8080/home/explorer").success(function(data, status) {
-
-    		$scope.myFilesAndFolders = data.folderDirectory;
-
-    		for (var i = data.fileDirectory.length - 1; i >= 0; i--) {
-    			$scope.myFilesAndFolders.push(data.fileDirectory[i]);
-    		}
+    		$scope.arquivos = data.folderDirectory;
     	});
     };
     
-    $scope.showOnTable = function(list) {
-    	for (var i = 0; i < list.length; i++) {
+    $scope.showOnTable = function(lista) {
+    	for (var i = 0; i < lista.length; i++) {
         	$scope.arquivos.push(lista[i]);
 		}
     };
@@ -49,12 +44,12 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
             	
             	permission: "private",
             	            	
-            	dateCreation: date.toISOString().substring(0, 10) + " " + date.toString().substring(16, 25)
+            	dateCreation: date.toISOString().substring(0, 10) + " " + date.toString().substring(16, 24)
          };
         
         $http.post('http://localhost:8080/home/newFolder', folder).success(function(data, status) {
-        	
-        	console.log(folder);
+            loadingFolder();
+
         });
 
 	};
@@ -66,6 +61,7 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
         if(name.length === 0){
             alert("O arquivo nao pode ser criado, nome vazio!")
         } else {
+            var date = new Date();
         	
         	var file = {
         		name: nome,
@@ -74,7 +70,7 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
         		
         		permission: "private",
         		
-            	dateCreation: new Date()
+            	dateCreation: date.toISOString().substring(0, 10) + " " + date.toString().substring(16, 24)
         			
         	}
 
