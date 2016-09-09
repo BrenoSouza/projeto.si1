@@ -120,7 +120,7 @@ public class HomeController {
 		Map<String, Object> map = jsonToMap(json);
 		
 		String name = (String) map.get("fileName");
-		Permission permission = (Permission) map.get("permission");
+		Permission permission = Permission.create((String) map.get("permission"));
 		Type type = Type.valueOf((String) map.get("type"));
 		String date = (String) map.get("dateCreation");
 		
