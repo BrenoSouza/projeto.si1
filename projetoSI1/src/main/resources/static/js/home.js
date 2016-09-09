@@ -170,13 +170,13 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     } 
     
     
-    $scope.showSharedFilesWithMe() = function() {
+    $scope.showSharedFilesWithMe = function() {
     	//Vai alterar o $scope.arquivos para a lista de arquivos que foram compartilhados com o usuario
     	$scope.showOnTable($scope.filesAndFoldersSharedWithMe);
     	
     }
     
-    $scope.showMySharedFiles() = function() {
+    $scope.showMySharedFiles = function() {
     	//Vai alterar o $scope.arquivos para a lista de arquivos que o usuario compartilhou com outros usuarios    	
     	for (var i = 0; i < $scope.arquivos.length; i++) {
 			if ($scope.arquivos[i].permission === "public") {
