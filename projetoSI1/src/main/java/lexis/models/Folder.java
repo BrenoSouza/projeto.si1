@@ -441,7 +441,7 @@ public class Folder implements FileAndFolder {
 	}
 	
 	public List<String> getPathWithThisFolder() {
-		List<String> newPath = path.subList(0, path.size());
+		List<String> newPath = new ArrayList<String>(path.subList(0, path.size()));
 		newPath.add(this.getName());
 		return newPath;
 	}
