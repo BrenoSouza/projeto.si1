@@ -53,7 +53,7 @@ public class Folder implements FileAndFolder {
 		folderDirectory = new ArrayList<Folder>();
 	
 		if(!Util.isAValidName(name))
-			name = getNewName(UNAMED_FOLDER);
+			name = getNewFoldersName(UNAMED_FOLDER);
 		
 		if(permission == null)
 			permission = Permission.PRIVATE;
@@ -82,7 +82,7 @@ public class Folder implements FileAndFolder {
 		List<String> newPath = getPathWithThisFolder();
 		
 		if(containsFolder(name)) 
-			temp = new Folder(getNewName(name), permission, newPath, dateCreation);
+			temp = new Folder(getNewFoldersName(name), permission, newPath, dateCreation);
 		 else
 			temp = new Folder(name, permission, newPath, dateCreation);
 
@@ -112,7 +112,7 @@ public class Folder implements FileAndFolder {
 		List<String> newPath = getPathWithThisFolder();
 		
 		if(containsFolder(name)) 
-			temp = new Folder(getNewName(name), permission, newPath, dateCreation);
+			temp = new Folder(getNewFoldersName(name), permission, newPath, dateCreation);
 		 else
 			temp = new Folder(name, permission, newPath, dateCreation);
 
@@ -123,7 +123,7 @@ public class Folder implements FileAndFolder {
 		List<String> newPath = getPathWithThisFolder();
 		File fileTemp;
 		if(getFile(name, type) != null) {
-			fileTemp = new File(getNewName(name),type,permission,newPath,dateCreation);
+			fileTemp = new File(getNewFilesName(name, type),type,permission,newPath,dateCreation);
 			this.fileDirectory.add(fileTemp);
 			
 		} else {
@@ -358,6 +358,10 @@ public class Folder implements FileAndFolder {
 	public boolean containsFolder(String name) {
 		return getFolder(name) != null;
 	}
+	
+	private boolean containsFile(String name, Type type) {
+		return getFile(name, type) != null;
+	}
 
 	@Override
 	public LocalDateTime getDateCreation() {
@@ -402,7 +406,7 @@ public class Folder implements FileAndFolder {
 	public void setName(String name) {
 		
 		if(!Util.isAValidName(name))
-			name = getNewName(UNAMED_FOLDER);
+			name = getNewFoldersName(UNAMED_FOLDER);
 		
 		this.name = name;
 	}
@@ -439,11 +443,25 @@ public class Folder implements FileAndFolder {
 	}
 
 
-	public String getNewName(String name) {
+	public String getNewFoldersName(String name) {
 		Integer countSameNameFolders = 0;
 		String auxName = name.substring(0);
 		
 		while(containsFolder(auxName)){
+			countSameNameFolders++;
+			auxName = name.substring(0) + " (" + countSameNameFolders.toString() + ")";
+			
+		}
+		
+		return auxName;
+	}
+	
+	
+	public String getNewFilesName(String name, Type type) {
+		Integer countSameNameFolders = 0;
+		String auxName = name.substring(0);
+		
+		while(containsFile(auxName, type)){
 			countSameNameFolders++;
 			auxName = name.substring(0) + " (" + countSameNameFolders.toString() + ")";
 			
