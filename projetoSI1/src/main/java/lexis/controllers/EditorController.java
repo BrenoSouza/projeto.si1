@@ -1,5 +1,7 @@
 package lexis.controllers;
 
+import java.time.LocalDateTime;
+
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +26,6 @@ public class EditorController {
 	@RequestMapping
 	public ModelAndView editor() {
 		ModelAndView editor;
-		System.out.println("arquivo2 :"+file);
 		if(file == null){
 			editor = new ModelAndView("/home");
 		}else{
@@ -41,9 +42,7 @@ public class EditorController {
 
 		String fileName = JsonUtil.getName();
 		Type type = JsonUtil.getType();
-		System.out.println(fileName+"/"+type);
 		this.file = explorer.getFile(fileName,type);
-		System.out.println("arquivo1 :"+file);
 	}
 	
 	@RequestMapping(value = "viewFile", method = RequestMethod.GET)
@@ -56,7 +55,8 @@ public class EditorController {
 		JsonUtil.json(json);
 		
 		String data = JsonUtil.getData();
-		file.setData(data );
+		LocalDateTime dateEdition = LocalDateTime.now();
+		file.setData(data, dateEdition);
 	}
 	
 	private User userLogged(){
