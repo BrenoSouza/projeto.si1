@@ -53,7 +53,7 @@ public class Folder implements FileAndFolder {
 		folderDirectory = new ArrayList<Folder>();
 	
 		if(!Util.isAValidName(name))
-			name = getANewName(UNAMED_FOLDER);
+			name = getNewName(UNAMED_FOLDER);
 		
 		if(permission == null)
 			permission = Permission.PRIVATE;
@@ -82,7 +82,7 @@ public class Folder implements FileAndFolder {
 		List<String> newPath = getPathWithThisFolder();
 		
 		if(containsFolder(name)) 
-			temp = new Folder(getANewName(name), permission, newPath, dateCreation);
+			temp = new Folder(getNewName(name), permission, newPath, dateCreation);
 		 else
 			temp = new Folder(name, permission, newPath, dateCreation);
 
@@ -112,7 +112,7 @@ public class Folder implements FileAndFolder {
 		List<String> newPath = getPathWithThisFolder();
 		
 		if(containsFolder(name)) 
-			temp = new Folder(getANewName(name), permission, newPath, dateCreation);
+			temp = new Folder(getNewName(name), permission, newPath, dateCreation);
 		 else
 			temp = new Folder(name, permission, newPath, dateCreation);
 
@@ -121,8 +121,18 @@ public class Folder implements FileAndFolder {
 	
 	public void addFile(String name,Type type,Permission permission,LocalDateTime dateCreation){
 		List<String> newPath = getPathWithThisFolder();
-		File fileTemp = new File(name,type,permission,newPath,dateCreation);
-		this.fileDirectory.add(fileTemp);
+		File fileTemp;
+		if(getFile(name, type) != null) {
+			fileTemp = new File(getNewName(name),type,permission,newPath,dateCreation);
+			this.fileDirectory.add(fileTemp);
+			
+		} else {
+			
+			fileTemp = new File(name,type,permission,newPath,dateCreation);
+			this.fileDirectory.add(fileTemp);
+		}
+		
+		
 	}
 	
 
@@ -392,7 +402,7 @@ public class Folder implements FileAndFolder {
 	public void setName(String name) {
 		
 		if(!Util.isAValidName(name))
-			name = getANewName(UNAMED_FOLDER);
+			name = getNewName(UNAMED_FOLDER);
 		
 		this.name = name;
 	}
@@ -429,7 +439,7 @@ public class Folder implements FileAndFolder {
 	}
 
 
-	public String getANewName(String name) {
+	public String getNewName(String name) {
 		Integer countSameNameFolders = 0;
 		String auxName = name.substring(0);
 		
