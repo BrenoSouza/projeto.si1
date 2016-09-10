@@ -2,6 +2,7 @@ package lexis.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,11 +12,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lexis.models.User;
 import lexis.services.UserServiceDAO;
-import lexis.util.UserRegisterHelper;
+import lexis.util.UserLoginService;
+import lexis.util.UserRegisterService;
 
 @Controller
 public class IndexController {
-	
+
 	// objeto responsavel por manipular User
 	private UserServiceDAO userService;
 
@@ -23,7 +25,7 @@ public class IndexController {
 	public void setUserService(UserServiceDAO userService) {
 		this.userService = userService;
 	}
-	
+
 	/**
 	 * Metodo responsavel pelo index.html
 	 * 
@@ -35,6 +37,10 @@ public class IndexController {
 		if(user != null){
 			index.setViewName("/home");
 		}
+
+		// cria um novo objeto que aponta para "index.html"
+		
+
 		// adicionar um User com a chave "usercadastro"
 		index.addObject("userRegister", new User());
 
@@ -57,18 +63,19 @@ public class IndexController {
 	 *         com a mensagem de erro.
 	 */
 	@RequestMapping(value = "userRegister", method = RequestMethod.POST) // produces = "application/json"
-	public ModelAndView userRegister(User userRegister, RedirectAttributes attributes) {
+	public ModelAndView userRegister(@RequestBody User userRegister, RedirectAttributes attributes) {
 		
 		ModelAndView register = new ModelAndView("redirect:login");
-		UserRegisterHelper userRegisterHelper = new UserRegisterHelper(userService);
+		
+		// cria um objeto responsavel pelo cadastro do usuario
+		UserRegisterService userRegisterService = new UserRegisterService(userService);
 		
 		try {
-			
 			// verifica se a erros no usuario
-			userRegisterHelper.hasErrorIn(userRegister);
+			userRegisterService.hasErrorIn(userRegister);
 
 			// caso nao haja erro registra o usuario
-			userRegisterHelper.RegisterUser(userRegister);
+			userRegisterService.RegisterUser(userRegister);
 
 			attributes.addFlashAttribute("mensagemsuccess", "cadastro efetuado com sucesso");
 			
@@ -96,11 +103,37 @@ public class IndexController {
 	 * @return Retona a home.html se nao houver erros,caso contrario retorna a
 	 *         index.html com a mensagem de erro.
 	 */
-	@RequestMapping("/home")
+	@RequestMapping("/home")//(value = "userlogin", method = RequestMethod.POST)
 	public ModelAndView userLogin(User userLogin, RedirectAttributes attributes) {
 		ModelAndView login = new ModelAndView();
+		
+		//login.addObject("user", userTemp);
 		login.setViewName("/home");
 		return login;
+		// cria um objeto resposavel pelo login do usuario
+		/*UserLoginService userLoginService = new UserLoginService(userService);
+
+		try {
+			// tenta adicionar user interno a chave "user", aprtir do userLogin
+			// passado
+			login.addObject("user", userLoginService.getUser(userLogin));
+
+			// caso nao de nenhum erro retorna para o home.html
+			login.setViewName("home");
+
+			return login;
+
+			// caso haja erros de validacao ou sintax no obejeto passado:
+		} catch (Exception e) {
+			// retorna a pagina incial
+			login.setViewName("redirect:/");
+
+			// com as mensagens de erros
+			attributes.addFlashAttribute("mensagem", e.getMessage());
+
+			return login;
+		}*/
+
 	}
 
 }
