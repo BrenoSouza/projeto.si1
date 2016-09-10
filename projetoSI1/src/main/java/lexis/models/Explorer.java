@@ -105,6 +105,10 @@ public class Explorer implements Comparable<Explorer> {
 		return stackFolder.peek().getOrCreateFile(name, type);
 	}
 	
+	public File getFile(String name, Type type) {
+		return stackFolder.peek().getFile(name, type);
+	}
+	
 	public boolean removeFolder(String name) {
 		return stackFolder.peek().removeFolder(name);
 	}
