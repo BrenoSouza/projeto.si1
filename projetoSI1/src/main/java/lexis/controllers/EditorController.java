@@ -32,9 +32,8 @@ public class EditorController {
 	
 	@RequestMapping
 	public ModelAndView editor() {
-		setExplorer();
 		ModelAndView editor;
-		if(fileTemp == null){
+		if(false){
 			editor = new ModelAndView("/home");
 		}else{
 			editor = new ModelAndView("/editor");
@@ -43,16 +42,17 @@ public class EditorController {
 	}
 	
 	@RequestMapping(value = "viewFile", method = RequestMethod.POST)
-	public File viewFile(@RequestBody Object json) {
+	public void viewFile(@RequestBody Object json) {
 		Map<String, Object> map = jsonToMap(json);
 		
+		setExplorer();
 		
 		
 		String fileName = (String) map.get("fileName");
 		Type type = Type.valueOf((String) map.get("type"));
 		
 		this.fileTemp = explorer.openFile(fileName,Type.TXT);
-		return EditorController.fileEditor(explorer,fileTemp);
+		//return EditorController.fileEditor(explorer,fileTemp);
 	}
 	
 	@RequestMapping(value = "viewFile", method = RequestMethod.GET)
