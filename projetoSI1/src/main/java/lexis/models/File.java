@@ -97,9 +97,11 @@ public class File implements FileAndFolder {
 	 * Atualiza o coteudo do arquivo.
 	 * 
 	 */
-	public void setData(String data) {
-		if(data != null)
+	public void setData(String data, LocalDateTime dateEdition) {
+		if(data != null && dateEdition != null) {
 			this.data = data;
+			this.dateEdition = dateEdition;
+		}
 	}
 
 	@Override
