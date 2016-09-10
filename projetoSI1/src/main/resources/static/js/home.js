@@ -52,7 +52,7 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
         var folder = {
             	name:nome,
             	
-            	permission: "private",
+            	Permission: "private",
             	            	
             	dateCreation: date.toISOString().substring(0, 10) + " " + date.toString().substring(16, 24)
          };
@@ -74,11 +74,11 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
             var date = new Date();
         	
         	var file = {
-        		fileName: nome,
+        		name: nome,
         		
         		type: "MD",
         		
-        		permission: "private",
+        		Permission: "private",
         		
             	dateCreation: date.toISOString().substring(0, 10) + " " + date.toString().substring(16, 24)
         			
@@ -202,7 +202,7 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     $scope.viewFile = function(arquivo) {
 
     	var file = {
-    		fileName: arquivo.name,
+    		name: arquivo.name,
     		type: arquivo.type
     		
     	}
