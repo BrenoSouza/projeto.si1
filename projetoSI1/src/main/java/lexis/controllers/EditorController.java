@@ -22,18 +22,20 @@ import lexis.models.File;
 import lexis.models.Folder;
 import lexis.models.Type;
 import lexis.models.User;
+import lexis.util.JsonUtil;
 
 @RestController
 @RequestMapping("/editor")
 public class EditorController {
 
 	private Explorer explorer;
-	private File fileTemp;
+	private static File file;
 	
 	@RequestMapping
 	public ModelAndView editor() {
 		ModelAndView editor;
-		if(false){
+		System.out.println("arquivo2 :"+file);
+		if(file == null){
 			editor = new ModelAndView("/home");
 		}else{
 			editor = new ModelAndView("/editor");
@@ -43,29 +45,23 @@ public class EditorController {
 	
 	@RequestMapping(value = "viewFile", method = RequestMethod.POST)
 	public void viewFile(@RequestBody Object json) {
-		Map<String, Object> map = jsonToMap(json);
+		JsonUtil.json(json);
 		
 		setExplorer();
 		
 		
-		String fileName = (String) map.get("fileName");
-		Type type = Type.valueOf((String) map.get("type"));
-		
-		this.fileTemp = explorer.openFile(fileName,Type.TXT);
-		//return EditorController.fileEditor(explorer,fileTemp);
+		String fileName = JsonUtil.getName();
+		Type type = JsonUtil.getType();
+		System.out.println(fileName+"/"+type);
+		this.file = explorer.getFile(fileName,type);
+		System.out.println("arquivo1 :"+file);
 	}
 	
 	@RequestMapping(value = "viewFile", method = RequestMethod.GET)
 	public File viewFile() {
-		return fileTemp;
-	}
-	
-
-	@RequestMapping("fileEditor")
-	public static File fileEditor(Explorer explorer,File file) {
-		ModelAndView editor = new ModelAndView("/editor");
 		return file;
 	}
+	
 	
 	private Map<String, Object> jsonToMap(Object json) {
 		ObjectMapper mapper = new ObjectMapper();
