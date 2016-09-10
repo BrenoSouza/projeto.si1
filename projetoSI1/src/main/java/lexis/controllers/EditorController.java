@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,6 +16,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import lexis.models.DataBase;
 import lexis.models.Explorer;
 import lexis.models.File;
 import lexis.models.Folder;
@@ -30,6 +32,7 @@ public class EditorController {
 	
 	@RequestMapping
 	public ModelAndView editor() {
+		setExplorer();
 		ModelAndView editor;
 		if(fileTemp == null){
 			editor = new ModelAndView("/home");
@@ -83,5 +86,12 @@ public class EditorController {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	private User userLogged(){
+		return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	}
+	
+	public void setExplorer(){
+		this.explorer = DataBase.getInstance().getUser(userLogged().getUsername());
 	}
 }
