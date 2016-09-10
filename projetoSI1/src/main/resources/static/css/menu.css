@@ -1,0 +1,38 @@
+@CHARSET "ISO-8859-1";
+
+#menuButton{
+	position: absolute;
+	top: 10px;
+	left: 20px;
+	width: 20px;
+	height: 24px;
+	background: #191919;
+	border: 0px;
+	border-radius: 0px;
+	padding: 2px 5px;
+	cursor: pointer;
+	transition: border 0.3s linear 0s;
+}
+
+#menuButton:hover div{
+	background: #1f3c58;
+}
+#menuButton > div{
+	width: 20px;
+	height: 4px;
+	background: #DDD;
+	margin: 3px 0px;
+	border-radius: 4px;
+	transition: background 0.3s linear 0s;
+}
+#menu{
+	position: absolute;
+	left: 0px;
+	top: 50px;
+	width: 260px;
+	height: 125px;
+	background: #333;
+	opacity: 0;
+	transition: opacity 0.3s linear 0s, right 0s linear 0s;
+	cursor: pointer;
+}

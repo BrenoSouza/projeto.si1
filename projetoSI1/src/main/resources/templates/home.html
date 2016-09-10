@@ -18,11 +18,84 @@
 	th:href="@{css/bootstrap-responsive.css}" />
 <link rel="stylesheet" type="text/css" href="../static/css/style.css"
 	th:href="@{css/style.css}" />
-
-
+<link rel="stylesheet" type="text/css" href="../static/css/menu.css"
+	th:href="@{css/menu.css}" />
+<link rel="stylesheet" type="text/css" href="../static/css/dialogbox.css"
+	th:href="@{css/dialogbox.css}" />
 
 </head>
 <body ng-controller="listaArquivosCtrl">
+
+	<div id="menuButton" onmouseover = "openMenu()">
+	  <div></div>
+	  <div></div>
+	  <div></div>
+	</div>
+	<div id="menuButton" onmouseover = "openMenu()">
+	  <div></div>
+	  <div></div>
+	  <div></div>
+	</div>
+	<div id="menu" onmouseleave="closeMenu()">
+		<ul>
+			<li>
+				<a ng-click = "InicialFolder()" align = "center">
+					<span>
+						<span>
+							Meus Arquivos
+						</span>
+					</span>
+				</a>
+			</li>
+			<li>	
+				<a ng-click = "sharedWithMeFolder()">
+					<span>
+						<span>
+							Arquivos compartilhados comigo
+						</span>
+					</span>
+				</a>
+				
+			</li>
+			
+			<li>
+				<a ng-click = "sharedFolder()">
+					<span>
+						<span>
+							Meus arquivos compartilhados
+						</span>
+					</span>
+				</a>
+			</li>
+			<li>	
+				<a ng-click = "myAccount()">
+					<span>
+						<span>
+							Minha Conta
+						</span>
+					</span>
+				</a>
+			</li>
+			<li>	
+				<a ng-click = "trashFolder()">
+					<span>
+						<span>
+							Lixeira
+						</span>
+					</span>
+				</a>
+			</li>
+		</ul>
+	</div>
+
+	<div id="dialogoverlay"></div>
+	<div id="dialogbox">
+	  <div>
+	    <div id="dialogboxhead"></div>
+	    <div id="dialogboxbody"></div>
+	    <div id="dialogboxfoot"></div>
+	  </div>
+	</div> 
 
 	<div class="navbar navbar-inverse">
 		<div class="navbar-inner">
@@ -33,7 +106,7 @@
 					<span class="icon-bar"></span>
 				</a> 
 
-				<a class="brand topbar-links" style="margin-left: 0.5%">
+				<a class="brand topbar-links" style="margin-left: 2%">
 						<input style="height:20px; " id="home" type="image" src="../static/images/lexisName.png"
 								th:src="@{images/lexisName.png}" ng-click="initialFolder()"></input>
 				</a>
@@ -200,6 +273,8 @@
 	<script th:src="@{/js/angular.min.js}"
 		src="../static/js/angular.min.js"></script>
 	<script th:src="@{/js/home.js}" src="../static/js/home.js"></script>
+	<script th:src="@{/js/menu.js}" src="../static/js/menu.js"></script>
+	<script th:src="@{/js/dialogbox.js}" src="../static/js/dialogbox.js"></script>
 
 	<div class="footer">
 		<div class="row-fluid">
