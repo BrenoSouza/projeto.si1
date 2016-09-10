@@ -11,7 +11,8 @@ public class Explorer implements Comparable<Explorer> {
 	private Folder root;
 	private Stack<Folder> stackFolder;
 	
-	private TreeMap<String, List<File>> sharedFiles;
+	private TreeMap<String, List<SharedFileReadAndWrite>> sharedFilesReadAndWrite;
+	private TreeMap<String, List<SharedFileReadOnly>> s;
 
 	
 	
@@ -27,30 +28,51 @@ public class Explorer implements Comparable<Explorer> {
 		stackFolder = new Stack<Folder>();
 		stackFolder.push(root);
 		
-		sharedFiles = new TreeMap<String, List<File>>();
+		sharedFilesReadAndWrite = new TreeMap<String, List<SharedFileReadAndWrite>>();
+		s = new TreeMap<String, List<SharedFileReadOnly>>();
 		
 	}
 	
 	/**
-	 * Adiciona arquivos de terceiros para esse explorer.
-	 * @param owner Criador do arquivo.
+	 * Adiciona arquivos de terceiros para esse explorer. O dono 
+	 * desse explorer tem permissao apenas para ver alguns 
+	 * atributos do arquivo e para  ver e alterar o conteudo 
+	 * do arquivo.
+	 * @param owner Criador/dono do arquivo.
 	 * @param file Arquivo a ser compartilhado
 	 */
-	public void addSharedFile(String owner, File file) {
-		if(!sharedFiles.containsKey(owner)) {
-			sharedFiles.put(owner, new ArrayList<File>());
+	public void addSharedFileReadAndWrite(File file, String owner) {
+		if(!sharedFilesReadAndWrite.containsKey(owner)) {
+			sharedFilesReadAndWrite.put(owner, new ArrayList<SharedFileReadAndWrite>());
 		}
 		
-		sharedFiles.get(owner).add(file);
+		SharedFileReadAndWrite fileReadAndWrite = new SharedFileReadAndWrite(file, owner);
+		sharedFilesReadAndWrite.get(owner).add(fileReadAndWrite);
+	}
+	
+	/**
+	 * Adiciona arquivos de terceiros para esse explorer. O dono 
+	 * desse explorer tem permissao apenas para ver alguns 
+	 * atributos do arquivo, como o conteudo, nome, entre outros.
+	 * @param owner Criador/dono do arquivo.
+	 * @param file Arquivo a ser compartilhado
+	 */
+	public void addSharedFileReadOnly(File file, String owner) {
+		if(!s.containsKey(owner)) {
+			s.put(owner, new ArrayList<SharedFileReadOnly>());
+		}
+		
+		SharedFileReadOnly fileReadOnly = new SharedFileReadOnly(file, owner);
+		s.get(owner).add(fileReadOnly);
 	}
 	
 	
-	public TreeMap<String, List<File>> getSharedFiles() {
-		return sharedFiles;
+	public TreeMap<String, List<SharedFileReadAndWrite>> getSharedFilesReadAndWrite() {
+		return sharedFilesReadAndWrite;
 	}
 	
-	public void setSharedFiles(TreeMap<String, List<File>> sharedFiles) {
-		this.sharedFiles = sharedFiles;
+	public TreeMap<String, List<SharedFileReadOnly>> getSharedFilesReadOnly() {
+		return s;
 	}
 	
 	public Folder goUp() {
