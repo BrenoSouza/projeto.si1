@@ -1,5 +1,7 @@
 var app = angular.module("listaArquivos", []);
 
+document.write(unescape("%3Cscript src='dialogbox.js' type='text/javascript'%3E%3C/script%3E"));
+
 app.controller("listaArquivosCtrl", function($scope, $http) {
     
     $scope.arquivos = [];
@@ -69,7 +71,7 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
         var nome = window.prompt("Nome da arquivo:");
 
         if(nome.length === 0){
-            alert("O arquivo nao pode ser criado, nome vazio!")
+            Alert.render("O arquivo não pode ser criado, nome vazio!", "Nome inválido")
         } else {
             var date = new Date();
         	
@@ -137,7 +139,7 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
         	});
     	}
     	else {
-    		alert("Nome não pode ser vazio!");
+    		Alert.render("Nome não pode ser vazio!" , "Nome inválido");
     	}
     	
     }
@@ -172,7 +174,7 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     		});
     	}
     	else {
-    		alert("Nome não pode ser vazio!!");
+    		Alert.render("Nome não pode ser vazio!!", "Nome inválido");
     		
     	}
     } 
@@ -208,7 +210,7 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     	}
     	
     	$http.post("http://localhost:8080/editor/viewFile", file).success(function(data, status) {
-    		alert(file.fileName);
+    		Alert.render(file.fileName, "");
     	});
     	
     	
