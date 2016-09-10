@@ -38,6 +38,7 @@ import lexis.models.Permission;
 import lexis.models.Type;
 import lexis.models.User;
 import lexis.services.UserServiceDAO;
+import lexis.util.JsonUtil;
 
 @RestController
 @RequestMapping("/home")
@@ -88,21 +89,11 @@ public class HomeController {
 		return folderTemp;
 	}
 	
-	@RequestMapping(value = "viewFile", method = RequestMethod.POST)
-	public File viewFile(@RequestBody Object json) {
-		Map<String, Object> map = jsonToMap(json);
-		
-		File fileTemp;
-		
-		String fileName = (String) map.get("fileName");
-		Type type = Type.valueOf((String) map.get("type"));
-		
-		fileTemp = explorer.openFile(fileName,Type.TXT);
-		return EditorController.fileEditor(explorer,fileTemp);
-	}
 
 	@RequestMapping(value = "newFolder", method = RequestMethod.POST)
 	public void newFolder(@RequestBody Object json) {	
+		JsonUtil jsons = new JsonUtil();
+		jsons.jsonToMap(json);
 		Map<String, Object> map = jsonToMap(json);
 		
 		String name = (String) map.get("name");
