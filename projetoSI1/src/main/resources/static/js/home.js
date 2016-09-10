@@ -84,13 +84,12 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
         			
         	}
 
-			console.log(file);
         	
         	$http.post("http://localhost:8080/home/newFile", file).success(function(data, status) {
+    			console.log(file);
         		loadingFolder();
     		});
         }
-        console.log($scope.arquivos);
     };
 
     $scope.sortBy = function(valor) {
@@ -208,7 +207,7 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     		
     	}
     	
-    	$http.post("http://localhost:8080/home/viewFile", file).success(function(data, status) {
+    	$http.post("http://localhost:8080/editor/viewFile", file).success(function(data, status) {
     		alert(file.fileName);
     	});
     	

@@ -38,7 +38,7 @@ import lexis.models.Permission;
 import lexis.models.Type;
 import lexis.models.User;
 import lexis.services.UserServiceDAO;
-import lexis.util.JsonUtil;
+//import lexis.util.JsonUtil;
 
 @RestController
 @RequestMapping("/home")
@@ -92,8 +92,8 @@ public class HomeController {
 
 	@RequestMapping(value = "newFolder", method = RequestMethod.POST)
 	public void newFolder(@RequestBody Object json) {	
-		JsonUtil jsons = new JsonUtil();
-		jsons.jsonToMap(json);
+		//JsonUtil jsons = new JsonUtil();
+		//jsons.jsonToMap(json);
 		Map<String, Object> map = jsonToMap(json);
 		
 		String name = (String) map.get("name");

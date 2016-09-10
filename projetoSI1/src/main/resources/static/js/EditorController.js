@@ -21,13 +21,11 @@ appE.controller("editorCtrl", function($scope, $http) {
 	}
 	
 	var getTxt = function() {
-        $http.get("http://localhost:8080/editor/fileEditor").success(function(data, status) {
+        $http.get("http://localhost:8080/editor/viewFile").success(function(data, status) {
 			$scope.file = data;
 			console.log("heitor e seu consolo")
 			console.log($scope.file);
     	});
     }
-	
-	getTxt();
-	
+		
 });
