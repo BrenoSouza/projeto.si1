@@ -1,7 +1,6 @@
-var appE = angular.module("editor", []);
+var app = angular.module("editor", []);
 
-
-appE.controller("editorCtrl", function($scope, $http) {
+app.controller("editorCtrl", function($scope, $http) {
 
 	$scope.file = {
 		
@@ -20,12 +19,13 @@ appE.controller("editorCtrl", function($scope, $http) {
 
 	}
 	
-	var getTxt = function() {
+	$scope.getTxt = function() {
         $http.get("http://localhost:8080/editor/viewFile").success(function(data, status) {
 			$scope.file = data;
 			console.log("heitor e seu consolo")
 			console.log($scope.file);
     	});
+        alert("nao funfaaaaaaa");
     }
 		
 });
