@@ -140,17 +140,18 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     }
     
     
-    $scope.deleteFile = function(fileName, fileType) {
+    $scope.deleteFile = function(arquivo) {
     	
     	var file = {
-    		name: fileName,
-    		type: fileType
+    		name: arquivo.name,
+    		type: arquivo.type
     	}
     	
     	$http.post("/home/deleteFile", file).success(function(data, status) {
-			loadingFolder();
+
     	});
-    	
+		loadingFolder();
+
     }
     
     $scope.renameFile = function(name, nName, type, nType){
