@@ -144,18 +144,27 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     	
     	
     	var decisao = Confirm.render("Excluir", "Deseja excluir o arquivo selecionado? ");
+    	alert(decisao);
     	
     	if(decisao) {
-    	
-    		var file = {
-    	    	name: arquivo.name,
-    	    	type: arquivo.type
+    		var file;
+    		
+    		if (arquivo.type === "folder") {
+    			file = {
+    				name: arquivo.name,
+    			}
+    		} else {
+    			file = {
+        			name: arquivo.name,
+        			type: arquivo.type
+        		}    			
     		}
     		
     	    $http.post("/home/deleteFile", file).success(function(data, status) {
     			
     	    });
-    		loadingFolder();
+    		
+    	    loadingFolder();
     	}
 
     }
