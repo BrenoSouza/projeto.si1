@@ -418,6 +418,22 @@ public class Folder implements FileAndFolder {
 		
 		this.path = path;
 	}
+	
+	@Override
+	public void setCellOfPath(int index, String newValue) {
+		if(newValue == null)
+			throw new NullPointerException();
+		
+		for(Folder child : folderDirectory) 
+			child.setCellOfPath(index, newValue);
+		
+		for(File child : fileDirectory) 
+			child.setCellOfPath(index, newValue);
+		
+		if(0 <= index && index < path.size())
+			path.set(index, newValue);
+		
+	}
 
 	@Override
 	public boolean equals(Object obj) {

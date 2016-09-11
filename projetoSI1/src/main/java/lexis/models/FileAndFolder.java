@@ -67,6 +67,8 @@ public interface FileAndFolder {
 	
 	public void setPath(List<String> path);
 	
+	public void setCellOfPath(int index, String newValue);
+	
 	public String getStringPath();
 		
 	

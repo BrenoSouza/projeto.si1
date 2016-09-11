@@ -12,7 +12,7 @@ public class Explorer implements Comparable<Explorer> {
 	private Stack<Folder> stackFolder;
 	
 	private TreeMap<String, List<SharedFileReadAndWrite>> sharedFilesReadAndWrite;
-	private TreeMap<String, List<SharedFileReadOnly>> s;
+	private TreeMap<String, List<SharedFileReadOnly>> sharedFilesReadOnly;
 
 	
 	
@@ -29,7 +29,7 @@ public class Explorer implements Comparable<Explorer> {
 		stackFolder.push(root);
 		
 		sharedFilesReadAndWrite = new TreeMap<String, List<SharedFileReadAndWrite>>();
-		s = new TreeMap<String, List<SharedFileReadOnly>>();
+		sharedFilesReadOnly = new TreeMap<String, List<SharedFileReadOnly>>();
 		
 	}
 	
@@ -58,12 +58,12 @@ public class Explorer implements Comparable<Explorer> {
 	 * @param file Arquivo a ser compartilhado
 	 */
 	public void addSharedFileReadOnly(File file, String owner) {
-		if(!s.containsKey(owner)) {
-			s.put(owner, new ArrayList<SharedFileReadOnly>());
+		if(!sharedFilesReadOnly.containsKey(owner)) {
+			sharedFilesReadOnly.put(owner, new ArrayList<SharedFileReadOnly>());
 		}
 		
 		SharedFileReadOnly fileReadOnly = new SharedFileReadOnly(file, owner);
-		s.get(owner).add(fileReadOnly);
+		sharedFilesReadOnly.get(owner).add(fileReadOnly);
 	}
 	
 	
@@ -72,7 +72,7 @@ public class Explorer implements Comparable<Explorer> {
 	}
 	
 	public TreeMap<String, List<SharedFileReadOnly>> getSharedFilesReadOnly() {
-		return s;
+		return sharedFilesReadOnly;
 	}
 	
 	public Folder goUp() {
@@ -140,20 +140,23 @@ public class Explorer implements Comparable<Explorer> {
 	}
 	
 	
-	public void renameAFolder(String oldName, String newName) {
+	public void renameFolder(String oldName, String newName) {
 		Folder temp = stackFolder.peek().getFolder(oldName);
 		
-		if(stackFolder.peek().getFolder(newName) == null)
+		if(stackFolder.peek().getFolder(newName) == null) {
 			temp.setName(newName);
+			
+			int index = stackFolder.size()-1;
+			temp.setCellOfPath(index, newName);
+		}
 		
 	}
 	
-	public void renameAFile(String oldName, String newName, Type type) {
+	public void renameFile(String oldName, String newName, Type type) {
 		File temp = stackFolder.peek().getFile(oldName, type);
 		
-		if(stackFolder.peek().getFile(newName, type) == null)
+		if(stackFolder.peek().getFile(newName, type) == null) 
 			temp.setName(newName);
-		
 		
 	}
 	

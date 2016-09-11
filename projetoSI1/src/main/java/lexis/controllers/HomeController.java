@@ -86,7 +86,7 @@ public class HomeController {
 		String oldName = JsonUtil.getOldName();
 		String newName = JsonUtil.getNewName();
 		
-		explorer.renameAFolder(oldName,newName);
+		explorer.renameFolder(oldName,newName);
 		return "pasta renomeada com sucesso, antigo nome: "+ oldName +" novo nome:" + newName;
 	}
 	
@@ -99,7 +99,7 @@ public class HomeController {
 		Type oldeType = JsonUtil.getOldType();
 		Type newType = JsonUtil.getNewType();
 		
-		explorer.renameAFile(oldName, newName, oldeType);
+		explorer.renameFile(oldName, newName, oldeType);
 		explorer.getFile(newName, oldeType).setType(newType);
 		
 		return "arquivo renomeado com sucesso, antigo nome: "+ oldName +" novo nome:" + newName;
