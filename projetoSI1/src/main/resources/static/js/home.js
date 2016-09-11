@@ -12,9 +12,12 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     
     $scope.deletedFilesAndFolders = [];
     
+    window.onload = function() {
+        loadingFolder();
+    }
     
     var loadingFolder = function() {
-    	$http.get("http://localhost:8080/home/explorer").success(function(data, status) {
+    	$http.get("/home/explorer").success(function(data, status) {
     		
     		$scope.arquivos = [];
     		
@@ -36,9 +39,6 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     };
 
 
-    loadingFolder();
-
-
     $scope.addFolder = function(nome) {
         var nome = prompt("Nome da pasta:");
 
@@ -52,7 +52,7 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
             	dateCreation: date.toISOString().substring(0, 10) + " " + date.toString().substring(16, 24)
          };
         
-        $http.post('http://localhost:8080/home/newFolder', folder).success(function(data, status) {
+        $http.post('/home/newFolder', folder).success(function(data, status) {
             loadingFolder();
 
         });
@@ -80,7 +80,7 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
         	}
 
         	
-        	$http.post("http://localhost:8080/home/newFile", file).success(function(data, status) {
+        	$http.post("/home/newFile", file).success(function(data, status) {
         		loadingFolder();
         		if ($scope.arquivos.length === 0) {
         			$scope.viewFile(file);
@@ -102,20 +102,20 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     }
 
     $scope.changeFolder = function(name) {
-        $http.get("http://localhost:8080/home/explorer/" + name).success(function(data, status) {
+        $http.get("/home/explorer/" + name).success(function(data, status) {
 			loadingFolder();
     	});
     }
 
     $scope.backFolder = function() {
-    	$http.get("http://localhost:8080/home/explorer/back").success(function(data, status) {
+    	$http.get("/home/explorer/back").success(function(data, status) {
 			loadingFolder();
     	});
     }
     
     $scope.deleteFolder = function(name) {
     	
-    	$http.post("http://localhost:8080/home/deleteFolder", name).success(function(data, status) {
+    	$http.post("/home/deleteFolder", name).success(function(data, status) {
 			loadingFolder();
     	});
     }
@@ -129,7 +129,7 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     			newName: nName
     		}
     		
-    		$http.post("http://localhost:8080/home/renameFolder", data).success(function(data, status) {
+    		$http.post("/home/renameFolder", data).success(function(data, status) {
     			loadingFolder();
         	});
     	}
@@ -140,20 +140,24 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     }
     
     
-    $scope.deleteFile = function(fileName, fileType) {
+    $scope.deleteFile = function(arquivo) {
     	
-    	var desisao = Confirm.render("Excluir", "Deseja excluir o arquivo selecionado? ");
     	
-    	if(decisao === true){
+    	var decisao = Confirm.render("Excluir", "Deseja excluir o arquivo selecionado? ");
+    	
+    	if(decisao) {
+    	
     		var file = {
-    	    		name: fileName,
-    	    		type: fileType
-    	    	}
-    	    	
-    	    	$http.post("http://localhost:8080/home/deleteFile", file).success(function(data, status) {
-    				loadingFolder();
-    	    	});
+    	    	name: arquivo.name,
+    	    	type: arquivo.type
+    		}
+    		
+    	    $http.post("/home/deleteFile", file).success(function(data, status) {
+    			
+    	    });
+    		loadingFolder();
     	}
+
     }
     
     $scope.renameFile = function(name, type, nType){
@@ -169,7 +173,7 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     			newType: nType
     		}
     	
-    		$http.post("http://localhost:8080/home/renameFile", data).success(function(data, status) {
+    		$http.post("/home/renameFile", data).success(function(data, status) {
     			loadingFolder();
     		});
     	}
@@ -206,10 +210,9 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     	var file = {
     		name: arquivo.name,
     		type: arquivo.type
-    		
     	}
     	
-    	$http.post("http://localhost:8080/editor/viewFile", file).success(function(data, status) {
+    	$http.post("/editor/viewFile", file).success(function(data, status) {
 
     	});
     	
