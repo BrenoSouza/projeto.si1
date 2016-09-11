@@ -31,9 +31,9 @@ public class IndexController {
 	 */
 	@RequestMapping(value = {"/","login","index"}) // acessa o url "/"
 	public ModelAndView index(@AuthenticationPrincipal User user) {
-		ModelAndView index = new ModelAndView("/index");
+		ModelAndView index = new ModelAndView("index");
 		if(user != null){
-			index.setViewName("/home");
+			index.setViewName("home");
 		}
 		// adicionar um User com a chave "usercadastro"
 		index.addObject("userRegister", new User());
@@ -99,7 +99,7 @@ public class IndexController {
 	@RequestMapping("/home")
 	public ModelAndView userLogin(User userLogin, RedirectAttributes attributes) {
 		ModelAndView login = new ModelAndView();
-		login.setViewName("/home");
+		login.setViewName("home");
 		return login;
 	}
 

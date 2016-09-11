@@ -27,9 +27,9 @@ public class EditorController {
 	public ModelAndView editor() {
 		ModelAndView editor;
 		if(file == null){
-			editor = new ModelAndView("/home");
+			editor = new ModelAndView("home");
 		}else{
-			editor = new ModelAndView("/editor");
+			editor = new ModelAndView("editor");
 		}
 		return editor;
 	}
