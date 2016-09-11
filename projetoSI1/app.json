@@ -1,0 +1,8 @@
+{
+  "name": "Lexis",
+  "description": "Lexis editor",
+  "website": "",
+  "repository": "https://github.com/BrenoSouza/projeto.si1",
+  "image": "heroku/java",
+  "addons": [ "heroku-postgresql" ]
+}

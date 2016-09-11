@@ -12,6 +12,9 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     
     $scope.deletedFilesAndFolders = [];
     
+    window.onload = function() {
+        loadingFolder();
+    }
     
     var loadingFolder = function() {
     	$http.get("/home/explorer").success(function(data, status) {
@@ -34,9 +37,6 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
         	$scope.arquivos.push(lista[i]);
 		}
     };
-
-
-    loadingFolder();
 
 
     $scope.addFolder = function(nome) {
@@ -201,7 +201,6 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     	var file = {
     		name: arquivo.name,
     		type: arquivo.type
-    		
     	}
     	
     	$http.post("/editor/viewFile", file).success(function(data, status) {

@@ -16,7 +16,7 @@ appL.controller("loginCtrl", function($scope) {
 		
 		$scope.EmptyUserNameOrEmail = function() {
 			if ($scope.login.length === 0) {
-				alert("É vazio");
+
 			}
 		}
 		
