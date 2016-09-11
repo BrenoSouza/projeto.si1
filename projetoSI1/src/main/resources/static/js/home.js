@@ -64,7 +64,7 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
         var nome = window.prompt("Nome da arquivo:");
 
         if(nome.length === 0){
-        	Alert.render("Nome inválido:", "Nome não pode ser vazio!");
+        	Alert.render("Nome inválido", "Nome não pode ser vazio!");
         } else {
             var date = new Date();
         	
@@ -134,7 +134,7 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
         	});
     	}
     	else {
-    		Alert.render("Nome inválido:", "Nome não pode ser vazio!");
+    		Alert.render("Nome inválido", "Nome não pode ser vazio!");
     	}
     	
     }
@@ -142,20 +142,28 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     
     $scope.deleteFile = function(arquivo) {
     	
-    	var file = {
-    		name: arquivo.name,
-    		type: arquivo.type
-    	}
     	
-    	$http.post("/home/deleteFile", file).success(function(data, status) {
-
-    	});
-		loadingFolder();
+    	var decisao = Confirm.render("Excluir", "Deseja excluir o arquivo selecionado? ");
+    	
+    	if(decisao) {
+    	
+    		var file = {
+    	    	name: arquivo.name,
+    	    	type: arquivo.type
+    		}
+    		
+    	    $http.post("/home/deleteFile", file).success(function(data, status) {
+    			
+    	    });
+    		loadingFolder();
+    	}
 
     }
     
-    $scope.renameFile = function(name, nName, type, nType){
+    $scope.renameFile = function(name, type, nType){
     	
+    	var nName = Prompt.render("Renomear", "Novo Nome:");
+    
     	if(nName.length != 0) {
     	
     		data = {
@@ -170,7 +178,7 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     		});
     	}
     	else {
-    		Alert.render("Nome inválido:", "Nome não pode ser vazio!");
+    		Alert.render("Nome inválido", "Nome não pode ser vazio!");
     		
     	}
     } 

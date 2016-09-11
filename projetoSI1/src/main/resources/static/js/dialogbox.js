@@ -17,6 +17,7 @@ function CustomAlert(){
         document.getElementById('dialogboxbody').innerHTML = dialog;
         document.getElementById('dialogboxfoot').innerHTML = '<button onclick="Alert.ok()">OK</button>';
     }
+    
 	this.ok = function(){
 		document.getElementById('dialogbox').style.display = "none";
 		document.getElementById('dialogoverlay').style.display = "none";
@@ -24,7 +25,7 @@ function CustomAlert(){
 }
 
 function CustomConfirm(){
-	this.render = function(msg, dialog, func, id){
+	this.render = function(msg, dialog){
 		var winW = window.innerWidth;
 	    var winH = window.innerHeight;
 		var dialogoverlay = document.getElementById('dialogoverlay');
@@ -37,16 +38,17 @@ function CustomConfirm(){
 		
 		document.getElementById('dialogboxhead').innerHTML = msg;
 	    document.getElementById('dialogboxbody').innerHTML = dialog;
-		document.getElementById('dialogboxfoot').innerHTML = '<button onclick="Confirm.yes(\''+op+'\',\''+id+'\')">Sim</button> <button onclick="Confirm.no()">Não</button>';
+		document.getElementById('dialogboxfoot').innerHTML = '<button onclick="Confirm.yes()">Sim</button> <button onclick="Confirm.no()">Não</button>';
 	}
 	this.no = function(){
 		document.getElementById('dialogbox').style.display = "none";
 		document.getElementById('dialogoverlay').style.display = "none";
+		return false;
 	}
-	this.yes = function(func,id){
-		window[func](id);
+	this.yes = function(){
 		document.getElementById('dialogbox').style.display = "none";
 		document.getElementById('dialogoverlay').style.display = "none";
+		return true;
 	}
 }
 
@@ -64,14 +66,14 @@ function CustomPrompt(){
 		document.getElementById('dialogboxhead').innerHTML = msg;
 	    document.getElementById('dialogboxbody').innerHTML = dialog;
 		document.getElementById('dialogboxbody').innerHTML += '<br><input id="prompt_value1">';
-		document.getElementById('dialogboxfoot').innerHTML = '<button onclick="Prompt.ok(\''+func+'\')">OK</button> <button onclick="Prompt.cancel()">Cancel</button>';
+		document.getElementById('dialogboxfoot').innerHTML = '<button onclick="Prompt.ok()">OK</button> <button onclick="Prompt.cancel()">Cancel</button>';
 	}
 	this.cancel = function(){
 		document.getElementById('dialogbox').style.display = "none";
 		document.getElementById('dialogoverlay').style.display = "none";
 		return "";
 	}
-	this.ok = function(func){
+	this.ok = function(){
 		var prompt_value1 = document.getElementById('prompt_value1').value;
 		document.getElementById('dialogbox').style.display = "none";
 		document.getElementById('dialogoverlay').style.display = "none";
