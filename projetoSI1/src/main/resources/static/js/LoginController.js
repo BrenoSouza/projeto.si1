@@ -8,19 +8,35 @@ appL.controller("loginCtrl", function($scope) {
 		
 		$scope.validation = function() {
 
-			$scope.EmptyUserNameOrEmail();
-			
+			$scope.EmptyUserName();
+			$scope.EmptyPassword();
+			$scope.ValidLogin()
 			
 			
 		}
 		
-		$scope.EmptyUserNameOrEmail = function() {
+		$scope.EmptyUserName = function() {
 			if ($scope.login.length === 0) {
-
+				alert("O login não pode ser vazio");
 			}
 		}
 		
+		$scope.EmptyPassword = function() {
+			if ($scope.password.length === 0) {
+				alert("A senha não pode ser vazia");
+			}
+		}
 		
+		$scope.ValidLogin = function(){
+			
+			var EMAIL_REGEXP = '^[a-z0-9](\.?[a-z0-9_-]){0,}@[a-z0-9-]+\.([a-z]{1,6}\.)?[a-z]{2,6}$';
+			var VALID_CHARACTERS = '^[a-zA-Z0-9_.-]*$'; 
+
+			if(!($scope.login.match(EMAIL_REGEXP)) && (!($scope.login.match(VALID_CHARACTERS)))){
+				alert("O login informado é inválido");
+			}
+			
+		}	
 
 });
 
