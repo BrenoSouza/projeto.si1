@@ -159,7 +159,7 @@ public class Folder implements FileAndFolder {
 		
 		LocalDateTime aux = LocalDateTime.now();
 		
-		File file = new File(fileName, type, Permission.PRIVATE, path, 
+		File file = new File(fileName, type, Permission.PRIVATE, getPathWithThisFolder(), 
 				aux);
 		return fileDirectory.remove(file);
 	}
@@ -501,7 +501,7 @@ public class Folder implements FileAndFolder {
 		for(Folder f : folder.getFolderDirectory()) {
 			if(f.getName().toLowerCase().equals(name.toLowerCase())) 
 				results.add(f);
-			
+
 			if(!f.getFolderDirectory().isEmpty())
 				auxFind(name, results, f);
 		}
