@@ -159,7 +159,7 @@ public class Folder implements FileAndFolder {
 		
 		LocalDateTime aux = LocalDateTime.now();
 		
-		File file = new File(fileName, type, Permission.PRIVATE, path, 
+		File file = new File(fileName, type, Permission.PRIVATE, getPathWithThisFolder(), 
 				aux);
 		return fileDirectory.remove(file);
 	}
@@ -418,6 +418,22 @@ public class Folder implements FileAndFolder {
 		
 		this.path = path;
 	}
+	
+	@Override
+	public void setCellOfPath(int index, String newValue) {
+		if(newValue == null)
+			throw new NullPointerException();
+		
+		for(Folder child : folderDirectory) 
+			child.setCellOfPath(index, newValue);
+		
+		for(File child : fileDirectory) 
+			child.setCellOfPath(index, newValue);
+		
+		if(0 <= index && index < path.size())
+			path.set(index, newValue);
+		
+	}
 
 	@Override
 	public boolean equals(Object obj) {
@@ -485,7 +501,7 @@ public class Folder implements FileAndFolder {
 		for(Folder f : folder.getFolderDirectory()) {
 			if(f.getName().toLowerCase().equals(name.toLowerCase())) 
 				results.add(f);
-			
+
 			if(!f.getFolderDirectory().isEmpty())
 				auxFind(name, results, f);
 		}

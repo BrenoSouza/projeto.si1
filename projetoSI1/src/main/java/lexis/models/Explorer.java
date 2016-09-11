@@ -12,14 +12,14 @@ public class Explorer implements Comparable<Explorer> {
 	private Stack<Folder> stackFolder;
 	
 	private TreeMap<String, List<SharedFileReadAndWrite>> sharedFilesReadAndWrite;
-	private TreeMap<String, List<SharedFileReadOnly>> s;
+	private TreeMap<String, List<SharedFileReadOnly>> sharedFilesReadOnly;
 
 	
-	
-	public Explorer() {
-		
-	}
-	
+	/**
+	 * Construtor padrao que recebe o nome do diretorio 
+	 * raiz da arvore de diretorios.
+	 * @param rootName Nome do diretorio raiz.
+	 */
 	public Explorer(String rootName) {
 		if(rootName == null)
 			throw new NullPointerException();
@@ -29,7 +29,7 @@ public class Explorer implements Comparable<Explorer> {
 		stackFolder.push(root);
 		
 		sharedFilesReadAndWrite = new TreeMap<String, List<SharedFileReadAndWrite>>();
-		s = new TreeMap<String, List<SharedFileReadOnly>>();
+		sharedFilesReadOnly = new TreeMap<String, List<SharedFileReadOnly>>();
 		
 	}
 	
@@ -58,23 +58,43 @@ public class Explorer implements Comparable<Explorer> {
 	 * @param file Arquivo a ser compartilhado
 	 */
 	public void addSharedFileReadOnly(File file, String owner) {
-		if(!s.containsKey(owner)) {
-			s.put(owner, new ArrayList<SharedFileReadOnly>());
+		if(!sharedFilesReadOnly.containsKey(owner)) {
+			sharedFilesReadOnly.put(owner, new ArrayList<SharedFileReadOnly>());
 		}
 		
 		SharedFileReadOnly fileReadOnly = new SharedFileReadOnly(file, owner);
-		s.get(owner).add(fileReadOnly);
+		sharedFilesReadOnly.get(owner).add(fileReadOnly);
 	}
 	
 	
+	/**
+	 * Recupera o mapa <Login do dono do arquivo, Lista de arquivos> 
+	 * contento todos os arquivos compartilhados com esse usuario que 
+	 * ele possui permissao para visualizar e editar o conteudo do arquivo.
+	 * @return
+	 */
 	public TreeMap<String, List<SharedFileReadAndWrite>> getSharedFilesReadAndWrite() {
 		return sharedFilesReadAndWrite;
 	}
 	
+	/**
+	 * Recupera o mapa <Login do dono do arquivo, Lista de arquivos> 
+	 * contento todos os arquivos compartilhados com esse usuario que 
+	 * ele possui permissao apenas visualizar.
+	 * @return
+	 */
 	public TreeMap<String, List<SharedFileReadOnly>> getSharedFilesReadOnly() {
-		return s;
+		return sharedFilesReadOnly;
 	}
 	
+	/**
+	 * Sobe um nivel na hierarquia de pastas. Por exemplo, 
+	 * caso a pasta2 esteja contida na pasta1 e a pasta atual 
+	 * e a pasta2, se esse metodo for utilizado ele ira para 
+	 * pasta1. Caso a pasta atual ja seja a pasta root ele apenas 
+	 * retorna o root.
+	 * @return Retorna a pasta atual apos subir um nivel.
+	 */
 	public Folder goUp() {
 		if(stackFolder.size() != 1)
 			stackFolder.pop();
@@ -82,7 +102,12 @@ public class Explorer implements Comparable<Explorer> {
 		return stackFolder.peek();
 	}
 	
-	
+	/**
+	 * Entra na pasta que possui esse nome caso ela exista e 
+	 * esteja contida na pasta atual.
+	 * @param name Nome da pasta que se deseja entrar.
+	 * @return Retorna a pasta atual apos a operacao.
+	 */
 	public Folder goDown(String name) {
 		Folder temp = stackFolder.peek().getFolder(name);
 		
@@ -93,6 +118,11 @@ public class Explorer implements Comparable<Explorer> {
 		
 	}
 	
+	/**
+	 * Sobe todos os niveis ate que a pasta atual 
+	 * seja o root.
+	 * @return retorna o root.
+	 */
 	public Folder goToRoot() {
 		while(stackFolder.size() > 1)
 			stackFolder.pop();
@@ -100,10 +130,24 @@ public class Explorer implements Comparable<Explorer> {
 		return stackFolder.peek();
 	}
 	
+	/**
+	 * Pesquisa em todos os diretorios por uma pasta ou 
+	 * arquivo que possui o nome passado como parametro.
+	 * @param name Nome a ser pesquisado.
+	 * @return Retorna uma lista com todos os resultados encontrados.
+	 */
 	public List<FileAndFolder> find(String name) {
 		return root.find(name);
 	}
 	
+	/**
+	 * Vai para o diretorio passado no parametro, caso o 
+	 * diretorio nao seja valido ele vai para o root e o 
+	 * retorna.
+	 * @param path Diretorio de destino.
+	 * @return Retorna o diretorio atual apos a operacao 
+	 * do metodo.
+	 */
 	public Folder goTo(String path) {
 		
 		goToRoot();
@@ -140,20 +184,23 @@ public class Explorer implements Comparable<Explorer> {
 	}
 	
 	
-	public void renameAFolder(String oldName, String newName) {
+	public void renameFolder(String oldName, String newName) {
 		Folder temp = stackFolder.peek().getFolder(oldName);
 		
-		if(stackFolder.peek().getFolder(newName) == null)
+		if(stackFolder.peek().getFolder(newName) == null) {
 			temp.setName(newName);
+			
+			int index = stackFolder.size()-1;
+			temp.setCellOfPath(index, newName);
+		}
 		
 	}
 	
-	public void renameAFile(String oldName, String newName, Type type) {
+	public void renameFile(String oldName, String newName, Type type) {
 		File temp = stackFolder.peek().getFile(oldName, type);
 		
-		if(stackFolder.peek().getFile(newName, type) == null)
+		if(stackFolder.peek().getFile(newName, type) == null) 
 			temp.setName(newName);
-		
 		
 	}
 	
@@ -187,8 +234,10 @@ public class Explorer implements Comparable<Explorer> {
 				}
 			}
 		}
-			
-		return stackFolder.peek();
+		if(arrayPath[arrayPath.length-1].equals(stackFolder.peek()))
+			return stackFolder.peek();
+		
+		return goToRoot();
 	}
 	
 }

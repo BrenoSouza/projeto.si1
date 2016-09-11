@@ -162,6 +162,17 @@ public class File implements FileAndFolder {
 		
 		this.path = path;
 	}
+	
+	@Override
+	public void setCellOfPath(int index, String newValue) {
+		if(newValue == null)
+			throw new NullPointerException();
+		
+		if(index < 0 || index >= path.size()) {
+			//TODO
+		}
+		path.set(index, newValue);
+	}
 
 	@Override
 	public boolean equals(Object obj) {

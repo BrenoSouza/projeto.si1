@@ -64,7 +64,7 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
         var nome = window.prompt("Nome da arquivo:");
 
         if(nome.length === 0){
-            alert("O arquivo nao pode ser criado, nome vazio!")
+        	Alert.render("Nome inválido:", "Nome não pode ser vazio!");
         } else {
             var date = new Date();
         	
@@ -134,7 +134,7 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
         	});
     	}
     	else {
-    		alert("Nome não pode ser vazio!");
+    		Alert.render("Nome inválido:", "Nome não pode ser vazio!");
     	}
     	
     }
@@ -169,7 +169,7 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     		});
     	}
     	else {
-    		alert("Nome não pode ser vazio!!");
+    		Alert.render("Nome inválido:", "Nome não pode ser vazio!");
     		
     	}
     } 

@@ -113,8 +113,8 @@ public class SharedFileReadOnly {
 					
 		SharedFileReadOnly otherFile = (SharedFileReadOnly) obj;
 		
-		
-		return getOwner().equals(otherFile.getOwner());
+		return getOwner().equals(otherFile.getOwner()) && 
+				getFile().equals(otherFile.getFile());
 	}
 	
 }
