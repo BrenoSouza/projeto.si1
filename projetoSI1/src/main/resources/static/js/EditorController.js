@@ -1,31 +1,34 @@
-var appE = angular.module("editor", []);
+var app = angular.module("editor", []);
 
+app.controller("editorCtrl", function($scope, $http) {
 
-appE.controller("editorCtrl", function($scope, $http) {
+	$scope.file = {}
 
-	$scope.file = {
-		
-			
+	window.onload = function(){
+		$scope.getTxt();
 	}
 	
-	$scope.saveFile = function(name, type, nName, nType, value) {
-
-		var arquivo = {
-			oldName: name,
-			oldType: type,
-			newName: nName,
-			newType: nType,
-			newValue: value
+	$scope.saveFile = function() {
+		var value = {
+			data: document.getElementById('fileData').value
 		}
+				
+		$http.post('http://localhost:8080/editor/saveData', value).success(function(data, status) {
+			alert("Salvo com sucesso!");
+        });
 
 	}
 	
-	var getTxt = function() {
+	$scope.getTxt = function() {
         $http.get("http://localhost:8080/editor/viewFile").success(function(data, status) {
 			$scope.file = data;
-			console.log("heitor e seu consolo")
-			console.log($scope.file);
-    	});
-    }
+			document.getElementById('fileData').value = data.data;
+
+        });
+	}
+	
+	$scope.discard = function() {
+		document.getElementById('fileData').value = $scope.file.data;
+	}
 		
 });

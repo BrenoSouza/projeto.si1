@@ -5,12 +5,12 @@ import lexis.models.DataBase;
 import lexis.models.User;
 import lexis.services.UserServiceDAO;
 
-public class UserRegisterService {
+public class UserRegisterHelper {
 
 	private UserServiceDAO userService;
 	private User userTemp;
 
-	public UserRegisterService(UserServiceDAO userService) {
+	public UserRegisterHelper(UserServiceDAO userService) {
 		this.userService = userService;
 	}
 

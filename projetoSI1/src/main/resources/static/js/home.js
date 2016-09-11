@@ -12,11 +12,6 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     
     $scope.deletedFilesAndFolders = [];
     
-    console.log($scope.arquivos);
-    console.log($scope.myFilesAndFolders);
-    console.log($scope.mySharedFilesAndFolders);
-    console.log($scope.filesAndFoldersSharedWithMe);
-    
     
     var loadingFolder = function() {
     	$http.get("http://localhost:8080/home/explorer").success(function(data, status) {
@@ -86,8 +81,10 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
 
         	
         	$http.post("http://localhost:8080/home/newFile", file).success(function(data, status) {
-    			console.log(file);
         		loadingFolder();
+        		if ($scope.arquivos.length === 0) {
+        			$scope.viewFile(file);
+        		}
     		});
         }
     };
@@ -208,11 +205,9 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     	}
     	
     	$http.post("http://localhost:8080/editor/viewFile", file).success(function(data, status) {
-    		alert(file.fileName);
+
     	});
     	
-    	
     }
-    
     
 });    

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-appE="editor" xmlns:th="http://www.thymeleaf.org">
+<html ng-app="editor" xmlns:th="http://www.thymeleaf.org">
 <head lang="pt-BR">
 
 <title>Arquivo | Lexis Cloud Editor</title>
@@ -130,15 +130,15 @@
 					<li><a href="#">Novo Documento</a></li>
 					<!--
              -->
-					<li><a href="#">Salvar</a></li>
+					<li><a ng-click="saveFile()" href="">Salvar</a></li>
 					<!--
              -->
-					<li><a ng-click="getTxt()" href="#">Salvar como</a></li>
+					<li><a href="#">Salvar como</a></li>
 					<!--
              -->
              		<li><a href="#">Compartilhar</a></li>
              		
-					<li><a href="#">Excluir</a></li>
+					<li><a ng-click="discard()" href="#">Excluir</a></li>
 					
 				</ul>
 			</div>
@@ -149,7 +149,7 @@
 		<div class="row">
 			<div class="span12">
 				<form action="#" method="get">
-					<textarea name="textValue" class="input-text"></textarea>
+					<textarea id="fileData" name="textValue" class="input-text"></textarea>
 				</form>
 			</div>
 
@@ -168,5 +168,10 @@
 			</footer>
 		</div>
 	</div>
+	
+	<script th:src="@{/js/angular.min.js}" src="../static/js/angular.min.js"></script>	
+	<script th:src="@{/js/EditorController.js}" src="../static/js/EditorController.js"></script>
+	
+	
 </body>
 </html>
