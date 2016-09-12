@@ -252,11 +252,18 @@ public class Explorer implements Comparable<Explorer> {
 		
 	}
 	
-	public void renameFile(String oldName, String newName, Type type) {
-		File temp = stackFolder.peek().getFile(oldName, type);
+	public void renameFile(String oldName, String newName, Type oldType, Type newType) {
 		
-		if(stackFolder.peek().getFile(newName, type) == null) 
+		if(oldName == null || newName == null || 
+				oldType == null || newType == null)
+			throw new NullPointerException();
+		
+		File temp = stackFolder.peek().getFile(oldName, oldType);
+		
+		if(temp != null && stackFolder.peek().getFile(newName, newType) == null) {
 			temp.setName(newName);
+			temp.setType(newType);
+		}
 		
 	}
 	

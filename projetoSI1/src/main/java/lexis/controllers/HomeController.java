@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lexis.models.DataBase;
 import lexis.models.Explorer;
-import lexis.models.File;
 import lexis.models.Folder;
 import lexis.models.Notification;
 import lexis.models.Permission;
@@ -109,8 +108,8 @@ public class HomeController {
 		Type oldType = JsonUtil.getOldType();
 		Type newType = JsonUtil.getNewType();
 		
-		explorer.renameFile(oldName, newName, oldType);
-		explorer.getFile(newName, oldType).setType(newType);
+		explorer.renameFile(oldName, newName, oldType, newType);
+
 
 	}
 
