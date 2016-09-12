@@ -129,16 +129,13 @@ public class UserServiceDAOImpl implements UserServiceDAO,UserDetailsService{
 		}
 		return false;
 	}
+	
 
 	@Override
 	public UserDetails loadUserByUsername(String arg0) throws UsernameNotFoundException {
 		User userTemp;
 		String userName = arg0.toLowerCase();
-		if(userName.contains("@")){
-			userTemp = userRepository.findByEmail(userName);
-		}else{
-			userTemp = userRepository.findByUsername(userName);
-		}
+		userTemp = getUserByEmailOrLogin(userName);
 		
 		if(userTemp == null){
 			throw new UsernameNotFoundException("O usuario "+ userName+ " não existe");
@@ -146,6 +143,24 @@ public class UserServiceDAOImpl implements UserServiceDAO,UserDetailsService{
 		return userTemp;
 			
 		
+	}
+
+	@Override
+	public User getUserByEmailOrLogin(String login) {
+		if(login.contains("@")){
+			return getUserByEmail(login);
+		}else{
+			return getUserByLogin(login);
+		}
+	}
+
+	@Override
+	public Boolean existsByEmailOrLogin(String login) {
+		if(login.contains("@")){
+			return existsByEmail(login);
+		}else{
+			return existsByLogin(login);
+		}
 	}
 
 }

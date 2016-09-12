@@ -51,6 +51,8 @@ public interface UserServiceDAO {
 	 * @return
 	 */
 	User getUserByEmail(String email);
+	
+	User getUserByEmailOrLogin(String login);
 
 	/**
 	 * Verifica se existe o user pelo login.
@@ -69,6 +71,8 @@ public interface UserServiceDAO {
 	 * @return True se estiver ,False se nao.
 	 */
 	Boolean existsByEmail(String email);
+	
+	Boolean existsByEmailOrLogin(String login);
 
 	/**
 	 * Deleta o usuario.
