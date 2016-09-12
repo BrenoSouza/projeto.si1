@@ -3,7 +3,10 @@ package lexis.models;
 import java.time.LocalDateTime;
 
 public class Notification implements Comparable<Notification> {
-
+	
+	public static final boolean READED = true;
+	public static final boolean UNREADED = true;
+	
 	String owner;
 	LocalDateTime log;
 
