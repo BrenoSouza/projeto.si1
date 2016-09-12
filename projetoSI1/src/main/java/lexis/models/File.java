@@ -20,7 +20,7 @@ public class File implements FileAndFolder {
 	private static final String SEP = "/";
 	
 	public static final String EMPTY_DATA = "";
-	public static final String UNAMED_FILE = "semTitulo";
+	public static final String UNAMED_FILE = "Sem titulo";
 
 	@Column // (scale = 4)
 	private String name;

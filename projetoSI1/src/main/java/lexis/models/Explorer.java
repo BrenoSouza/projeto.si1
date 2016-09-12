@@ -241,6 +241,10 @@ public class Explorer implements Comparable<Explorer> {
 	
 	
 	public void renameFolder(String oldName, String newName) {
+		
+		if(oldName == null || newName == null)
+			throw new NullPointerException();
+		
 		Folder temp = stackFolder.peek().getFolder(oldName);
 		
 		if(stackFolder.peek().getFolder(newName) == null) {
