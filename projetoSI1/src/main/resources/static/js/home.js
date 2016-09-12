@@ -39,9 +39,9 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     };
 
 
-    $scope.addFolder = function(nome) {
-        var nome = prompt("Nome da pasta:");
+    $scope.addFolder = function() {
 
+    	var nome = document.getElementById("newFolderName").value;
         var date = new Date();
 
         var folder = {
@@ -56,6 +56,8 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
             loadingFolder();
 
         });
+        document.getElementById("newFolderName").value = "";
+
 
 	};
 
@@ -148,10 +150,12 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
 
     }
     
-    $scope.renameFile = function(name, type, nType){
+    $scope.renameFile = function(){
     	
     	var nName = Prompt.render("Renomear", "Novo Nome:");
-    
+
+    	console.log(nName);
+    	
     	if(nName.length != 0) {
     	
     		data = {
@@ -223,6 +227,11 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
 			$scope.deleteFolder(file);
 		}
 	    loadingFolder();
+    }
+    
+    
+    $scope.blankInput = function(id) {
+    	document.getElementById(id).value = "";
     }
     
 });    

@@ -153,21 +153,21 @@
 				
 				<td>
 
-					<input style="width:50px; height:50px; " id="new-file" type="image" src="../static/images/newFile.png"
+					<input class="menu2" style="width:50px; height:50px; " id="new-file" type="image" src="../static/images/newFile.png"
 							th:src="@{images/newFile.png}" name="createFile" ng-click="addTxt()"></input>
 				</td>
 
 				<td>
-					<input style="width:50px; height:50px; " id="new-file" type="image" src="../static/images/newFolder.png"
-							th:src="@{images/newFolder.png}" name="createFile" ng-click="addFolder()"></input>
+					<input class="menu2" id="createFolder" style="width:50px; height:50px; " data-toggle="modal" type="image" src="../static/images/newFolder.png"
+							th:src="@{images/newFolder.png}" name="createFolder"></input>
 				</td>
 
 				<td>
-					<input style="width:50px; height:50px; " id="new-file" type="image" src="../static/images/home.png"
+					<input class="menu2" style="width:50px; height:50px; " id="new-file" type="image" src="../static/images/home.png"
 							th:src="@{images/home.png}" ng-click="initialFolder()"></input>
 				</td>
 				<td>
-					<input style="width:50px; height:50px; " id="new-file" type="image" src="../static/images/back.png"
+					<input class="menu2" style="width:50px; height:50px; " id="new-file" type="image" src="../static/images/back.png"
 							th:src="@{images/back.png}" ng-click="backFolder()"></input>
 
 				</td>
@@ -257,7 +257,7 @@
 							
 							<input id="share" type="image" src="../static/images/share.png"
 							th:src="@{images/share.png}" name="shareFile" ng-click="shareTxtOrFolder()"></input>
-							
+														
 							<input id="delete" type="image" src="../static/images/delete.png"
 							th:src="@{images/delete.png}" name="removeFile" ng-click="deleteL(arquivo)"></input>
 
@@ -271,11 +271,37 @@
 		</div>
 	</div>
 
-	<script th:src="@{/js/angular.min.js}"
-		src="../static/js/angular.min.js"></script>
+	<script th:src="@{/js/angular.min.js}" src="../static/js/angular.min.js"></script>
 	<script th:src="@{/js/home.js}" src="../static/js/home.js"></script>
 	<script th:src="@{/js/menu.js}" src="../static/js/menu.js"></script>
 	<script th:src="@{/js/dialogbox.js}" src="../static/js/dialogbox.js"></script>
+	<script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js}"></script>
+  	<script th:src="@{http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+
+
+
+
+			
+			<!-- Button to trigger modal -->
+			<a id="myBtn" role="button" class="btn" data-toggle="modal">Executar modal de demo</a>
+			 
+			<!-- Modal Create Folder -->
+			<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-header">
+			    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			    	<h3 id="myModalLabel" style="text-align: center;" >Criar nova pasta</h3>
+			  	</div>
+			  	<div class="modal-body" style="text-align:center" >
+			   		<input type="text" id="newFolderName" placeholder="Nome"></input>
+			  	</div>
+			  	<div class="modal-footer" style="text-align:center">
+			    	<button class="btn" data-dismiss="modal" aria-hidden="true" ng-click="blankInput('newFolderName')">Cancelar</button>
+			    	<button class="btn btn-primary" data-dismiss="modal" ng-click="addFolder()" >Salvar</button>
+			  	</div>
+			</div>
+
+
+
 
 	<div class="footer">
 		<div class="row-fluid">
@@ -286,6 +312,17 @@
 			</footer>
 		</div>
 	</div>
+
+
+
+<script>
+$(document).ready(function(){
+    $("#createFolder").click(function(){
+        $("#myModal").modal();
+    });
+});
+
+</script>
 
 </body>
 </html>
