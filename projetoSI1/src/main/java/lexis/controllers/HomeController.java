@@ -2,6 +2,7 @@ package lexis.controllers;
 
 import java.time.LocalDateTime;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,15 +12,24 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lexis.models.DataBase;
 import lexis.models.Explorer;
+import lexis.models.File;
 import lexis.models.Folder;
 import lexis.models.Permission;
 import lexis.models.Type;
 import lexis.models.User;
+import lexis.services.UserServiceDAO;
 import lexis.util.JsonUtil;
 
 @RestController
 @RequestMapping("/home")
 public class HomeController {
+	// objeto responsavel por manipular User
+	private UserServiceDAO userService;
+
+	@Autowired
+	public void setUserService(UserServiceDAO userService) {
+		this.userService = userService;
+	}
 
 	private Explorer explorer;
 
@@ -122,6 +132,40 @@ public class HomeController {
 		explorer.removeFile(fileName, type );	
 		
 		return "arquivo: "+ fileName +" deletado com sucesso";
+	}
+	
+	@RequestMapping(value = "shareFile", method = RequestMethod.POST)
+	public void shareFile(@RequestBody Object json){
+		JsonUtil.json(json);
+		
+		//propietario e seu explorer
+		User userOwner = userService.getUserByLogin(explorer.getOwner());
+		Explorer ownersExplorer = explorer;
+		
+		
+		//atributos passados pelo usuario
+		String fileNameShared = JsonUtil.getName();
+		Type fileTypeShared = JsonUtil.getNewType();
+		String UserNameToShared = JsonUtil.getUserName();
+		Boolean read = JsonUtil.isRead();
+		Boolean write = JsonUtil.isWrite();
+		
+		Boolean userExists = userService.existsByLogin(UserNameToShared);	
+		
+		//procura pelo usuario fornecido
+		User userToShareWith = userService.getUserByLogin(UserNameToShared);
+		//procura pelo explorer do usuario	
+		Explorer explorerToShareWith = DataBase.getInstance().getUser(UserNameToShared);
+			
+		if(read){
+			DataBase.getInstance().shareFileReadOnly(userOwner, ownersExplorer, fileNameShared, fileTypeShared, userToShareWith, explorerToShareWith);
+		}else if(write){
+			DataBase.getInstance().shareFileReadAndWrite(userOwner, ownersExplorer, fileNameShared, fileTypeShared, userToShareWith, explorerToShareWith);
+		}else{
+			System.out.println("deu merda");
+		}
+		
+		
 	}
 	
 	private User userLogged(){

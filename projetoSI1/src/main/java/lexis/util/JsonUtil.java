@@ -59,6 +59,18 @@ public class JsonUtil {
 		return Type.valueOf((String) map.get("newType"));
 	}
 	
+	public static String getUserName(){
+		return (String) map.get("user");
+	}
+	
+	public static Boolean isRead(){
+		return Boolean.valueOf((String) map.get("read"));
+	}
+	
+	public static Boolean isWrite(){
+		return Boolean.valueOf((String) map.get("write"));
+	}
+	
 	private static Map<String, Object> jsonToMap(Object json) {
 		ObjectMapper mapper = new ObjectMapper();
 		try {
