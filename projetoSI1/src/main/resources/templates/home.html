@@ -153,8 +153,8 @@
 				
 				<td>
 
-					<input class="menu2" style="width:50px; height:50px; " id="new-file" type="image" src="../static/images/newFile.png"
-							th:src="@{images/newFile.png}" name="createFile" ng-click="addTxt()"></input>
+					<input class="menu2" style="width:50px; height:50px; " id="createFile" type="image" src="../static/images/newFile.png"
+							th:src="@{images/newFile.png}" name="createFile"></input>
 				</td>
 
 				<td>
@@ -281,12 +281,9 @@
 
 
 
-			
-			<!-- Button to trigger modal -->
-			<a id="myBtn" role="button" class="btn" data-toggle="modal">Executar modal de demo</a>
-			 
+				
 			<!-- Modal Create Folder -->
-			<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div id="createFolderModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-header">
 			    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 			    	<h3 id="myModalLabel" style="text-align: center;" >Criar nova pasta</h3>
@@ -297,6 +294,35 @@
 			  	<div class="modal-footer" style="text-align:center">
 			    	<button class="btn" data-dismiss="modal" aria-hidden="true" ng-click="blankInput('newFolderName')">Cancelar</button>
 			    	<button class="btn btn-primary" data-dismiss="modal" ng-click="addFolder()" >Salvar</button>
+			  	</div>
+			</div>
+
+			
+			
+			<!-- Modal Create File -->
+			<div id="createFileModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-header">
+			    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			    	<h3 id="myModalLabel" style="text-align: center;" >Criar novo Arquivo</h3>
+			  	</div>
+			  	<div class="modal-body" style="text-align:center" >
+			   		<input type="text" id="newFileName" placeholder="Nome"></input>
+			   		
+			   		<select id="selectType">
+			   			<table>
+			   				<td>
+			   					<option value="TXT">txt</option>
+			   				</td>
+			   				<td>
+  								<option value="MD">md</option>
+  							</td>
+  						</table>
+			   		</select>
+			   		
+			  	</div>
+			  	<div class="modal-footer" style="text-align:center">
+			    	<button class="btn" data-dismiss="modal" aria-hidden="true" ng-click="blankInput('newFileName')">Cancelar</button>
+			    	<button class="btn btn-primary" data-dismiss="modal" ng-click="addTxt()" >Salvar</button>
 			  	</div>
 			</div>
 
@@ -318,8 +344,13 @@
 <script>
 $(document).ready(function(){
     $("#createFolder").click(function(){
-        $("#myModal").modal();
+        $("#createFolderModal").modal();
     });
+    
+    $("#createFile").click(function(){
+        $("#createFileModal").modal();
+    });
+    
 });
 
 </script>

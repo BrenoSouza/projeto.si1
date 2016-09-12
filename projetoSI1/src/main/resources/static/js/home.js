@@ -44,27 +44,32 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     	var nome = document.getElementById("newFolderName").value;
         var date = new Date();
 
-        var folder = {
-            	name:nome,
+        if (nome.length === 0) {
+        	alert("Pasta com nome vazio não poder ser criado!")
+        } else {
+        	var folder = {
+        		name:nome,
             	
             	Permission: "private",
             	            	
             	dateCreation: date.toISOString().substring(0, 10) + " " + date.toString().substring(16, 24)
-         };
+        	};
         
-        $http.post('/home/newFolder', folder).success(function(data, status) {
-            loadingFolder();
+        	$http.post('/home/newFolder', folder).success(function(data, status) {
+        		loadingFolder();
 
-        });
-        document.getElementById("newFolderName").value = "";
+        	});
+        	document.getElementById("newFolderName").value = "";
 
-
+        }
 	};
 
 
     $scope.addTxt = function() {
-        var nome = window.prompt("Nome da arquivo:");
 
+    	var nome = document.getElementById("newFileName").value;
+    	var selectedType = document.getElementById("selectType").value;
+    	alert(selectedType);
         if(nome.length === 0){
         	Alert.render("Nome inválido", "Nome não pode ser vazio!");
         } else {
@@ -73,21 +78,20 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
         	var file = {
         		name: nome,
         		
-        		type: "MD",
+        		type: selectedType,
         		
         		Permission: "private",
         		
             	dateCreation: date.toISOString().substring(0, 10) + " " + date.toString().substring(16, 24)
-        			
         	}
 
         	
         	$http.post("/home/newFile", file).success(function(data, status) {
         		loadingFolder();
-        		if ($scope.arquivos.length === 0) {
-        			$scope.viewFile(file);
-        		}
     		});
+        	
+        	document.getElementById("newFileName").value = "";
+
         }
     };
 
@@ -97,7 +101,7 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     }
 
     $scope.isTxt = function(type) {
-        if (type === "MD") {
+        if (type === "MD" || type === "TXT") {
             return true;
         }
         return false;
