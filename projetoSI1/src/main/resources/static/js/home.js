@@ -113,10 +113,10 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     	});
     }
     
-    $scope.deleteFolder = function(name) {
+    $scope.deleteFolder = function(file) {
     	
-    	$http.post("/home/deleteFolder", name).success(function(data, status) {
-			loadingFolder();
+    	$http.post("/home/deleteFolder", file).success(function(data, status) {
+
     	});
     }
     
@@ -140,32 +140,11 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     }
     
     
-    $scope.deleteFile = function(arquivo) {
-    	
-    	
-    	var decisao = Confirm.render("Excluir", "Deseja excluir o arquivo selecionado? ");
-    	alert(decisao);
-    	
-    	if(decisao) {
-    		var file;
+    $scope.deleteFile = function(file) {
     		
-    		if (arquivo.type === "folder") {
-    			file = {
-    				name: arquivo.name,
-    			}
-    		} else {
-    			file = {
-        			name: arquivo.name,
-        			type: arquivo.type
-        		}    			
-    		}
-    		
-    	    $http.post("/home/deleteFile", file).success(function(data, status) {
-    			
-    	    });
-    		
-    	    loadingFolder();
-    	}
+   	    $http.post("/home/deleteFile", file).success(function(data, status) {
+
+   	    });
 
     }
     
@@ -225,6 +204,25 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
 
     	});
     	
+    }
+    
+    $scope.deleteL = function(arquivo) {
+    	
+		if (arquivo.type != "folder") {
+			file = {
+				name: arquivo.name,
+        		type: arquivo.type
+			}
+			
+			$scope.deleteFile(file);
+		} else {
+			file = {
+    			name: arquivo.name
+    		}  
+			
+			$scope.deleteFolder(file);
+		}
+	    loadingFolder();
     }
     
 });    
