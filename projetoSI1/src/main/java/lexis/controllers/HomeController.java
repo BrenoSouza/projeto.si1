@@ -14,6 +14,7 @@ import lexis.models.DataBase;
 import lexis.models.Explorer;
 import lexis.models.File;
 import lexis.models.Folder;
+import lexis.models.Notification;
 import lexis.models.Permission;
 import lexis.models.Type;
 import lexis.models.User;
@@ -105,11 +106,11 @@ public class HomeController {
 		
 		String oldName = JsonUtil.getOldName();
 		String newName = JsonUtil.getNewName();
-		Type oldeType = JsonUtil.getOldType();
+		Type oldType = JsonUtil.getOldType();
 		Type newType = JsonUtil.getNewType();
 		
-		explorer.renameFile(oldName, newName, oldeType);
-		explorer.getFile(newName, oldeType).setType(newType);
+		explorer.renameFile(oldName, newName, oldType);
+		explorer.getFile(newName, oldType).setType(newType);
 
 	}
 
@@ -153,9 +154,9 @@ public class HomeController {
 			//procura pelo explorer do usuario	
 			Explorer explorerToShareWith = DataBase.getInstance().getUser(userToShareWith.getUsername());	
 			if(write){
-				DataBase.getInstance().shareFileReadAndWrite(userOwner, ownersExplorer, fileNameShared, fileTypeShared, userToShareWith, explorerToShareWith);
+				DataBase.getInstance().shareFileReadAndWrite(userOwner, ownersExplorer, fileNameShared, fileTypeShared, userToShareWith, explorerToShareWith,LocalDateTime.now());
 			}else if(read){
-				DataBase.getInstance().shareFileReadOnly(userOwner, ownersExplorer, fileNameShared, fileTypeShared, userToShareWith, explorerToShareWith);
+				DataBase.getInstance().shareFileReadOnly(userOwner, ownersExplorer, fileNameShared, fileTypeShared, userToShareWith, explorerToShareWith,LocalDateTime.now());
 			}else{
 				System.out.println("deu bug");
 			}
@@ -163,6 +164,13 @@ public class HomeController {
 			System.out.println("usuario "+ userNameToShared +" nao existe");
 		}		
 	}
+	
+	@RequestMapping(value = "notification", method = RequestMethod.GET)
+	public Notification[] getNotification(){
+		return explorer.getNotifications();
+	}
+	
+	
 	
 	private User userLogged(){
 		return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
