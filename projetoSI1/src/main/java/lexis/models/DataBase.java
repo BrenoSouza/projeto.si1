@@ -63,7 +63,7 @@ public class DataBase {
 	 * @param userToShareWith Usuario que recebera o arquivo compartilhado.
 	 * @param explorerToShareWith Explorer do usuario que ira receber 
 	 * o arquivo.
-	 * @param log Data e Hora na qual o compartilhamento foi feito.
+	 * @param log Data e hora na qual o compartilhamento foi feito.
 	 * @return Retorna o arquivo compartilhado caso o arquivo esteja em 
 	 * ownersExplorer.currentFolder() e null caso contrario.
 	 */

@@ -270,8 +270,8 @@ public class Explorer implements Comparable<Explorer> {
 		return root;
 	}
 	
-	public List<Notification> getNotifications() {
-		return notifications;
+	public Notification[] getNotifications() {
+		return notifications.toArray(new Notification[0]);
 	}
 	
 	
