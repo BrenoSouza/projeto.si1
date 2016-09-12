@@ -16,6 +16,8 @@ import java.time.LocalDateTime;
  */
 public class SharedFileReadOnly {
 	
+	public static final String TYPE_SHARING = "Read Only";
+	
 	private File file;
 	private String owner;
 	
@@ -90,6 +92,10 @@ public class SharedFileReadOnly {
 	public String getOwner() {
 		return owner;
 	}
+	
+	public String getTypeSharing() {
+		return TYPE_SHARING;
+	}
 
 	protected File getFile() {
 		return file;
@@ -102,7 +108,7 @@ public class SharedFileReadOnly {
 		return "Name: " + getName() + "\nCreation: " + getDateCreation().toString() + 
 				"\nLast Edition: " + getDateEdition().toString() + "\nType of File: " + 
 				getType().name().toLowerCase() + "\nPermission: " + getPermission().name().toLowerCase() + 
-				"\nData: " + getData() + "\n";
+				"\nData: " + getData() + "\nType Sharing: " + getTypeSharing() + "\n";
 	}
 	
 	// TODO
