@@ -1,7 +1,7 @@
 var app = angular.module("listaArquivos", []);
 
 app.controller("listaArquivosCtrl", function($scope, $http) {
-    
+	
     $scope.arquivos = [];
     
     $scope.myFilesAndFolders = [];
@@ -11,6 +11,8 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     $scope.filesAndFoldersSharedWithMe = [];
     
     $scope.deletedFilesAndFolders = [];
+    
+    var sharedFileAux;
     
     window.onload = function() {
         loadingFolder();
@@ -39,29 +41,36 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     };
 
 
-    $scope.addFolder = function(nome) {
-        var nome = prompt("Nome da pasta:");
+    $scope.addFolder = function() {
 
+    	var nome = document.getElementById("newFolderName").value;
         var date = new Date();
 
-        var folder = {
-            	name:nome,
+        if (nome.length === 0) {
+        	alert("Pasta com nome vazio não poder ser criado!")
+        } else {
+        	var folder = {
+        		name:nome,
             	
             	Permission: "private",
             	            	
             	dateCreation: date.toISOString().substring(0, 10) + " " + date.toString().substring(16, 24)
-         };
+        	};
         
-        $http.post('/home/newFolder', folder).success(function(data, status) {
-            loadingFolder();
+        	$http.post('/home/newFolder', folder).success(function(data, status) {
+        		loadingFolder();
 
-        });
+        	});
+        	document.getElementById("newFolderName").value = "";
 
+        }
 	};
 
 
     $scope.addTxt = function() {
-        var nome = window.prompt("Nome da arquivo:");
+
+    	var nome = document.getElementById("newFileName").value;
+    	var selectedType = document.getElementById("selectType").value;
 
         if(nome.length === 0){
         	Alert.render("Nome inválido", "Nome não pode ser vazio!");
@@ -71,21 +80,20 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
         	var file = {
         		name: nome,
         		
-        		type: "MD",
+        		type: selectedType,
         		
         		Permission: "private",
         		
             	dateCreation: date.toISOString().substring(0, 10) + " " + date.toString().substring(16, 24)
-        			
         	}
 
         	
         	$http.post("/home/newFile", file).success(function(data, status) {
         		loadingFolder();
-        		if ($scope.arquivos.length === 0) {
-        			$scope.viewFile(file);
-        		}
     		});
+        	
+        	document.getElementById("newFileName").value = "";
+
         }
     };
 
@@ -95,7 +103,7 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     }
 
     $scope.isTxt = function(type) {
-        if (type === "MD") {
+        if (type === "MD" || type === "TXT") {
             return true;
         }
         return false;
@@ -113,10 +121,10 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     	});
     }
     
-    $scope.deleteFolder = function(name) {
+    $scope.deleteFolder = function(file) {
     	
-    	$http.post("/home/deleteFolder", name).success(function(data, status) {
-			loadingFolder();
+    	$http.post("/home/deleteFolder", file).success(function(data, status) {
+
     	});
     }
     
@@ -140,39 +148,20 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     }
     
     
-    $scope.deleteFile = function(arquivo) {
-    	
-    	
-    	var decisao = Confirm.render("Excluir", "Deseja excluir o arquivo selecionado? ");
-    	alert(decisao);
-    	
-    	if(decisao) {
-    		var file;
+    $scope.deleteFile = function(file) {
     		
-    		if (arquivo.type === "folder") {
-    			file = {
-    				name: arquivo.name,
-    			}
-    		} else {
-    			file = {
-        			name: arquivo.name,
-        			type: arquivo.type
-        		}    			
-    		}
-    		
-    	    $http.post("/home/deleteFile", file).success(function(data, status) {
-    			
-    	    });
-    		
-    	    loadingFolder();
-    	}
+   	    $http.post("/home/deleteFile", file).success(function(data, status) {
+
+   	    });
 
     }
     
-    $scope.renameFile = function(name, type, nType){
+    $scope.renameFile = function(){
     	
     	var nName = Prompt.render("Renomear", "Novo Nome:");
-    
+
+    	console.log(nName);
+    	
     	if(nName.length != 0) {
     	
     		data = {
@@ -226,5 +215,60 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     	});
     	
     }
+    
+    $scope.deleteL = function(arquivo) {
+    	
+		if (arquivo.type != "folder") {
+			file = {
+				name: arquivo.name,
+        		type: arquivo.type
+			}
+			
+			$scope.deleteFile(file);
+		} else {
+			file = {
+    			name: arquivo.name
+    		}  
+			
+			$scope.deleteFolder(file);
+		}
+	    loadingFolder();
+    }
+    
+    
+    $scope.blankInput = function(id) {
+    	document.getElementById(id).value = "";
+    }
+    
+    $scope.openShareModal = function(arquivo){
+    	$scope.sharedFileAux = arquivo;
+        $("#shareModal").modal();
+    }
+    
+    $scope.shareFile = function() {
+    	 var userLogin = document.getElementById("userLoginShare").value;
+         var readOnly = document.getElementById("readOnly").checked;
+         var readAndWrite = document.getElementById("readAndWrite").checked;
+    	 
+         if(readAndWrite) {
+        	 readOnly = true;
+         }
+         
+         if(userLogin.length != 0) {
+         	var file = {
+         		user: userLogin,
+         		name: $scope.sharedFileAux.name,
+         		type: $scope.sharedFileAux.type,
+         		read: readOnly.toString(),
+         		write: readAndWrite.toString()
+         	}
+
+         	$http.post("/home/shareFile", file).success(function(data, status) {
+
+        	});
+         }
+         $scope.blankInput("userLoginShare");
+    }
+    
     
 });    

@@ -90,18 +90,17 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "renameFolder",method = RequestMethod.POST)
-	public String renameFolder(@RequestBody Object json) {
+	public void renameFolder(@RequestBody Object json) {
 		JsonUtil.json(json);
 		
 		String oldName = JsonUtil.getOldName();
 		String newName = JsonUtil.getNewName();
 		
 		explorer.renameFolder(oldName,newName);
-		return "pasta renomeada com sucesso, antigo nome: "+ oldName +" novo nome:" + newName;
 	}
 	
 	@RequestMapping(value = "renameFile",method = RequestMethod.POST)
-	public String renameFile(@RequestBody Object json) {
+	public void renameFile(@RequestBody Object json) {
 		JsonUtil.json(json);
 		
 		String oldName = JsonUtil.getOldName();
@@ -111,27 +110,24 @@ public class HomeController {
 		
 		explorer.renameFile(oldName, newName, oldeType);
 		explorer.getFile(newName, oldeType).setType(newType);
-		
-		return "arquivo renomeado com sucesso, antigo nome: "+ oldName +" novo nome:" + newName;
+
 	}
 
 	@RequestMapping(value = "deleteFolder", method = RequestMethod.POST)
-	public String deleteFolder(@RequestBody Object json) {
+	public void deleteFolder(@RequestBody Object json) {
 		JsonUtil.json(json);
 		String folderName = JsonUtil.getName();
 		explorer.removeFolder(folderName);
-		return "pasta: "+ folderName +" deletada com sucesso";
 	}
 	
 	@RequestMapping(value = "deleteFile", method = RequestMethod.POST)
-	public String deleteFile(@RequestBody Object json) {
+	public void deleteFile(@RequestBody Object json) {
 		JsonUtil.json(json);
 		
 		String fileName = JsonUtil.getName();
 		Type type = JsonUtil.getType();
 		explorer.removeFile(fileName, type );	
 		
-		return "arquivo: "+ fileName +" deletado com sucesso";
 	}
 	
 	@RequestMapping(value = "shareFile", method = RequestMethod.POST)
@@ -139,33 +135,33 @@ public class HomeController {
 		JsonUtil.json(json);
 		
 		//propietario e seu explorer
-		User userOwner = userService.getUserByLogin(explorer.getOwner());
+		User userOwner = userLogged();
 		Explorer ownersExplorer = explorer;
 		
 		
 		//atributos passados pelo usuario
 		String fileNameShared = JsonUtil.getName();
-		Type fileTypeShared = JsonUtil.getNewType();
-		String UserNameToShared = JsonUtil.getUserName();
+		Type fileTypeShared = JsonUtil.getType();
+		String userNameToShared = JsonUtil.getUserName();
 		Boolean read = JsonUtil.isRead();
 		Boolean write = JsonUtil.isWrite();
 		
-		Boolean userExists = userService.existsByLogin(UserNameToShared);	
-		
-		//procura pelo usuario fornecido
-		User userToShareWith = userService.getUserByLogin(UserNameToShared);
-		//procura pelo explorer do usuario	
-		Explorer explorerToShareWith = DataBase.getInstance().getUser(UserNameToShared);
-			
-		if(read){
-			DataBase.getInstance().shareFileReadOnly(userOwner, ownersExplorer, fileNameShared, fileTypeShared, userToShareWith, explorerToShareWith);
-		}else if(write){
-			DataBase.getInstance().shareFileReadAndWrite(userOwner, ownersExplorer, fileNameShared, fileTypeShared, userToShareWith, explorerToShareWith);
+		Boolean userExists = userService.existsByEmailOrLogin(userNameToShared);
+		if(userExists){
+			//procura pelo usuario fornecido
+			User userToShareWith = userService.getUserByEmailOrLogin(userNameToShared);
+			//procura pelo explorer do usuario	
+			Explorer explorerToShareWith = DataBase.getInstance().getUser(userToShareWith.getUsername());	
+			if(write){
+				DataBase.getInstance().shareFileReadAndWrite(userOwner, ownersExplorer, fileNameShared, fileTypeShared, userToShareWith, explorerToShareWith);
+			}else if(read){
+				DataBase.getInstance().shareFileReadOnly(userOwner, ownersExplorer, fileNameShared, fileTypeShared, userToShareWith, explorerToShareWith);
+			}else{
+				System.out.println("deu bug");
+			}
 		}else{
-			System.out.println("deu merda");
-		}
-		
-		
+			System.out.println("usuario "+ userNameToShared +" nao existe");
+		}		
 	}
 	
 	private User userLogged(){
