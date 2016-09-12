@@ -246,7 +246,7 @@ public class Explorer implements Comparable<Explorer> {
 		if(stackFolder.peek().getFolder(newName) == null) {
 			temp.setName(newName);
 			
-			int index = stackFolder.size()-1;
+			int index = stackFolder.size();
 			temp.setCellOfPath(index, newName);
 		}
 		
