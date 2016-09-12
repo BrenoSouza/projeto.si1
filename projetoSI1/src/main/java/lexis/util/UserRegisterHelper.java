@@ -5,6 +5,7 @@ import lexis.models.DataBase;
 import lexis.models.User;
 import lexis.services.UserServiceDAO;
 
+
 public class UserRegisterHelper {
 
 	private UserServiceDAO userService;
@@ -12,6 +13,7 @@ public class UserRegisterHelper {
 
 	public UserRegisterHelper(UserServiceDAO userService) {
 		this.userService = userService;
+			
 	}
 
 	public void hasErrorIn(User user) {
@@ -28,12 +30,37 @@ public class UserRegisterHelper {
 		checksLoginIsUsed(user);
 
 		checksEmailIsUsed(user);
+		
+		checkValidLogin(user);
+		
+		checkValidEmail(user);
 	}
 
+	private void checkValidEmail(User user) throws EmailInvalidException {
+		String valid = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+				+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
+		if(!user.getEmail().matches(valid)){
+			throw new EmailInvalidException("O e-mail informado é inválido");
+		}
+
+		
+	}
+
+	// verifica se caracteres de login sao validos
+	private void checkValidLogin(User user) throws LoginInvalidException{
+		String valid = "^[a-zA-Z0-9_.-]*$";
+		if(!user.getUsername().matches(valid)){
+			throw new LoginInvalidException("O login informado é inválido");
+		}
+
+	}
+	
+	
 	// verifica se o email esta em uso
 	private void checksEmailIsUsed(User user) throws EmailIsUsedException {
 		if (userService.existsByEmail(user.getEmail())) {
-			throw new EmailIsUsedException("email ja em uso");
+			throw new EmailIsUsedException("e-mail já em uso");
 		}
 	}
 

@@ -51,12 +51,12 @@
 			<h2 class="sign-up " style="margin-right: 10%">Registrar</h2>
 			<form th:object="${userRegister}" th:action="@{/userRegister}" method="POST">
 				<label for="login" style="margin-right: 27%">Login: </label>
-				<input type="text" name="login" id="login-sign-up" th:field="*{username}"></input>
+				<input type="text" name="login" id="login-sign-up" ng-model="login" th:field="*{username}"></input>
 				<label for="password" style="margin-right: 22%">Password: </label>
-				<input type="password" name="password" id="password-sign-up" th:field="*{password}"></input>
+				<input type="password" name="password" id="password-sign-up" ng-model="password" th:field="*{password}"></input>
 				<label for="email" style="margin-right: 27%">Email: </label>
-				<input type="text" name="email" id="email-sign-up" th:field="*{email}"></input>
-				<input type="submit" class="button" name="sign-up" value="Register" style="margin-right: 19%"></input>				
+				<input type="text" name="email" id="email-sign-up" ng-model="email" th:field="*{email}"></input>
+				<input type="submit" class="button" name="sign-up" value="Register" ng-click="registerValidation()" style="margin-right: 19%"></input>				
 			</form>
 		</div >
 		<div class="span1 divisor" ><img src="../static/images/div.png" th:src="@{images/div.png}" alt=""></img></div>
