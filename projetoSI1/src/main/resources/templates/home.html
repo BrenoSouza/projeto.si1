@@ -318,7 +318,7 @@
 			<div id="shareModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-header">
 			    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-			    	<h3 id="myModalLabel" style="text-align: center;" >Compartilhar</h3>
+			    	<h3 id="myModalLabel" style="text-align: center;" >Compartilhar arquivo: <i>{{sharedFileAux.name}}.{{sharedFileAux.type}}</i></h3>
 			  	</div>
 			  	<div class="modal-body" style="text-align:center" >
 			  		<table style="text-align:center">
@@ -357,6 +357,23 @@
 			    	<button class="btn btn-primary" data-dismiss="modal" ng-click="addFolder()" >Salvar</button>
 			  	</div>
 			</div>
+			
+			
+			
+			<!-- Modal Rename Folder -->
+			<div id="renameFolderModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-header">
+			    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			    	<h3 id="myModalLabel" style="text-align: center;" >Renomear pasta: <i>{{sharedFileAux.name}}</i></h3>
+			  	</div>
+			  	<div class="modal-body" style="text-align:center" >
+			   		<input type="text" id="newRenameFolderName" placeholder="Novo nome"></input>
+			  	</div>
+			  	<div class="modal-footer" style="text-align:center">
+			    	<button class="btn" data-dismiss="modal" aria-hidden="true" ng-click="blankInput('newRenameFolderName')">Cancelar</button>
+			    	<button class="btn btn-primary" data-dismiss="modal" ng-click="renameFolder()" >Salvar</button>
+			  	</div>
+			</div>
 
 			
 			
@@ -364,7 +381,7 @@
 			<div id="renameFileModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-header">
 			    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-			    	<h3 id="myModalLabel" style="text-align: center;" >Renomear Arquivo e formato</h3>
+			    	<h3 id="myModalLabel" style="text-align: center;" >Renomear nome e formato do arquivo: <i>{{sharedFileAux.name}}.{{sharedFileAux.type}}</i></h3>
 			  	</div>
 			  	<div class="modal-body" style="text-align:center" >
 			   		<input type="text" id="newRenameFileName" placeholder="Nove nome"></input>

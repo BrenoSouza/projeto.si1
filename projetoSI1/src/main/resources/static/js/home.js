@@ -128,22 +128,33 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     	});
     }
     
-    $scope.renameFolder = function(name, nName) {
+    $scope.showModalRenameFolder = function(arquivo) {
+    	$scope.sharedFileAux = arquivo;
+        $("#renameFolderModal").modal();
+    	
+    }
+    
+    $scope.renameFolder = function() {
+    	var nName = document.getElementById('newRenameFolderName').value;
     	
     	if (nName.length != 0) {
     		
-    		data = {
-    			oldName: name,
+    		var folder = {
+    			oldName: $scope.sharedFileAux.name,
     			newName: nName
     		}
     		
-    		$http.post("/home/renameFolder", data).success(function(data, status) {
+    		$http.post("/home/renameFolder", folder).success(function(data, status) {
     			loadingFolder();
         	});
-    	}
-    	else {
+        	$scope.blank('newRenameFolderName');
+    	} else {
     		Alert.render("Nome inválido", "Nome não pode ser vazio!");
+        	$scope.blank('newRenameFolderName');
+
     	}
+    	$scope.blank('newRenameFolderName');
+		$scope.sharedFileAux = undefined;
     	
     }
     
@@ -179,7 +190,7 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     		});
     	}
     	else {
-    		alert("Nome inválido", "Nome não pode ser vazio!");
+    		Alert.render("Nome inválido", "Nome não pode ser vazio!");
     		
     	}
     	$scope.sharedFileAux = undefined;
@@ -271,6 +282,9 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
          	$http.post("/home/shareFile", file).success(function(data, status) {
 
         	});
+         } else {
+     		Alert.render("Nome inválido", "Nome não pode ser vazio!");
+        	 
          }
          $scope.blankInput("userLoginShare");
          $scope.sharedFileAux = undefined;
