@@ -1,5 +1,6 @@
 package lexis.models;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -8,16 +9,18 @@ import java.util.TreeSet;
 
 public class Explorer implements Comparable<Explorer> {
 	
+	public static final int MAX_NOTIFICATIONS = 10;
 
 	private Folder root;
 	private String owner;
 	private Stack<Folder> stackFolder;
 	
-	private TreeSet<String> pifo;
+	private TreeSet<String> usersThatImSharing;
 	
 	private TreeMap<String, List<SharedFileReadAndWrite>> sharedFilesReadAndWrite;
 	private TreeMap<String, List<SharedFileReadOnly>> sharedFilesReadOnly;
-
+	
+	private List<Notification> notifications;
 	
 	/**
 	 * Construtor padrao que recebe o nome do diretorio 
@@ -33,33 +36,44 @@ public class Explorer implements Comparable<Explorer> {
 		stackFolder = new Stack<Folder>();
 		stackFolder.push(root);
 		
-		pifo = new TreeSet<String>();
+		usersThatImSharing = new TreeSet<String>();
 		sharedFilesReadAndWrite = new TreeMap<String, List<SharedFileReadAndWrite>>();
 		sharedFilesReadOnly = new TreeMap<String, List<SharedFileReadOnly>>();
 		
+		notifications = new ArrayList<Notification>();
+		
+	}
+	
+	private void addNotification(Notification notification) {
+		if(notifications.size() == MAX_NOTIFICATIONS)
+			notifications.remove(MAX_NOTIFICATIONS-1);
+		
+		notifications.add(notification);
+		notifications.sort(new NotificationComparator());
 	}
 	
 	public void addUserToShare(String userLogin) {
-		pifo.add(userLogin.toLowerCase());
+		usersThatImSharing.add(userLogin.toLowerCase());
 	}
 	
 	public boolean removeUserThatImSharing(String userLogin) {
-		return pifo.remove(userLogin.toLowerCase());
+		return usersThatImSharing.remove(userLogin.toLowerCase());
 	}
 	
 	public String[] getUsersThatImSharing() {
-		return pifo.toArray(new String[0]);
+		return usersThatImSharing.toArray(new String[0]);
 	}
 	
 	/**
 	 * Adiciona arquivos de terceiros para esse explorer. O dono 
 	 * desse explorer tem permissao apenas para ver alguns 
 	 * atributos do arquivo e para  ver e alterar o conteudo 
-	 * do arquivo.
+	 * do arquivo. Uma notificacao e criada ao adicionar um arquivo.
 	 * @param owner Criador/dono do arquivo.
 	 * @param file Arquivo a ser compartilhado
+	 * @param log Horario em que foi feito o compartilhamento.
 	 */
-	public SharedFileReadAndWrite addSharedFileReadAndWrite(File file, String owner) {
+	public SharedFileReadAndWrite addSharedFileReadAndWrite(File file, String owner, LocalDateTime log) {
 		
 		if(file == null || owner == null)
 			throw new NullPointerException();
@@ -72,8 +86,11 @@ public class Explorer implements Comparable<Explorer> {
 		
 		List<SharedFileReadAndWrite> sharedFilesWithThisUser = sharedFilesReadAndWrite.get(owner); 
 		
-		if(!sharedFilesWithThisUser.contains(fileReadAndWrite))
+		if(!sharedFilesWithThisUser.contains(fileReadAndWrite)) {
+			
 			sharedFilesWithThisUser.add(fileReadAndWrite);
+			addNotification(new Notification(owner, fileReadAndWrite, log));
+		}
 		
 		return fileReadAndWrite;
 	}
@@ -81,11 +98,13 @@ public class Explorer implements Comparable<Explorer> {
 	/**
 	 * Adiciona arquivos de terceiros para esse explorer. O dono 
 	 * desse explorer tem permissao apenas para ver alguns 
-	 * atributos do arquivo, como o conteudo, nome, entre outros.
+	 * atributos do arquivo, como o conteudo, nome, entre outros. Uma notificacao 
+	 * e criada ao adicionar um arquivo.
 	 * @param owner Criador/dono do arquivo.
 	 * @param file Arquivo a ser compartilhado
+	 * @param log Horario em que foi feito o compartilhamento.
 	 */
-	public SharedFileReadOnly addSharedFileReadOnly(File file, String owner) {
+	public SharedFileReadOnly addSharedFileReadOnly(File file, String owner, LocalDateTime log) {
 		if(!sharedFilesReadOnly.containsKey(owner)) {
 			sharedFilesReadOnly.put(owner, new ArrayList<SharedFileReadOnly>());
 		}
@@ -94,8 +113,11 @@ public class Explorer implements Comparable<Explorer> {
 		
 		List<SharedFileReadOnly> sharedFilesWithThisUser = sharedFilesReadOnly.get(owner);
 		
-		if(!sharedFilesWithThisUser.contains(fileReadOnly))		
+		if(!sharedFilesWithThisUser.contains(fileReadOnly)) {		
+		
 			sharedFilesWithThisUser.add(fileReadOnly);
+			addNotification(new Notification(owner, fileReadOnly, log));
+		}
 		
 		return fileReadOnly;
 	}
@@ -246,6 +268,10 @@ public class Explorer implements Comparable<Explorer> {
 	
 	public Folder getRoot() {
 		return root;
+	}
+	
+	public Notification[] getNotifications() {
+		return notifications.toArray(new Notification[0]);
 	}
 	
 	

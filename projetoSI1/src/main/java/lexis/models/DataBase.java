@@ -1,5 +1,6 @@
 package lexis.models;
 
+import java.time.LocalDateTime;
 import java.util.TreeMap;
 
 public class DataBase {
@@ -62,11 +63,12 @@ public class DataBase {
 	 * @param userToShareWith Usuario que recebera o arquivo compartilhado.
 	 * @param explorerToShareWith Explorer do usuario que ira receber 
 	 * o arquivo.
+	 * @param log Data e hora na qual o compartilhamento foi feito.
 	 * @return Retorna o arquivo compartilhado caso o arquivo esteja em 
 	 * ownersExplorer.currentFolder() e null caso contrario.
 	 */
 	public SharedFileReadOnly shareFileReadOnly(User owner, Explorer ownersExplorer,  
-			String fileName, Type fileType, User userToShareWith, Explorer explorerToShareWith) {
+			String fileName, Type fileType, User userToShareWith, Explorer explorerToShareWith, LocalDateTime log) {
 		
 		if(!owner.getUsername().equals(ownersExplorer.getOwner()) || 
 				!userToShareWith.getUsername().equals(explorerToShareWith.getOwner())) {
@@ -78,7 +80,7 @@ public class DataBase {
 		
 		if(file != null) {
 			
-			sharedFile = explorerToShareWith.addSharedFileReadOnly(file, owner.getUsername());
+			sharedFile = explorerToShareWith.addSharedFileReadOnly(file, owner.getUsername(), log);
 			ownersExplorer.addUserToShare(userToShareWith.getUsername());
 		}
 		
@@ -97,11 +99,12 @@ public class DataBase {
 	 * @param userToShareWith Usuario que recebera o arquivo compartilhado.
 	 * @param explorerToShareWith Explorer do usuario que ira receber 
 	 * o arquivo.
+	 * @param log Data e hora na qual o compartilhamento foi feito.
 	 * @return Retorna o arquivo compartilhado caso o arquivo esteja em 
 	 * ownersExplorer.currentFolder() e null caso contrario.
 	 */
 	public SharedFileReadAndWrite shareFileReadAndWrite(User owner, Explorer ownersExplorer, 
-			String fileName, Type fileType, User userToShareWith, Explorer explorerToShareWith) {
+			String fileName, Type fileType, User userToShareWith, Explorer explorerToShareWith, LocalDateTime log) {
 		
 		if(!owner.getUsername().equals(ownersExplorer.getOwner()) || 
 				!userToShareWith.getUsername().equals(explorerToShareWith.getOwner())) {
@@ -113,7 +116,7 @@ public class DataBase {
 		
 		if(file != null) {
 			
-			sharedFile = explorerToShareWith.addSharedFileReadAndWrite(file, owner.getUsername());
+			sharedFile = explorerToShareWith.addSharedFileReadAndWrite(file, owner.getUsername(), log);
 			ownersExplorer.addUserToShare(userToShareWith.getUsername());
 		}
 		
