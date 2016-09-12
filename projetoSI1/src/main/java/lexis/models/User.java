@@ -95,12 +95,6 @@ public class User implements UserDetails {
 		
 	}
 	
-	public String getLogin(){
-		return login;
-	}
-
-
-
 	/**
 	 * Set uma nova senha para o usuario.
 	 * 
@@ -155,7 +149,9 @@ public class User implements UserDetails {
 			
 		User otherUser = (User) obj;
 			
-		return this.getUsername().equals(otherUser.getUsername());
+		return this.getUsername().equals(otherUser.getUsername()) && 
+				getEmail().equals(otherUser.getEmail()) && 
+				getPassword().equals(otherUser.getPassword());
 	}
 	
 	@Override
