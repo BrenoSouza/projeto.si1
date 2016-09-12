@@ -46,24 +46,20 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     	var nome = document.getElementById("newFolderName").value;
         var date = new Date();
 
-        if (nome.length === 0) {
-        	alert("Pasta com nome vazio não poder ser criado!")
-        } else {
-        	var folder = {
-        		name:nome,
+        var folder = {
+        	name:nome,
             	
-            	Permission: "private",
+           	Permission: "private",
             	            	
-            	dateCreation: date.toISOString().substring(0, 10) + " " + date.toString().substring(16, 24)
-        	};
+           	dateCreation: date.toISOString().substring(0, 10) + " " + date.toString().substring(16, 24)
+        };
         
-        	$http.post('/home/newFolder', folder).success(function(data, status) {
-        		loadingFolder();
+        $http.post('/home/newFolder', folder).success(function(data, status) {
+        	loadingFolder();
 
-        	});
-        	document.getElementById("newFolderName").value = "";
+        });
+        document.getElementById("newFolderName").value = "";
 
-        }
 	};
 
 
@@ -72,29 +68,24 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     	var nome = document.getElementById("newFileName").value;
     	var selectedType = document.getElementById("selectType").value;
 
-        if(nome.length === 0){
-        	Alert.render("Nome inválido", "Nome não pode ser vazio!");
-        } else {
-            var date = new Date();
+        var date = new Date();
         	
-        	var file = {
-        		name: nome,
+      	var file = {
+       		name: nome,
         		
-        		type: selectedType,
+       		type: selectedType,
         		
-        		Permission: "private",
+       		Permission: "private",
         		
-            	dateCreation: date.toISOString().substring(0, 10) + " " + date.toString().substring(16, 24)
-        	}
+           	dateCreation: date.toISOString().substring(0, 10) + " " + date.toString().substring(16, 24)
+       	}
+        	
+       	$http.post("/home/newFile", file).success(function(data, status) {
+       		loadingFolder();
+   		});
+        	
+       	document.getElementById("newFileName").value = "";
 
-        	
-        	$http.post("/home/newFile", file).success(function(data, status) {
-        		loadingFolder();
-    		});
-        	
-        	document.getElementById("newFileName").value = "";
-
-        }
     };
 
     $scope.sortBy = function(valor) {
@@ -136,24 +127,17 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     
     $scope.renameFolder = function() {
     	var nName = document.getElementById('newRenameFolderName').value;
-    	
-    	if (nName.length != 0) {
-    		
-    		var folder = {
-    			oldName: $scope.sharedFileAux.name,
-    			newName: nName
-    		}
-    		
-    		$http.post("/home/renameFolder", folder).success(function(data, status) {
-    			loadingFolder();
-        	});
-        	$scope.blank('newRenameFolderName');
-    	} else {
-    		Alert.render("Nome inválido", "Nome não pode ser vazio!");
-        	$scope.blank('newRenameFolderName');
-
+    	    		
+    	var folder = {
+    		oldName: $scope.sharedFileAux.name,
+    		newName: nName
     	}
-    	$scope.blank('newRenameFolderName');
+    		
+    	$http.post("/home/renameFolder", folder).success(function(data, status) {
+    		loadingFolder();
+        });
+  
+    	$scope.blankInput('newRenameFolderName');
 		$scope.sharedFileAux = undefined;
     	
     }
@@ -176,23 +160,16 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     	var nName = document.getElementById("newRenameFileName").value;
     	var nType = document.getElementById("selectRenameType").value;
     	
-    	if(nName.length != 0) {
-    	
-    		var fileInfo = {
-    			oldName: $scope.sharedFileAux.name,
-    			newName: nName,
-    			oldType: $scope.sharedFileAux.type,
-    			newType: nType
-    		}
-    	
-    		$http.post("/home/renameFile", fileInfo).success(function(data, status) {
-    			loadingFolder();
-    		});
+    	var fileInfo = {
+    		oldName: $scope.sharedFileAux.name,
+    		newName: nName,
+    		oldType: $scope.sharedFileAux.type,
+    		newType: nType
     	}
-    	else {
-    		Alert.render("Nome inválido", "Nome não pode ser vazio!");
-    		
-    	}
+    	
+    	$http.post("/home/renameFile", fileInfo).success(function(data, status) {
+    		loadingFolder();
+    	});
     	$scope.sharedFileAux = undefined;
     	$scope.blank("newRenameFileName");
     } 
