@@ -1,7 +1,7 @@
 var app = angular.module("listaArquivos", []);
 
 app.controller("listaArquivosCtrl", function($scope, $http) {
-    
+	
     $scope.arquivos = [];
     
     $scope.myFilesAndFolders = [];
@@ -11,6 +11,8 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     $scope.filesAndFoldersSharedWithMe = [];
     
     $scope.deletedFilesAndFolders = [];
+    
+    var sharedFileAux;
     
     window.onload = function() {
         loadingFolder();
@@ -238,11 +240,35 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     	document.getElementById(id).value = "";
     }
     
-    $scope.shareFile = function(arquivo){
+    $scope.openShareModal = function(arquivo){
+    	$scope.sharedFileAux = arquivo;
         $("#shareModal").modal();
-    	
-        
-        
     }
+    
+    $scope.shareFile = function() {
+    	 var userLogin = document.getElementById("userLoginShare").value;
+         var readOnly = document.getElementById("readOnly").checked;
+         var readAndWrite = document.getElementById("readAndWrite").checked;
+    	 
+         if(readAndWrite) {
+        	 readOnly = true;
+         }
+         
+         if(userLogin.length != 0) {
+         	var file = {
+         		user: userLogin,
+         		name: $scope.sharedFileAux.name,
+         		type: $scope.sharedFileAux.type,
+         		read: readOnly.toString(),
+         		write: readAndWrite.toString()
+         	}
+
+         	$http.post("/home/shareFile", file).success(function(data, status) {
+
+        	});
+         }
+         $scope.blankInput("userLoginShare");
+    }
+    
     
 });    
