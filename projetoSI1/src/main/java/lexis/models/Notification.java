@@ -2,7 +2,7 @@ package lexis.models;
 
 import java.time.LocalDateTime;
 
-public class Notification {
+public class Notification implements Comparable<Notification> {
 
 	String owner;
 	LocalDateTime log;
@@ -77,6 +77,21 @@ public class Notification {
 				"\nType of File: " + getFileType().name().toLowerCase() + "\nLog: " + 
 				getLog().toString() + "\nType Sharing: " + getTypeSharing() + "\n";
 	}
+
+
+
+	@Override
+	public int compareTo(Notification o) {
+		
+		if(this.equals(o))
+			return 0;
+		
+		return this.getLog().compareTo(o.getLog());
+	}
+
+
+
+
 	
 	
 	
