@@ -252,8 +252,11 @@
 						
 						<td>
 							
-							<input id="rename" type="image" src="../static/images/rename.png"
-							th:src="@{images/rename.png}" name="renameFile" ng-click="renameFile()"></input>
+							<input ng-if="isTxt(arquivo.type)" id="rename" type="image" src="../static/images/rename.png"
+							th:src="@{images/rename.png}" name="renameFile" ng-click="showModalRenameFile(arquivo)"></input>
+							
+							<input ng-if="!isTxt(arquivo.type)" id="rename" type="image" src="../static/images/rename.png"
+							th:src="@{images/rename.png}" name="renameFolder" ng-click="showModalRenameFolder(arquivo)"></input>
 							
 							<input ng-if="isTxt(arquivo.type)" class="shareBtn" id="shareFile{{arquivo.name}}{{arquivo.type}}" type="image" src="../static/images/share.png"
 							th:src="@{images/share.png}" name="shareFile" data-toggle="modal" ng-click="openShareModal(arquivo)"></input>
@@ -278,7 +281,37 @@
 	<script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js}"></script>
   	<script th:src="@{http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
 
-
+			
+			
+			<!-- Modal Create File -->
+			<div id="createFileModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-header">
+			    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			    	<h3 id="myModalLabel" style="text-align: center;" >Criar novo Arquivo</h3>
+			  	</div>
+			  	<div class="modal-body" style="text-align:center" >
+			   		<input type="text" id="newFileName" placeholder="Nome"></input>
+			   		
+			   		<select id="selectType">
+			   			<table>
+			   				<td>
+			   					<option value="TXT">txt</option>
+			   				</td>
+			   				<td>
+  								<option value="MD">md</option>
+  							</td>
+  						</table>
+			   		</select>
+			   		
+			  	</div>
+			  	<div class="modal-footer" style="text-align:center">
+			    	<button class="btn" data-dismiss="modal" aria-hidden="true" ng-click="blankInput('newFileName')">Cancelar</button>
+			    	<button class="btn btn-primary" data-dismiss="modal" ng-click="addTxt()" >Salvar</button>
+			  	</div>
+			</div>
+			
+			
+			
 
 
 			<!-- Modal Compartilhar File -->
@@ -327,16 +360,16 @@
 
 			
 			
-			<!-- Modal Create File -->
-			<div id="createFileModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<!-- Modal Rename File -->
+			<div id="renameFileModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-header">
 			    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-			    	<h3 id="myModalLabel" style="text-align: center;" >Criar novo Arquivo</h3>
+			    	<h3 id="myModalLabel" style="text-align: center;" >Renomear Arquivo e formato</h3>
 			  	</div>
 			  	<div class="modal-body" style="text-align:center" >
-			   		<input type="text" id="newFileName" placeholder="Nome"></input>
+			   		<input type="text" id="newRenameFileName" placeholder="Nove nome"></input>
 			   		
-			   		<select id="selectType">
+			   		<select id="selectRenameType">
 			   			<table>
 			   				<td>
 			   					<option value="TXT">txt</option>
@@ -349,8 +382,8 @@
 			   		
 			  	</div>
 			  	<div class="modal-footer" style="text-align:center">
-			    	<button class="btn" data-dismiss="modal" aria-hidden="true" ng-click="blankInput('newFileName')">Cancelar</button>
-			    	<button class="btn btn-primary" data-dismiss="modal" ng-click="addTxt()" >Salvar</button>
+			    	<button class="btn" data-dismiss="modal" aria-hidden="true" ng-click="blankInput('newRenameFileName')">Cancelar</button>
+			    	<button class="btn btn-primary" data-dismiss="modal" ng-click="renameFile()" >Salvar</button>
 			  	</div>
 			</div>
 
