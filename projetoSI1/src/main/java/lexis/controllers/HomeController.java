@@ -30,7 +30,7 @@ public class HomeController {
 	 */
 	@RequestMapping(value = "/user", method = RequestMethod.POST)
 	public String home(@RequestBody User user) {
-		return userLogged().getLogin();
+		return userLogged().getUsername();
 	}
 
 	/**
