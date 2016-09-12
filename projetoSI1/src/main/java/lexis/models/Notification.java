@@ -2,6 +2,12 @@ package lexis.models;
 
 import java.time.LocalDateTime;
 
+/**
+ * Classe possui notificacoes para o usuario sobre arquivos 
+ * que foram compartilhados com ele.
+ * @author klynger
+ *
+ */
 public class Notification implements Comparable<Notification> {
 	
 	public static final boolean READ = true;
@@ -10,54 +16,88 @@ public class Notification implements Comparable<Notification> {
 	String owner;
 	LocalDateTime log;
 
-	String fileName;
-	Type fileType;
-	String typeSharing;
+	SharedFileReadOnly sharedFile;
 	
 	boolean unread;
+	
+	/**
+	 * Construtor com o minimo de atributos necessarios 
+	 * para criar uma notificacao.
+	 * @param owner Login do criador do arquivo.
+	 * @param fileShared Arquivo que foi compartilhado, este 
+	 * arquivo pode ser do tipo SharedFileReadOnly ou de classes que 
+	 * herdam dela, como a SharedFileReadAndWrite.
+	 * @param log Momento em que foi feito o compartilhamento.
+	 */
+	public Notification(String owner, SharedFileReadOnly sharedFile, LocalDateTime log) {
 
-	public Notification(String owner, SharedFileReadOnly fileShared, LocalDateTime log) {
-
-		if (owner == null || fileShared == null || log == null)
+		if (owner == null || sharedFile == null || log == null)
 			throw new NullPointerException();
 
 		this.owner = owner;
 		this.log = log;
-		this.fileName = fileShared.getName();
-		this.fileType = fileShared.getType();
-		this.typeSharing = fileShared.getTypeSharing();
+		this.sharedFile = sharedFile;
 		this.unread = true;
 
 	}
 	
 	
-	
+	/**
+	 * Recupera o login do criador do arquivo.
+	 * @return
+	 */
 	public String getOwner() {
 		return owner;
 	}
 	
+	/**
+	 * Recupera o nome do arquivo compartilhado.
+	 * @return
+	 */
 	public String getFileName() {
-		return fileName;
+		return sharedFile.getName();
 	}
 	
+	/**
+	 * Recupera o momento em que o arquivo foi compartilhado.
+	 * @return
+	 */
 	public LocalDateTime getLog() {
 		return log;
 	}
 	
+	/**
+	 * Recupera o tipo do arquivo.
+	 * @return
+	 */
 	public Type getFileType() {
-		return fileType;
+		return sharedFile.getType();
 	}
 	
+	/**
+	 * Recupera o tipo de compartilhamento do arquivo (Leitura 
+	 * ou leitura e escrita).
+	 * @return
+	 */
 	public String getTypeSharing() {
-		return typeSharing;
+		return sharedFile.getTypeSharing();
 	}
 	
+	/**
+	 * Recupera o estado da notificacao que pode ser 
+	 * True para nao lida e false para lida.
+	 * @return
+	 */
 	public boolean isUnread() {
 		return unread;
 	}
 	
 	public void setUnread(boolean value) {
 		unread = value;
+	}
+	
+	public SharedFileReadOnly getSharedFile() {
+		return sharedFile;
 	}
 	
 	@Override
@@ -76,9 +116,7 @@ public class Notification implements Comparable<Notification> {
 	
 	@Override
 	public String toString() {
-		return "Owner: " + getOwner() + "Unread: " + isUnread() + "\nName of File: " + getFileName() + 
-				"\nType of File: " + getFileType().name().toLowerCase() + "\nLog: " + 
-				getLog().toString() + "\nType Sharing: " + getTypeSharing() + "\n";
+		return "Owner: " + getOwner() + "Unread: " + isUnread() + "\n" + getSharedFile().toString();
 	}
 
 
