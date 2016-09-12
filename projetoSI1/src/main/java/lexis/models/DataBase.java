@@ -50,5 +50,75 @@ public class DataBase {
 	}
 	
 	
+	/**
+	 * Metodo responsavel pelo compartilhamento de arquivos 
+	 * com a permissao somente para leitura do mesmo. Lembrando que 
+	 * o login do usuario passado deve ser o mesmo do nome do root dos 
+	 * seus respectivos exploradores de arquivo.
+	 * @param owner Usuario dono do arquivo a ser compartilhado.
+	 * @param ownersExplorer Explorer do dono do arquivo.
+	 * @param fileName Nome do arquivo.
+	 * @param fileType Tipo do arquivo.
+	 * @param userToShareWith Usuario que recebera o arquivo compartilhado.
+	 * @param explorerToShareWith Explorer do usuario que ira receber 
+	 * o arquivo.
+	 * @return Retorna o arquivo compartilhado caso o arquivo esteja em 
+	 * ownersExplorer.currentFolder() e null caso contrario.
+	 */
+	public SharedFileReadOnly shareFileReadOnly(User owner, Explorer ownersExplorer,  
+			String fileName, Type fileType, User userToShareWith, Explorer explorerToShareWith) {
+		
+		if(!owner.getUsername().equals(ownersExplorer.getOwner()) || 
+				!userToShareWith.getUsername().equals(explorerToShareWith.getOwner())) {
+			//TODO
+		}
+		
+		File file = ownersExplorer.getFile(fileName, fileType);
+		SharedFileReadOnly sharedFile = null;
+		
+		if(file != null) {
+			
+			sharedFile = explorerToShareWith.addSharedFileReadOnly(file, owner.getUsername());
+			ownersExplorer.addUserToShare(userToShareWith.getUsername());
+		}
+		
+		return sharedFile;
+	}
+	
+	/**
+	 * Metodo responsavel pelo compartilhamento de arquivos 
+	 * com a permissao para leitura e escrita do mesmo. Lembrando que 
+	 * o login do usuario passado deve ser o mesmo do nome do root dos 
+	 * seus respectivos exploradores de arquivo.
+	 * @param owner Usuario dono do arquivo a ser compartilhado.
+	 * @param ownersExplorer Explorer do dono do arquivo.
+	 * @param fileName Nome do arquivo.
+	 * @param fileType Tipo do arquivo.
+	 * @param userToShareWith Usuario que recebera o arquivo compartilhado.
+	 * @param explorerToShareWith Explorer do usuario que ira receber 
+	 * o arquivo.
+	 * @return Retorna o arquivo compartilhado caso o arquivo esteja em 
+	 * ownersExplorer.currentFolder() e null caso contrario.
+	 */
+	public SharedFileReadAndWrite shareFileReadAndWrite(User owner, Explorer ownersExplorer, 
+			String fileName, Type fileType, User userToShareWith, Explorer explorerToShareWith) {
+		
+		if(!owner.getUsername().equals(ownersExplorer.getOwner()) || 
+				!userToShareWith.getUsername().equals(explorerToShareWith.getOwner())) {
+			//TODO
+		}
+		
+		File file = ownersExplorer.getFile(fileName, fileType);
+		SharedFileReadAndWrite sharedFile = null;
+		
+		if(file != null) {
+			
+			sharedFile = explorerToShareWith.addSharedFileReadAndWrite(file, owner.getUsername());
+			ownersExplorer.addUserToShare(userToShareWith.getUsername());
+		}
+		
+		return sharedFile;		
+	}
+	
 
 }

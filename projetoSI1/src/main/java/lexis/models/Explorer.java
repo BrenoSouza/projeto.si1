@@ -4,12 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 public class Explorer implements Comparable<Explorer> {
 	
 
 	private Folder root;
+	private String owner;
 	private Stack<Folder> stackFolder;
+	
+	private TreeSet<String> pifo;
 	
 	private TreeMap<String, List<SharedFileReadAndWrite>> sharedFilesReadAndWrite;
 	private TreeMap<String, List<SharedFileReadOnly>> sharedFilesReadOnly;
@@ -23,14 +27,28 @@ public class Explorer implements Comparable<Explorer> {
 	public Explorer(String rootName) {
 		if(rootName == null)
 			throw new NullPointerException();
-			
-		root = new Folder(rootName, Permission.PRIVATE, new ArrayList<String>());
+		
+		owner = rootName.toLowerCase();
+		root = new Folder(rootName.toLowerCase(), Permission.PRIVATE, new ArrayList<String>());
 		stackFolder = new Stack<Folder>();
 		stackFolder.push(root);
 		
+		pifo = new TreeSet<String>();
 		sharedFilesReadAndWrite = new TreeMap<String, List<SharedFileReadAndWrite>>();
 		sharedFilesReadOnly = new TreeMap<String, List<SharedFileReadOnly>>();
 		
+	}
+	
+	public void addUserToShare(String userLogin) {
+		pifo.add(userLogin.toLowerCase());
+	}
+	
+	public boolean removeUserThatImSharing(String userLogin) {
+		return pifo.remove(userLogin.toLowerCase());
+	}
+	
+	public String[] getUsersThatImSharing() {
+		return pifo.toArray(new String[0]);
 	}
 	
 	/**
@@ -41,13 +59,23 @@ public class Explorer implements Comparable<Explorer> {
 	 * @param owner Criador/dono do arquivo.
 	 * @param file Arquivo a ser compartilhado
 	 */
-	public void addSharedFileReadAndWrite(File file, String owner) {
+	public SharedFileReadAndWrite addSharedFileReadAndWrite(File file, String owner) {
+		
+		if(file == null || owner == null)
+			throw new NullPointerException();
+		
 		if(!sharedFilesReadAndWrite.containsKey(owner)) {
 			sharedFilesReadAndWrite.put(owner, new ArrayList<SharedFileReadAndWrite>());
 		}
 		
 		SharedFileReadAndWrite fileReadAndWrite = new SharedFileReadAndWrite(file, owner);
-		sharedFilesReadAndWrite.get(owner).add(fileReadAndWrite);
+		
+		List<SharedFileReadAndWrite> sharedFilesWithThisUser = sharedFilesReadAndWrite.get(owner); 
+		
+		if(!sharedFilesWithThisUser.contains(fileReadAndWrite))
+			sharedFilesWithThisUser.add(fileReadAndWrite);
+		
+		return fileReadAndWrite;
 	}
 	
 	/**
@@ -57,13 +85,19 @@ public class Explorer implements Comparable<Explorer> {
 	 * @param owner Criador/dono do arquivo.
 	 * @param file Arquivo a ser compartilhado
 	 */
-	public void addSharedFileReadOnly(File file, String owner) {
+	public SharedFileReadOnly addSharedFileReadOnly(File file, String owner) {
 		if(!sharedFilesReadOnly.containsKey(owner)) {
 			sharedFilesReadOnly.put(owner, new ArrayList<SharedFileReadOnly>());
 		}
 		
 		SharedFileReadOnly fileReadOnly = new SharedFileReadOnly(file, owner);
-		sharedFilesReadOnly.get(owner).add(fileReadOnly);
+		
+		List<SharedFileReadOnly> sharedFilesWithThisUser = sharedFilesReadOnly.get(owner);
+		
+		if(!sharedFilesWithThisUser.contains(fileReadOnly))		
+			sharedFilesWithThisUser.add(fileReadOnly);
+		
+		return fileReadOnly;
 	}
 	
 	
@@ -213,7 +247,12 @@ public class Explorer implements Comparable<Explorer> {
 	public Folder getRoot() {
 		return root;
 	}
-
+	
+	
+	public String getOwner() {
+		return owner;
+	}
+	
 	@Override
 	public int compareTo(Explorer otherExplorer) {
 		return root.getName().compareTo(otherExplorer.getRoot().getName());
