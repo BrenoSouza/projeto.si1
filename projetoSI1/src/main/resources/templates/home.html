@@ -163,8 +163,8 @@
 				</td>
 
 				<td>
-					<input class="menu2" style="width:50px; height:50px; " id="new-file" type="image" src="../static/images/home.png"
-							th:src="@{images/home.png}" ng-click="initialFolder()"></input>
+					<input class="menu2" style="width:50px; height:50px;" type="image" src="../static/images/home.png"
+							th:src="@{images/home.png}"></input>
 				</td>
 				<td>
 					<input class="menu2" style="width:50px; height:50px; " id="new-file" type="image" src="../static/images/back.png"
@@ -255,8 +255,8 @@
 							<input id="rename" type="image" src="../static/images/rename.png"
 							th:src="@{images/rename.png}" name="renameFile" ng-click="renameFile()"></input>
 							
-							<input id="share" type="image" src="../static/images/share.png"
-							th:src="@{images/share.png}" name="shareFile" ng-click="shareTxtOrFolder()"></input>
+							<input ng-if="isTxt(arquivo.type)" class="shareBtn" id="shareFile{{arquivo.name}}{{arquivo.type}}" type="image" src="../static/images/share.png"
+							th:src="@{images/share.png}" name="shareFile" data-toggle="modal" ng-click="shareFile(arquivo)"></input>
 														
 							<input id="delete" type="image" src="../static/images/delete.png"
 							th:src="@{images/delete.png}" name="removeFile" ng-click="deleteL(arquivo)"></input>
@@ -277,6 +277,34 @@
 	<script th:src="@{/js/dialogbox.js}" src="../static/js/dialogbox.js"></script>
 	<script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js}"></script>
   	<script th:src="@{http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+
+
+
+
+			<!-- Modal Compartilhar File -->
+			<div id="shareModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-header">
+			    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			    	<h3 id="myModalLabel" style="text-align: center;" >Compartilhar</h3>
+			  	</div>
+			  	<div class="modal-body" style="text-align:center" >
+			  		<table style="text-align:center">
+			  			<td>
+			  				<h5>Usuário: </h5>
+			  			</td>
+			  			<td>
+			  				<input type="text" id="userLoginShare" placeholder="Username/email"></input>
+			  			</td>
+			  		</table>
+			  			<input type="radio" name="gender" value="y" checked="checked"> Leitura</input>
+  						<input type="radio" name="gender" value="n"> Leitura e Escrita</input>
+			  	</div>
+			  	<div class="modal-footer" style="text-align:center">
+			    	<button class="btn" data-dismiss="modal" aria-hidden="true" ng-click="blankInput('newFolderName')">Cancelar</button>
+			    	<button class="btn btn-primary" data-dismiss="modal">Compartilhar</button>
+			  	</div>
+			</div>
+
 
 
 

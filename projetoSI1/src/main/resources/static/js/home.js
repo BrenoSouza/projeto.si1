@@ -69,7 +69,7 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
 
     	var nome = document.getElementById("newFileName").value;
     	var selectedType = document.getElementById("selectType").value;
-    	alert(selectedType);
+
         if(nome.length === 0){
         	Alert.render("Nome inválido", "Nome não pode ser vazio!");
         } else {
@@ -236,6 +236,13 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     
     $scope.blankInput = function(id) {
     	document.getElementById(id).value = "";
+    }
+    
+    $scope.shareFile = function(arquivo){
+        $("#shareModal").modal();
+    	
+        
+        
     }
     
 });    
