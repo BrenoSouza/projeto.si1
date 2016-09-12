@@ -77,7 +77,7 @@ public class UserServiceDAOImpl implements UserServiceDAO,UserDetailsService{
 	 */
 	@Override
 	public User getUserByLogin(String login) {
-		return userRepository.findByLogin(login);
+		return userRepository.findByUsername(login);
 	}
 
 	/**
@@ -137,7 +137,7 @@ public class UserServiceDAOImpl implements UserServiceDAO,UserDetailsService{
 		if(userName.contains("@")){
 			userTemp = userRepository.findByEmail(userName);
 		}else{
-			userTemp = userRepository.findByLogin(userName);
+			userTemp = userRepository.findByUsername(userName);
 		}
 		
 		if(userTemp == null){

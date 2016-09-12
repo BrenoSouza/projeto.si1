@@ -30,6 +30,6 @@ public interface UserRepository extends CrudRepository<User, Integer> {
 	 * @return Se o login existir retorna o usuario associado a ele, se nao
 	 *         retorna null.
 	 */
-	User findByLogin(String login);
+	User findByUsername(String login);
 
 }

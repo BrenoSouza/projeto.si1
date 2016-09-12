@@ -51,7 +51,7 @@
 			<h2 class="sign-up " style="margin-right: 10%">Registrar</h2>
 			<form th:object="${userRegister}" th:action="@{/userRegister}" method="POST">
 				<label for="login" style="margin-right: 27%">Login: </label>
-				<input type="text" name="login" id="login-sign-up" th:field="*{login}"></input>
+				<input type="text" name="login" id="login-sign-up" th:field="*{username}"></input>
 				<label for="password" style="margin-right: 22%">Password: </label>
 				<input type="password" name="password" id="password-sign-up" th:field="*{password}"></input>
 				<label for="email" style="margin-right: 27%">Email: </label>

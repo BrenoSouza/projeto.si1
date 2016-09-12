@@ -36,14 +36,14 @@ public class User implements UserDetails {
 	
 	@Version
 	private Integer version;
-	private String login;
+	private String username;
 	private String password;
 	private String email;
 	//private BCryptPasswordEncoder crypt = new BCryptPasswordEncoder();
 	
 	
 	public User() {
-		login = null;
+		username = null;
 	}
 	
 	public User(String login, String password, String email) throws Exception {
@@ -52,7 +52,7 @@ public class User implements UserDetails {
 		checkEmail(email);
 		BCryptPasswordEncoder crypt = new BCryptPasswordEncoder();
 		
-		this.login = login.toLowerCase();
+		this.username = login.toLowerCase();
 		this.password = crypt.encode(password);
 		this.email = email.toLowerCase();
 		
@@ -86,10 +86,10 @@ public class User implements UserDetails {
 	}
 
 	
-	public void setLogin(String login) throws Exception {
-		if(this.login == null) {
+	public void setUsername(String login) throws Exception {
+		if(this.username == null) {
 			checkLogin(login);
-			this.login = login.toLowerCase();
+			this.username = login.toLowerCase();
 			
 		}
 		
@@ -134,7 +134,7 @@ public class User implements UserDetails {
 		int result = 1;
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((login == null) ? 0 : login.hashCode());
+		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((version == null) ? 0 : version.hashCode());
 		return result;
@@ -206,7 +206,7 @@ public class User implements UserDetails {
 	 */
 	@Override
 	public String getUsername() {
-		return login;
+		return username;
 	}
 
 	@Override
