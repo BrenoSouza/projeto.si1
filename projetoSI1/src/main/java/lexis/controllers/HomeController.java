@@ -1,6 +1,7 @@
 package lexis.controllers;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,6 +16,7 @@ import lexis.models.Explorer;
 import lexis.models.Folder;
 import lexis.models.Notification;
 import lexis.models.Permission;
+import lexis.models.SharedFileReadOnly;
 import lexis.models.Type;
 import lexis.models.User;
 import lexis.services.UserServiceDAO;
@@ -169,7 +171,31 @@ public class HomeController {
 		return explorer.getNotifications();
 	}
 	
+	@RequestMapping(value = "setReadNotification", method = RequestMethod.POST)
+	public void setReadNotification(@RequestBody Object json){
+		JsonUtil.json(json);
+		
+		int position = JsonUtil.getPosition();
+		Notification[] notifications = explorer.getNotifications();
+		
+		notifications[position].setUnread(Notification.READ);
+	}
 	
+	@RequestMapping(value = "SharedFilesReadAndWrite", method = RequestMethod.GET)
+	public void getSharedFilesReadAndWrite(){
+		explorer.getSharedFilesReadAndWrite();
+	}
+	
+	@RequestMapping(value = "SharedFilesReadOnly", method = RequestMethod.GET)
+	public void getSharedFilesReadOnly(){
+		explorer.getSharedFilesReadOnly();
+	}
+	
+	@RequestMapping(value = "getSharedFile", method = RequestMethod.POST)
+	public SharedFileReadOnly getSharedFile(@RequestBody Object json){
+		int position = JsonUtil.getPosition();
+		return explorer.getNotifications()[position].getSharedFile();
+	}
 	
 	private User userLogged(){
 		return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

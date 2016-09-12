@@ -91,6 +91,10 @@ public class JsonUtil {
 		}
 		return null;
 	}
+
+	public static int getPosition() {
+		return Integer.parseInt((String) map.get("position"));
+	}
 	
 	
 	
