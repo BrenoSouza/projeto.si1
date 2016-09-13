@@ -2,7 +2,6 @@ package lexis.controllers;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,8 +17,7 @@ import lexis.models.Folder;
 import lexis.models.Notification;
 import lexis.models.Pair;
 import lexis.models.Permission;
-import lexis.models.SharedFileReadAndWrite;
-import lexis.models.SharedFileReadOnly;
+import lexis.models.SharedFile;
 import lexis.models.Type;
 import lexis.models.User;
 import lexis.services.UserServiceDAO;
@@ -222,19 +220,11 @@ public class HomeController {
 	}
 	
 	/**
-	 * @return a lista de arquivos comparilhado com permissão de escrita
+	 * @return a lista de arquivos comparilhado com permissão de leitura e escrita
 	 */
-	@RequestMapping(value = "SharedFilesReadAndWrite", method = RequestMethod.GET)
-	public List<Pair<String, List<SharedFileReadAndWrite>>> getSharedFilesReadAndWrite(){
-		return explorer.getSharedFilesReadAndWrite();
-	}
-	
-	/**
-	 * @return retorna uma lista com os arquivos apenas com permissão de escrita
-	 */
-	@RequestMapping(value = "SharedFilesReadOnly", method = RequestMethod.GET)
-	public List<Pair<String, List<SharedFileReadOnly>>> getSharedFilesReadOnly(){
-		return explorer.getSharedFilesReadOnly();
+	@RequestMapping(value = "SharedFiles", method = RequestMethod.GET)
+	public List<Pair<String, List<SharedFile>>> getSharedFilesReadAndWrite(){
+		return explorer.getSharedFiles();
 	}
 	
 	/**
@@ -243,7 +233,7 @@ public class HomeController {
 	 * @return o arquivo solicitado
 	 */
 	@RequestMapping(value = "getSharedFile", method = RequestMethod.POST)
-	public SharedFileReadOnly getSharedFile(@RequestBody Object json){
+	public SharedFile getSharedFile(@RequestBody Object json){
 		int position = JsonUtil.getPosition();
 		return explorer.getNotifications()[position].getSharedFile();
 	}
