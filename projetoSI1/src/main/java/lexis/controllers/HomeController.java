@@ -16,6 +16,7 @@ import lexis.models.DataBase;
 import lexis.models.Explorer;
 import lexis.models.Folder;
 import lexis.models.Notification;
+import lexis.models.Pair;
 import lexis.models.Permission;
 import lexis.models.SharedFileReadAndWrite;
 import lexis.models.SharedFileReadOnly;
@@ -224,7 +225,7 @@ public class HomeController {
 	 * @return a lista de arquivos comparilhado com permissão de escrita
 	 */
 	@RequestMapping(value = "SharedFilesReadAndWrite", method = RequestMethod.GET)
-	public TreeMap<String, List<SharedFileReadAndWrite>> getSharedFilesReadAndWrite(){
+	public List<Pair<String, List<SharedFileReadAndWrite>>> getSharedFilesReadAndWrite(){
 		return explorer.getSharedFilesReadAndWrite();
 	}
 	
@@ -232,7 +233,7 @@ public class HomeController {
 	 * @return retorna uma lista com os arquivos apenas com permissão de escrita
 	 */
 	@RequestMapping(value = "SharedFilesReadOnly", method = RequestMethod.GET)
-	public TreeMap<String, List<SharedFileReadOnly>> getSharedFilesReadOnly(){
+	public List<Pair<String, List<SharedFileReadOnly>>> getSharedFilesReadOnly(){
 		return explorer.getSharedFilesReadOnly();
 	}
 	
