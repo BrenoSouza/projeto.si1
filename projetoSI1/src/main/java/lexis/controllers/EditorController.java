@@ -21,8 +21,14 @@ import lexis.util.JsonUtil;
 public class EditorController {
 
 	private Explorer explorer;
-	private static File file;
+	private File file;
 	
+	/**
+	 * metodo responsavel por mapear a pagina correta
+	 * se nao houver aquivo, mapeia para o home.html
+	 * se houver mapeia para editor.html
+	 * @return
+	 */
 	@RequestMapping
 	public ModelAndView editor() {
 		ModelAndView editor;
@@ -34,6 +40,9 @@ public class EditorController {
 		return editor;
 	}
 	
+	/**
+	 * @param json -Object Json com os dados do arquivo a ser buscado
+	 */
 	@RequestMapping(value = "viewFile", method = RequestMethod.POST)
 	public void viewFile(@RequestBody Object json) {
 		JsonUtil.json(json);
@@ -45,11 +54,19 @@ public class EditorController {
 		this.file = explorer.getFile(fileName,type);
 	}
 	
+	/**
+	 * metodo reponsavel pelo retorno do arquivo
+	 * @return o arquivo requisitado
+	 */
 	@RequestMapping(value = "viewFile", method = RequestMethod.GET)
 	public File viewFile() {
 		return file;
 	}
 
+	/**
+	 * metodo resposavel por salvar o codigo fonte do arquivo
+	 * @param json -Object Json com o dados a sem modificados
+	 */
 	@RequestMapping(value = "saveData", method = RequestMethod.POST)
 	public void saveData(@RequestBody Object json){
 		JsonUtil.json(json);
@@ -59,10 +76,17 @@ public class EditorController {
 		file.setData(data, dateEdition);
 	}
 	
+	/**
+	 * retorna o usuario logafo
+	 * @return
+	 */
 	private User userLogged(){
 		return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	}
 	
+	/**
+	 * modifica ou altera o explorer atual
+	 */
 	public void setExplorer(){
 		this.explorer = DataBase.getInstance().getUser(userLogged().getUsername());
 	}

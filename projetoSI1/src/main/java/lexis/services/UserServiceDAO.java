@@ -52,6 +52,11 @@ public interface UserServiceDAO {
 	 */
 	User getUserByEmail(String email);
 	
+	/**
+	 * busca pelo email ou pelo login
+	 * @param login - email ou login
+	 * @return - o usuario encontrado
+	 */
 	User getUserByEmailOrLogin(String login);
 
 	/**
@@ -72,6 +77,11 @@ public interface UserServiceDAO {
 	 */
 	Boolean existsByEmail(String email);
 	
+	/**
+	 * verifica pelo emial ou login se o usuario existe
+	 * @param login
+	 * @return
+	 */
 	Boolean existsByEmailOrLogin(String login);
 
 	/**

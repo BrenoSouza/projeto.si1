@@ -3,7 +3,6 @@ package lexis.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -26,7 +25,8 @@ public class IndexController {
 	
 	/**
 	 * Metodo responsavel pelo index.html
-	 * 
+	 * caso um usuario ja esteja logado, ele redireciona
+	 * autimaticamente para o home.html 
 	 * @return
 	 */
 	@RequestMapping(value = {"/","login","index"}) // acessa o url "/"
@@ -62,8 +62,7 @@ public class IndexController {
 		ModelAndView register = new ModelAndView("redirect:login");
 		UserRegisterHelper userRegisterHelper = new UserRegisterHelper(userService);
 		
-		try {
-			
+		try {			
 			// verifica se a erros no usuario
 			userRegisterHelper.hasErrorIn(userRegister);
 
@@ -74,30 +73,20 @@ public class IndexController {
 			
 			// retorna para o metodo responsavel pelo login
 			return  register;
-
 			// se houver erros:
 		} catch (Exception e) {
 			// com as mensagens de erro
 			attributes.addFlashAttribute("mensagemerror", e.getMessage());
-
 			return register;
 		}
-
 	}
 
 	/**
-	 * Metodo resposavel pela validação dos campos e login do usuario.
-	 * 
-	 * @param userLogin
-	 *            - Recebe o paramentro "userLogin" na url com o metodo POST.
-	 * @param attributes
-	 *            - Obejto da framework que permite o redirecionamento da pagina
-	 *            com mensagem de erro.
-	 * @return Retona a home.html se nao houver erros,caso contrario retorna a
-	 *         index.html com a mensagem de erro.
+	 * Metodo responsavel pelo home.html
+	 * @return Retorna a home.html
 	 */
 	@RequestMapping("/home")
-	public ModelAndView userLogin(User userLogin, RedirectAttributes attributes) {
+	public ModelAndView home() {
 		ModelAndView login = new ModelAndView();
 		login.setViewName("home");
 		return login;
