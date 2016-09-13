@@ -123,25 +123,35 @@ public class Explorer implements Comparable<Explorer> {
 	}
 	
 	
-	/**
-	 * Recupera o mapa <Login do dono do arquivo, Lista de arquivos> 
-	 * contento todos os arquivos compartilhados com esse usuario que 
-	 * ele possui permissao para visualizar e editar o conteudo do arquivo.
-	 * @return
-	 */
-	public TreeMap<String, List<SharedFileReadAndWrite>> getSharedFilesReadAndWrite() {
-		return sharedFilesReadAndWrite;
+	public List<Pair<String, List<SharedFileReadAndWrite>>> getSharedFilesReadAndWrite() {
+		
+		String[] users = getUsersThatImSharing();
+		
+		List<Pair<String, List<SharedFileReadAndWrite>>> output = new ArrayList<Pair<String, List<SharedFileReadAndWrite>>>();
+		
+		for(String user : users) {
+			output.add(new Pair<String, List<SharedFileReadAndWrite>>(user, new ArrayList<SharedFileReadAndWrite>()));
+			output.get(output.size()-1).getSecond().addAll(sharedFilesReadAndWrite.get(user));
+		}
+		
+		return output;
 	}
 	
-	/**
-	 * Recupera o mapa <Login do dono do arquivo, Lista de arquivos> 
-	 * contento todos os arquivos compartilhados com esse usuario que 
-	 * ele possui permissao apenas visualizar.
-	 * @return
-	 */
-	public TreeMap<String, List<SharedFileReadOnly>> getSharedFilesReadOnly() {
-		return sharedFilesReadOnly;
+	public List<Pair<String, List<SharedFileReadOnly>>> getSharedFilesReadOnly() {
+		
+		String[] users = getUsersThatImSharing();
+		
+		List<Pair<String, List<SharedFileReadOnly>>> output = new ArrayList<Pair<String, List<SharedFileReadOnly>>>();
+		
+		for(String user : users) {
+			output.add(new Pair<String, List<SharedFileReadOnly>>(user, new ArrayList<SharedFileReadOnly>()));
+			output.get(output.size()-1).getSecond().addAll(sharedFilesReadOnly.get(user));
+		}
+		
+		return output;
 	}
+	
+
 	
 	/**
 	 * Sobe um nivel na hierarquia de pastas. Por exemplo, 
