@@ -17,8 +17,7 @@ public class Explorer implements Comparable<Explorer> {
 	
 	private TreeSet<String> usersThatImSharing;
 	
-	private TreeMap<String, List<SharedFileReadAndWrite>> sharedFilesReadAndWrite;
-	private TreeMap<String, List<SharedFileReadOnly>> sharedFilesReadOnly;
+	private TreeMap<String, List<SharedFile>> sharedFiles;
 	
 	private List<Notification> notifications;
 	
@@ -37,8 +36,7 @@ public class Explorer implements Comparable<Explorer> {
 		stackFolder.push(root);
 		
 		usersThatImSharing = new TreeSet<String>();
-		sharedFilesReadAndWrite = new TreeMap<String, List<SharedFileReadAndWrite>>();
-		sharedFilesReadOnly = new TreeMap<String, List<SharedFileReadOnly>>();
+		sharedFiles = new TreeMap<String, List<SharedFile>>();
 		
 		notifications = new ArrayList<Notification>();
 		
@@ -78,13 +76,13 @@ public class Explorer implements Comparable<Explorer> {
 		if(file == null || owner == null)
 			throw new NullPointerException();
 		
-		if(!sharedFilesReadAndWrite.containsKey(owner)) {
-			sharedFilesReadAndWrite.put(owner, new ArrayList<SharedFileReadAndWrite>());
+		if(!sharedFiles.containsKey(owner)) {
+			sharedFiles.put(owner, new ArrayList<SharedFile>());
 		}
 		
 		SharedFileReadAndWrite fileReadAndWrite = new SharedFileReadAndWrite(file, owner);
 		
-		List<SharedFileReadAndWrite> sharedFilesWithThisUser = sharedFilesReadAndWrite.get(owner); 
+		List<SharedFile> sharedFilesWithThisUser = sharedFiles.get(owner); 
 		
 		if(!sharedFilesWithThisUser.contains(fileReadAndWrite)) {
 			
@@ -105,13 +103,13 @@ public class Explorer implements Comparable<Explorer> {
 	 * @param log Horario em que foi feito o compartilhamento.
 	 */
 	public SharedFileReadOnly addSharedFileReadOnly(File file, String owner, LocalDateTime log) {
-		if(!sharedFilesReadOnly.containsKey(owner)) {
-			sharedFilesReadOnly.put(owner, new ArrayList<SharedFileReadOnly>());
+		if(!sharedFiles.containsKey(owner)) {
+			sharedFiles.put(owner, new ArrayList<SharedFile>());
 		}
 		
 		SharedFileReadOnly fileReadOnly = new SharedFileReadOnly(file, owner);
 		
-		List<SharedFileReadOnly> sharedFilesWithThisUser = sharedFilesReadOnly.get(owner);
+		List<SharedFile> sharedFilesWithThisUser = sharedFiles.get(owner);
 		
 		if(!sharedFilesWithThisUser.contains(fileReadOnly)) {		
 		
@@ -123,35 +121,20 @@ public class Explorer implements Comparable<Explorer> {
 	}
 	
 	
-	public List<Pair<String, List<SharedFileReadAndWrite>>> getSharedFilesReadAndWrite() {
+	public List<Pair<String, List<SharedFile>>> getSharedFiles() {
 		
 		String[] users = getUsersThatImSharing();
 		
-		List<Pair<String, List<SharedFileReadAndWrite>>> output = new ArrayList<Pair<String, List<SharedFileReadAndWrite>>>();
+		List<Pair<String, List<SharedFile>>> output = new ArrayList<Pair<String, List<SharedFile>>>();
 		
 		for(String user : users) {
-			output.add(new Pair<String, List<SharedFileReadAndWrite>>(user, new ArrayList<SharedFileReadAndWrite>()));
-			output.get(output.size()-1).getSecond().addAll(sharedFilesReadAndWrite.get(user));
+			output.add(new Pair<String, List<SharedFile>>(user, new ArrayList<SharedFile>()));
+			output.get(output.size()-1).getSecond().addAll(sharedFiles.get(user));
 		}
 		
 		return output;
 	}
 	
-	public List<Pair<String, List<SharedFileReadOnly>>> getSharedFilesReadOnly() {
-		
-		String[] users = getUsersThatImSharing();
-		
-		List<Pair<String, List<SharedFileReadOnly>>> output = new ArrayList<Pair<String, List<SharedFileReadOnly>>>();
-		
-		for(String user : users) {
-			output.add(new Pair<String, List<SharedFileReadOnly>>(user, new ArrayList<SharedFileReadOnly>()));
-			output.get(output.size()-1).getSecond().addAll(sharedFilesReadOnly.get(user));
-		}
-		
-		return output;
-	}
-	
-
 	
 	/**
 	 * Sobe um nivel na hierarquia de pastas. Por exemplo, 

@@ -2,7 +2,7 @@ package lexis.models;
 
 import java.time.LocalDateTime;
 
-public final class SharedFileReadAndWrite extends SharedFileReadOnly {
+public final class SharedFileReadAndWrite extends SharedFile {
 	
 	public static final String TYPE_SHARING = "Read and Write";
 	

@@ -16,7 +16,7 @@ public class Notification implements Comparable<Notification> {
 	String owner;
 	LocalDateTime log;
 
-	SharedFileReadOnly sharedFile;
+	SharedFile sharedFile;
 	
 	boolean unread;
 	
@@ -29,7 +29,7 @@ public class Notification implements Comparable<Notification> {
 	 * herdam dela, como a SharedFileReadAndWrite.
 	 * @param log Momento em que foi feito o compartilhamento.
 	 */
-	public Notification(String owner, SharedFileReadOnly sharedFile, LocalDateTime log) {
+	public Notification(String owner, SharedFile sharedFile, LocalDateTime log) {
 
 		if (owner == null || sharedFile == null || log == null)
 			throw new NullPointerException();
@@ -96,7 +96,7 @@ public class Notification implements Comparable<Notification> {
 		unread = value;
 	}
 	
-	public SharedFileReadOnly getSharedFile() {
+	public SharedFile getSharedFile() {
 		return sharedFile;
 	}
 	
