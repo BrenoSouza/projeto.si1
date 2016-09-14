@@ -82,6 +82,7 @@ public class DataBase {
 			
 			sharedFile = explorerToShareWith.addSharedFileReadOnly(file, owner.getUsername(), log);
 			ownersExplorer.addUserToShare(userToShareWith.getUsername());
+			explorerToShareWith.addUserToShare(owner.getUsername());
 		}
 		
 		return sharedFile;
@@ -118,6 +119,7 @@ public class DataBase {
 			
 			sharedFile = explorerToShareWith.addSharedFileReadAndWrite(file, owner.getUsername(), log);
 			ownersExplorer.addUserToShare(userToShareWith.getUsername());
+			explorerToShareWith.addUserToShare(owner.getUsername());
 		}
 		
 		return sharedFile;		

@@ -103,6 +103,9 @@ public class Explorer implements Comparable<Explorer> {
 	 * @param log Horario em que foi feito o compartilhamento.
 	 */
 	public SharedFileReadOnly addSharedFileReadOnly(File file, String owner, LocalDateTime log) {
+		if(file == null || owner == null)
+			throw new NullPointerException();
+		
 		if(!sharedFiles.containsKey(owner)) {
 			sharedFiles.put(owner, new ArrayList<SharedFile>());
 		}
@@ -113,7 +116,7 @@ public class Explorer implements Comparable<Explorer> {
 		
 		if(!sharedFilesWithThisUser.contains(fileReadOnly)) {		
 		
-			sharedFilesWithThisUser.add(fileReadOnly);
+			sharedFiles.get(owner).add(fileReadOnly);
 			addNotification(new Notification(owner, fileReadOnly, log));
 		}
 		
@@ -129,7 +132,8 @@ public class Explorer implements Comparable<Explorer> {
 		
 		for(String user : users) {
 			output.add(new Pair<String, List<SharedFile>>(user, new ArrayList<SharedFile>()));
-			output.get(output.size()-1).getSecond().addAll(sharedFiles.get(user));
+			List<SharedFile> aux = sharedFiles.get(user);
+			output.get(output.size()-1).getSecond().addAll(aux);
 		}
 		
 		return output;
