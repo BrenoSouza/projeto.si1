@@ -15,10 +15,6 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
    $scope.sharedFileAux;
     
     window.onload = function() {
-        loadingFolder();
-    }
-    
-    var loadingFolder = function() {
     	$http.get("/home/explorer").success(function(data, status) {
     		
     		$scope.arquivos = [];
@@ -31,8 +27,46 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
 				$scope.arquivos.push(data.fileDirectory[int]);
 			}
     		
+    	});    
+    }
+    
+    
+    
+    var loadingFolder = function() {
+		$scope.arquivos = [];
+    	
+    	$http.get("/home/explorer").success(function(data, status) {
+    		    		
+    		for (var int = 0; int < data.folderDirectory.length; int++) {
+				$scope.arquivos.push(data.folderDirectory[int]);
+			}
+    		
+    		for (var int = 0; int < data.fileDirectory.length; int++) {
+				$scope.arquivos.push(data.fileDirectory[int]);
+			}
+    		
     	});
     	
+    	$http.get("/home/SharedFiles").success(function(data, status) {
+    		    		
+    		console.log(data);
+    		if(data != undefined) {
+    			console.log(data[0]);
+    			for (var i = 0; i < data.length; i++) {
+					for (var j = 0; j < data[i].second.length; j++) {
+						console.log(data[i].second[j])							
+						$scope.arquivos.push(data[i].second[j]);
+						
+						
+					}
+				}
+    			
+    			
+    		}
+    			//$http.get("/home/notification").success(function(data, status) {
+        		        		
+    			//});
+    	});
     	
     };
     
@@ -199,16 +233,26 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     }
     
     $scope.viewFile = function(arquivo) {
-
     	var file = {
     		name: arquivo.name,
     		type: arquivo.type
     	}
-    	
+   
     	$http.post("/editor/viewFile", file).success(function(data, status) {
 
     	});
     	
+    }
+    
+    $scope.viewSharedFile = function(arquivo) {
+    	var file = {
+    		owner: arquivo.owner,
+    		index: arquivo.index
+    	}
+    	
+    	$http.post("/editor/viewSharedFile", file).success(function(data, status) {
+
+    	});
     }
     
     $scope.deleteL = function(arquivo) {
@@ -269,27 +313,5 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
          $scope.sharedFileAux = undefined;
     }
     
-    
-    $scope.getShared = function() {
-    	$http.get("/home/SharedFiles").success(function(data, status) {
-    		
-    		console.log(data);
-    		
-    		var users = Object.keys(data);
-    		
-    		for(var k in users){
-    			   console.log(k);
-    		} 
- 
-    		if (data != null) {
-    			$http.get("/home/notification").success(function(data, status) {
-        		
-    				console.log(data);
-        		
-    			});
-    		}
-    		
-    	});
-    }
     
 });    

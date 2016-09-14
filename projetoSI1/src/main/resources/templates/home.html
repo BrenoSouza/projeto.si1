@@ -222,9 +222,14 @@
 						<td id="td-name">
 
 							<span ng-if="isTxt(arquivo.type)">
-								<a href="/editor" ng-click="viewFile(arquivo)" th:action="@{/home/editor}">
+								<a href="/editor" ng-click="viewSharedFile(arquivo)" th:action="@{/home/editor}">
 									<img src="../static/images/TXT.png" th:src="@{images/TXT.png}" alt="" class="iconeFile"></img>
 								</a>
+								
+								<a ng-if="arquivo.owner === undefined" href="/editor" ng-click="viewFile(arquivo)" th:action="@{/home/editor}">
+									<img src="../static/images/TXT.png" th:src="@{images/TXT.png}" alt="" class="iconeFile"></img>
+								</a>
+								
 							</span>
 
 							<span ng-if="!isTxt(arquivo.type)">
