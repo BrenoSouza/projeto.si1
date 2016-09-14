@@ -38,53 +38,16 @@
 	</div>
 	<div id="menu" onmouseleave="closeMenu()">
 		<ul>
-			<li>
-				<a ng-click = "InicialFolder()" align = "center">
-					<span>
+			<li ng-repeat="notification in notificationList">
+				<a ng-click = "showModalNotification(notification)" align = "center">
+					<div>
 						<span>
-							Meus Arquivos
+							{{notification.owner}} compartilhou um arquivo com você!
 						</span>
-					</span>
+					</div>
 				</a>
-			</li>
-			<li>	
-				<a ng-click = "sharedWithMeFolder()">
-					<span>
-						<span>
-							Arquivos compartilhados comigo
-						</span>
-					</span>
-				</a>
-				
 			</li>
 			
-			<li>
-				<a ng-click = "sharedFolder()">
-					<span>
-						<span>
-							Meus arquivos compartilhados
-						</span>
-					</span>
-				</a>
-			</li>
-			<li>	
-				<a ng-click = "myAccount()">
-					<span>
-						<span>
-							Minha Conta
-						</span>
-					</span>
-				</a>
-			</li>
-			<li>	
-				<a ng-click = "trashFolder()">
-					<span>
-						<span>
-							Lixeira
-						</span>
-					</span>
-				</a>
-			</li>
 		</ul>
 	</div>
 
@@ -107,7 +70,7 @@
 				</a> 
 
 				<a class="brand topbar-links" style="margin-left: 2%">
-						<input style="height:20px; " id="home" type="image" src="../static/images/lexisName.png"
+						<input style="height:20px; " id="home" type="image"
 								th:src="@{images/lexisName.png}" ng-click="initialFolder()"></input>
 				</a>
 				
@@ -153,12 +116,12 @@
 				
 				<td>
 
-					<input class="menu2" style="width:50px; height:50px; " id="createFile" type="image" src="../static/images/newFile.png"
+					<input ng-click="showModalCreateFile()" class="menu2" style="width:50px; height:50px; " id="createFile" type="image" src="../static/images/newFile.png"
 							th:src="@{images/newFile.png}" name="createFile"></input>
 				</td>
 
 				<td>
-					<input class="menu2" id="createFolder" style="width:50px; height:50px; " data-toggle="modal" type="image" src="../static/images/newFolder.png"
+					<input ng-click="showModalCreateFolder()" class="menu2" id="createFolder" style="width:50px; height:50px; " data-toggle="modal" type="image" src="../static/images/newFolder.png"
 							th:src="@{images/newFolder.png}" name="createFolder"></input>
 				</td>
 
@@ -222,11 +185,7 @@
 						<td id="td-name">
 
 							<span ng-if="isTxt(arquivo.type)">
-								<a href="/editor" ng-click="viewSharedFile(arquivo)" th:action="@{/home/editor}">
-									<img src="../static/images/TXT.png" th:src="@{images/TXT.png}" alt="" class="iconeFile"></img>
-								</a>
-								
-								<a ng-if="arquivo.owner === undefined" href="/editor" ng-click="viewFile(arquivo)" th:action="@{/home/editor}">
+								<a ng-click="viewFile(arquivo)" href="/editor" th:action="@{/home/editor}">
 									<img src="../static/images/TXT.png" th:src="@{images/TXT.png}" alt="" class="iconeFile"></img>
 								</a>
 								
@@ -234,7 +193,7 @@
 
 							<span ng-if="!isTxt(arquivo.type)">
 								<a ng-click="changeFolder(arquivo.name)" href="#" th:action="@{/home/editor}">
-									<img src="../static/images/folder.png" th:src="@{images/{{arquivo.type}}.png}" alt="" class="iconeFile"></img>
+									<img src="../static/images/folder.png" th:src="@{images/folder.png}" alt="" class="iconeFile"></img>
 								</a>
 
 							</span>
@@ -263,10 +222,10 @@
 							<input ng-if="!isTxt(arquivo.type)" id="rename" type="image" src="../static/images/rename.png"
 							th:src="@{images/rename.png}" name="renameFolder" ng-click="showModalRenameFolder(arquivo)"></input>
 							
-							<input ng-if="isTxt(arquivo.type)" class="shareBtn" id="shareFile{{arquivo.name}}{{arquivo.type}}" type="image" src="../static/images/share.png"
+							<input ng-if="isShare(arquivo)" class="shareBtn" id="shareFile{{arquivo.name}}{{arquivo.type}}" type="image" src="../static/images/share.png"
 							th:src="@{images/share.png}" name="shareFile" data-toggle="modal" ng-click="openShareModal(arquivo)"></input>
 														
-							<input id="delete" type="image" src="../static/images/delete.png"
+							<input ng-if="isShare(arquivo)" id="delete" type="image" src="../static/images/delete.png"
 							th:src="@{images/delete.png}" name="removeFile" ng-click="deleteL(arquivo)"></input>
 
 							
@@ -284,7 +243,7 @@
 	<script th:src="@{/js/menu.js}" src="../static/js/menu.js"></script>
 	<script th:src="@{/js/dialogbox.js}" src="../static/js/dialogbox.js"></script>
 	<script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js}"></script>
-  	<script th:src="@{http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+  	<script th:src="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
 
 			
 			
@@ -408,6 +367,21 @@
 			    	<button class="btn btn-primary" data-dismiss="modal" ng-click="renameFile()" >Salvar</button>
 			  	</div>
 			</div>
+			
+			
+			<div id="notificationModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-header">
+			    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			    	<h3 id="myModalLabel" style="text-align: center;">Notificação</h3>
+			  	</div>
+			  	<div class="modal-body" style="text-align:center" >
+			   		<h3>{{notificationString}}</h3>
+			  	</div>
+			  	<div class="modal-footer" style="text-align:center">
+			    	<button class="btn" data-dismiss="modal" aria-hidden="true" ng-click="visualization()">Ignorar</button>
+			    	<button class="btn btn-primary" data-dismiss="modal" ng-click="viewFile(notificationAux.sharedFile)" >Visualizar</button>
+			  	</div>
+			</div>
 
 
 
@@ -423,20 +397,6 @@
 	</div>
 
 
-
-<script>
-$(document).ready(function(){
-    $("#createFolder").click(function(){
-        $("#createFolderModal").modal();
-    });
-    
-    $("#createFile").click(function(){
-        $("#createFileModal").modal();
-    });
-    
-});
-
-</script>
 
 </body>
 </html>

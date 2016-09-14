@@ -108,7 +108,7 @@
 					data-target=".navbar-inverse-collapse"> <span class="icon-bar"></span>
 					<span class="icon-bar"></span> <span class="icon-bar"></span>
 				</a> 
-				<a class="brand topbar-links" href="home" th:action="@{/home}" style="margin-left: 2%">
+				<a class="brand topbar-links" ng-click="blankTextArea()" href="home" th:action="@{/home}" style="margin-left: 2%">
 					<img src="..imagen/lexisName.pbg" th:src="@{../images/lexisName.png}"> </img>
 				</a>
 					
@@ -151,7 +151,9 @@
 		<div class="row">
 			<div class="span12">
 				<form action="#" method="get">
-					<textarea id="fileData" name="textValue" class="input-text"></textarea>
+					<textarea readonly="readonly" ng-if="isReadOnly()" id="fileData" name="textValue" class="input-text"></textarea>
+					<textarea ng-if="!isReadOnly()" id="fileData" name="textValue" class="input-text"></textarea>
+					
 				</form>
 			</div>
 

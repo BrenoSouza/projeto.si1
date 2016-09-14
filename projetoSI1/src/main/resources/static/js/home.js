@@ -12,28 +12,28 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     
     $scope.deletedFilesAndFolders = [];
     
-   $scope.sharedFileAux;
+    $scope.notificationList = [];
+    
+    $scope.sharedFileAux;
+    
+    $scope.notificationAux;
+    
+    $scope.notificationString = "";
     
     window.onload = function() {
+
     	$http.get("/home/explorer").success(function(data, status) {
     		
-    		$scope.arquivos = [];
-    		
-    		for (var int = 0; int < data.folderDirectory.length; int++) {
-				$scope.arquivos.push(data.folderDirectory[int]);
-			}
-    		
-    		for (var int = 0; int < data.fileDirectory.length; int++) {
-				$scope.arquivos.push(data.fileDirectory[int]);
-			}
-    		
-    	});    
+    	}); 
+    	
+    	loadingFolder();
     }
     
     
     
     var loadingFolder = function() {
 		$scope.arquivos = [];
+		$scope.notificationList = [];
     	
     	$http.get("/home/explorer").success(function(data, status) {
     		    		
@@ -49,24 +49,24 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     	
     	$http.get("/home/SharedFiles").success(function(data, status) {
     		    		
-    		console.log(data);
     		if(data != undefined) {
-    			console.log(data[0]);
     			for (var i = 0; i < data.length; i++) {
 					for (var j = 0; j < data[i].second.length; j++) {
-						console.log(data[i].second[j])							
 						$scope.arquivos.push(data[i].second[j]);
-						
 						
 					}
 				}
     			
     			
     		}
-    			//$http.get("/home/notification").success(function(data, status) {
-        		        		
-    			//});
+    			
     	});
+    	
+    	$http.get("/home/notification").success(function(data, status) {
+			for (var i = 0; i < data.length; i++) {
+				$scope.notificationList.push(data[i]);
+			}
+		});
     	
     };
     
@@ -207,7 +207,7 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     		loadingFolder();
     	});
     	$scope.sharedFileAux = undefined;
-    	$scope.blank("newRenameFileName");
+    	$scope.blankInput("newRenameFileName");
     } 
     
     
@@ -218,7 +218,6 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     }
     
     $scope.showMySharedFiles = function() {
-    	//Vai alterar o $scope.arquivos para a lista de arquivos que o usuario compartilhou com outros usuarios    	
     	for (var i = 0; i < $scope.arquivos.length; i++) {
 			if ($scope.arquivos[i].permission === "public") {
 				$scope.mySharedFiles.push(arquivos[i]);
@@ -233,14 +232,19 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     }
     
     $scope.viewFile = function(arquivo) {
-    	var file = {
-    		name: arquivo.name,
-    		type: arquivo.type
-    	}
+    	
+    	if (arquivo.owner === undefined) {
+    		var file = {
+    			name: arquivo.name,
+    			type: arquivo.type
+    		}
    
-    	$http.post("/editor/viewFile", file).success(function(data, status) {
+    		$http.post("/editor/viewFile", file).success(function(data, status) {
 
-    	});
+    		});
+    	} else {
+    		$scope.viewSharedFile(arquivo);
+    	}
     	
     }
     
@@ -313,5 +317,41 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
          $scope.sharedFileAux = undefined;
     }
     
+    $scope.showModalCreateFile = function() {
+        $("#createFileModal").modal('show');
+    }
+    
+    $scope.showModalCreateFolder = function() {
+        $("#createFolderModal").modal('show');
+    }
+    
+    $scope.isShare = function(arquivo) {
+    	return (arquivo.owner === undefined)
+    }
+    
+    $scope.showModalNotification = function(notification) {
+    	$scope.notificationAux = notification;
+        $scope.notificationString = notification.owner + " compartilhou o arquivo " + notification.fileName + "." + notification.fileType + 
+        							" com você com permissão para " + notification.typeSharing + "!";
+    	
+        $("#notificationModal").modal();
+        $scope.visualization();
+    }
+    
+    $scope.visualization = function() {
+    	
+    	for (var i = 0; i < $scope.notificationList.length; i++) {
+			if($scope.notificationList[i] === $scope.notificationAux) {
+				var ind = {
+					index: i
+				}
+				$http.post("/home/setReadNotification", ind).success(function(data, status) {
+
+	    		});
+				loadingFolder();
+				break;
+			}
+		}
+    }
     
 });    
