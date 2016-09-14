@@ -139,9 +139,9 @@ public class Explorer implements Comparable<Explorer> {
 		return output;
 	}
 	
-	public SharedFile getSharedFile(String owner, String fileName, Type typeFile, int index) {
+	public SharedFile getSharedFile(String owner, int index) {
 		
-		if(owner == null || fileName == null || typeFile == null)
+		if(owner == null)
 			throw new NullPointerException();
 		
 		List<SharedFile> sharedFilesWithThisOwner = this.sharedFiles.get(owner);
