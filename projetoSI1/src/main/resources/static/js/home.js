@@ -32,6 +32,8 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
 			}
     		
     	});
+    	
+    	
     };
     
     $scope.showOnTable = function(lista) {
@@ -267,5 +269,27 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
          $scope.sharedFileAux = undefined;
     }
     
+    
+    $scope.getShared = function() {
+    	$http.get("/home/SharedFiles").success(function(data, status) {
+    		
+    		console.log(data);
+    		
+    		var users = Object.keys(data);
+    		
+    		for(var k in users){
+    			   console.log(k);
+    		} 
+ 
+    		if (data != null) {
+    			$http.get("/home/notification").success(function(data, status) {
+        		
+    				console.log(data);
+        		
+    			});
+    		}
+    		
+    	});
+    }
     
 });    
