@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import lexis.models.DataBase;
 import lexis.models.Explorer;
 import lexis.models.File;
+import lexis.models.SharedFile;
 import lexis.models.Type;
 import lexis.models.User;
 import lexis.util.JsonUtil;
@@ -22,6 +23,7 @@ public class EditorController {
 
 	private Explorer explorer;
 	private File file;
+	private SharedFile sharedFile;
 	
 	/**
 	 * metodo responsavel por mapear a pagina correta
@@ -45,13 +47,25 @@ public class EditorController {
 	 */
 	@RequestMapping(value = "viewFile", method = RequestMethod.POST)
 	public void viewFile(@RequestBody Object json) {
-		JsonUtil.json(json);
-		
+		JsonUtil.json(json);	
 		setExplorer();
 
 		String fileName = JsonUtil.getName();
 		Type type = JsonUtil.getType();
 		this.file = explorer.getFile(fileName,type);
+	}
+	
+	/**
+	 * @param json -Object Json com os dados do arquivo a ser buscado
+	 */
+	@RequestMapping(value = "viewSharedFile", method = RequestMethod.POST)
+	public void viewSharedFile(@RequestBody Object json) {
+		JsonUtil.json(json);	
+		setExplorer();
+		
+		String fileOwner = JsonUtil.getOwner();
+		int index = JsonUtil.getIndex();
+		this.sharedFile = explorer.getSharedFile(fileOwner,index);
 	}
 	
 	/**
@@ -61,6 +75,11 @@ public class EditorController {
 	@RequestMapping(value = "viewFile", method = RequestMethod.GET)
 	public File viewFile() {
 		return file;
+	}
+	
+	@RequestMapping(value = "viewSharedFile", method = RequestMethod.GET)
+	public SharedFile viewSharedFile() {
+		return sharedFile;
 	}
 
 	/**

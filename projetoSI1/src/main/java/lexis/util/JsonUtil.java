@@ -158,8 +158,12 @@ public class JsonUtil {
 	 * metodo que obtem a posição de dentro do json
 	 * @return a posição int  encontrada
 	 */
-	public static int getPosition() {
-		return Integer.parseInt((String) map.get("position"));
+	public static int getIndex() {
+		return Integer.parseInt((String) map.get("index"));
+	}
+
+	public static String getOwner() {
+		return (String) map.get("owner");
 	}
 
 }
