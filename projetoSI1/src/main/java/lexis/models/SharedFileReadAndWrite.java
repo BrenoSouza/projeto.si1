@@ -20,4 +20,15 @@ public final class SharedFileReadAndWrite extends SharedFile {
 		return TYPE_SHARING;
 	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		if(!(obj instanceof SharedFileReadAndWrite))
+			return false;
+					
+		SharedFileReadAndWrite otherFile = (SharedFileReadAndWrite) obj;
+		
+		return getOwner().equals(otherFile.getOwner()) && 
+				getFile().equals(otherFile.getFile());
+	}
+	
 }

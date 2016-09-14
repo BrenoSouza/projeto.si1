@@ -139,6 +139,23 @@ public class Explorer implements Comparable<Explorer> {
 		return output;
 	}
 	
+	public SharedFile getSharedFile(String owner, String fileName, Type typeFile, int index) {
+		
+		if(owner == null || fileName == null || typeFile == null)
+			throw new NullPointerException();
+		
+		List<SharedFile> sharedFilesWithThisOwner = this.sharedFiles.get(owner);
+		SharedFile output = null;
+		
+		
+		if(sharedFilesWithThisOwner != null && index < sharedFilesWithThisOwner.size()) {
+			output = sharedFilesWithThisOwner.get(index);
+		}
+		
+		
+		return output;
+	}
+	
 	
 	/**
 	 * Sobe um nivel na hierarquia de pastas. Por exemplo, 
