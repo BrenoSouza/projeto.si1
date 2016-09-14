@@ -133,7 +133,12 @@ public class Explorer implements Comparable<Explorer> {
 		for(String user : users) {
 			output.add(new Pair<String, List<SharedFile>>(user, new ArrayList<SharedFile>()));
 			List<SharedFile> aux = sharedFiles.get(user);
+			
+			for(int i = 0; i < aux.size(); i++) 
+				aux.get(i).setIndex(i);
+
 			output.get(output.size()-1).getSecond().addAll(aux);
+			
 		}
 		
 		return output;

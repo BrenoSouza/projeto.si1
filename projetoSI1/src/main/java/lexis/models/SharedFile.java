@@ -6,6 +6,7 @@ public abstract class SharedFile {
 	
 	private File file;
 	private String owner;
+	private int index;
 	
 	
 	public SharedFile(File file, String owner) {
@@ -24,6 +25,15 @@ public abstract class SharedFile {
 	 */
 	public Type getType() {
 		return file.getType();
+	}
+	
+	
+	public void setIndex(int index) {
+		this.index = index;
+	}
+	
+	public int getIndex() {
+		return index;
 	}
 	
 	/**
