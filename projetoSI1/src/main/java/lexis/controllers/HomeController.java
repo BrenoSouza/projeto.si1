@@ -213,7 +213,7 @@ public class HomeController {
 	public void setReadNotification(@RequestBody Object json){
 		JsonUtil.json(json);
 		
-		int position = JsonUtil.getPosition();
+		int position = JsonUtil.getIndex();
 		Notification[] notifications = explorer.getNotifications();
 		
 		notifications[position].setUnread(Notification.READ);
@@ -224,7 +224,10 @@ public class HomeController {
 	 */
 	@RequestMapping(value = "SharedFiles", method = RequestMethod.GET)
 	public List<Pair<String, List<SharedFile>>> getSharedFilesReadAndWrite(){
-		return explorer.getSharedFiles();
+		List<Pair<String, List<SharedFile>>> temp = explorer.getSharedFiles();
+		return temp;
+		
+		
 	}
 	
 	/**
@@ -234,7 +237,7 @@ public class HomeController {
 	 */
 	@RequestMapping(value = "getSharedFile", method = RequestMethod.POST)
 	public SharedFile getSharedFile(@RequestBody Object json){
-		int position = JsonUtil.getPosition();
+		int position = JsonUtil.getIndex();
 		return explorer.getNotifications()[position].getSharedFile();
 	}
 	
