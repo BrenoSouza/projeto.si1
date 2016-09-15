@@ -21,7 +21,8 @@ body {
 textarea  
 {  
    font-family:"Ubuntu", serif;  
-   font-size: 15px;   
+   font-size: 15px;
+   rows="3";
 }
 
 .unlabeled {

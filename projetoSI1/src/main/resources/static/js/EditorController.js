@@ -2,14 +2,14 @@ var app = angular.module("editor", []);
 
 app.controller("editorCtrl", function($scope, $http) {
 
-	$scope.file = {}
+	$scope.file = undefined;
+	$scope.isShared = false;
 
 	window.onload = function(){
 		$scope.getTxt();
 	}
 	
 	$scope.saveFile = function() {
-		console.log($scope.file);
 
 		var value = {
 			data: document.getElementById('fileData').value
@@ -25,16 +25,22 @@ app.controller("editorCtrl", function($scope, $http) {
 	
 	$scope.getTxt = function() {
 		
-		//$http.get("/editor/viewSharedFile").success(function(data, status) {
-			//console.log(data);
-		//});
+		$http.get("/editor/viewSharedFile").success(function(data, status) {
+			if (Object.keys(data).length != 0) {
+				$scope.file = data;
+				$scope.isShared = true;
+				document.getElementById('fileData').value = data.data;
+			} 
+		});
 		
-		$http.get("/editor/viewFile").success(function(data, status) {
-			$scope.file = data;
-			document.getElementById('fileData').value = data.data;
-
-        });
-
+		if(!$scope.isShared) {
+			$http.get("/editor/viewFile").success(function(data, status) {
+				$scope.file = data;
+				if (data.data != undefined) {
+					document.getElementById('fileData').value = data.data;
+				}
+			});
+		}
 	}
 			
 	
@@ -43,7 +49,12 @@ app.controller("editorCtrl", function($scope, $http) {
 	}
 	
 	$scope.isReadOnly = function() {
-		return ($scope.file.typeSharing === "Read Only");
+		if ($scope.file != undefined) {
+			if ($scope.file.typeSharing === "Read Only") {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	$scope.blankTextArea = function() {

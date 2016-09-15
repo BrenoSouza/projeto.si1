@@ -36,3 +36,9 @@
 	transition: opacity 0.3s linear 0s, right 0s linear 0s;
 	cursor: pointer;
 }
+
+#notificationSpan {
+	text-decoration: none;
+s	color: #ebebeb;
+	text-alling:center;
+}

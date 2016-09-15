@@ -19,11 +19,11 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     $scope.notificationAux;
     
     $scope.notificationString = "";
-    
+        
     window.onload = function() {
 
     	$http.get("/home/explorer").success(function(data, status) {
-    		
+    	
     	}); 
     	
     	loadingFolder();
@@ -36,7 +36,7 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
 		$scope.notificationList = [];
     	
     	$http.get("/home/explorer").success(function(data, status) {
-    		    		
+    		
     		for (var int = 0; int < data.folderDirectory.length; int++) {
 				$scope.arquivos.push(data.folderDirectory[int]);
 			}
@@ -44,29 +44,31 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     		for (var int = 0; int < data.fileDirectory.length; int++) {
 				$scope.arquivos.push(data.fileDirectory[int]);
 			}
-    		
-    	});
     	
-    	$http.get("/home/SharedFiles").success(function(data, status) {
-    		    		
-    		if(data != undefined) {
-    			for (var i = 0; i < data.length; i++) {
-					for (var j = 0; j < data[i].second.length; j++) {
-						$scope.arquivos.push(data[i].second[j]);
-						
-					}
-				}
+    		if(data.path.length === 0) {
+    			$http.get("/home/SharedFiles").success(function(data, status) {
+	    		
+    				if(data != undefined) {
+    					for (var i = 0; i < data.length; i++) {
+    						for (var j = 0; j < data[i].second.length; j++) {
+    							$scope.arquivos.push(data[i].second[j]);
+    						}
+    					}	
+    				}
+        			
+    			});
     			
+    			$http.get("/home/notification").success(function(data, status) {
+    				for (var i = 0; i < data.length; i++) {
+    					if(data[i].unread) {
+    						$scope.notificationList.push(data[i]);
+    					}
+    				}
+    			});
     			
     		}
-    			
-    	});
-    	
-    	$http.get("/home/notification").success(function(data, status) {
-			for (var i = 0; i < data.length; i++) {
-				$scope.notificationList.push(data[i]);
-			}
-		});
+    		
+    	});	
     	
     };
     
@@ -192,9 +194,13 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
         $("#renameFileModal").modal();
     }
     
-    $scope.renameFile = function(){    	
+    $scope.renameFile = function() {    	
     	var nName = document.getElementById("newRenameFileName").value;
     	var nType = document.getElementById("selectRenameType").value;
+    	
+    	if (nName === "") {
+    		nName = $scope.sharedFileAux.name;
+    	} 
     	
     	var fileInfo = {
     		oldName: $scope.sharedFileAux.name,
@@ -232,7 +238,6 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     }
     
     $scope.viewFile = function(arquivo) {
-    	
     	if (arquivo.owner === undefined) {
     		var file = {
     			name: arquivo.name,
@@ -326,7 +331,11 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     }
     
     $scope.isShare = function(arquivo) {
-    	return (arquivo.owner === undefined)
+    	if(arquivo != undefined) {	
+    		return (arquivo.owner != undefined);
+    	}
+    	return false;
+
     }
     
     $scope.showModalNotification = function(notification) {
@@ -339,17 +348,15 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     }
     
     $scope.visualization = function() {
-    	
     	for (var i = 0; i < $scope.notificationList.length; i++) {
 			if($scope.notificationList[i] === $scope.notificationAux) {
 				var ind = {
 					index: i
 				}
-				$http.post("/home/setReadNotification", ind).success(function(data, status) {
-
-	    		});
-				loadingFolder();
-				break;
+				//$http.post("/home/setReadNotification", ind).success(function(data, status) {
+	    		//});
+				//loadingFolder();
+				//break;
 			}
 		}
     }

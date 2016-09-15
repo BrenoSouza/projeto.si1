@@ -26,22 +26,23 @@
 </head>
 <body ng-controller="listaArquivosCtrl">
 
+
 	<div id="menuButton" onmouseover = "openMenu()">
-	  <div></div>
-	  <div></div>
-	  <div></div>
+	  <a class="brand topbar-links" style="margin-left: 2%">
+		<input style="height:20px; " id="notification" type="image" th:src="@{images/bell.png}"></input>
+	</a>
 	</div>
 	<div id="menuButton" onmouseover = "openMenu()">
-	  <div></div>
-	  <div></div>
-	  <div></div>
+	  <a class="brand topbar-links" style="margin-left: 2%">
+		<input style="height:20px; " id="notification" type="image" th:src="@{images/bell1.png}"></input>
+	</a>
 	</div>
-	<div id="menu" onmouseleave="closeMenu()">
-		<ul>
+	<div id="menu" onmouseleave="closeMenu()" style="overflow:auto">
+		<ul >
 			<li ng-repeat="notification in notificationList">
 				<a ng-click = "showModalNotification(notification)" align = "center">
-					<div>
-						<span>
+					<div id="notificationSpan">
+						<span class="list-group-item">
 							{{notification.owner}} compartilhou um arquivo com você!
 						</span>
 					</div>
@@ -222,10 +223,10 @@
 							<input ng-if="!isTxt(arquivo.type)" id="rename" type="image" src="../static/images/rename.png"
 							th:src="@{images/rename.png}" name="renameFolder" ng-click="showModalRenameFolder(arquivo)"></input>
 							
-							<input ng-if="isShare(arquivo)" class="shareBtn" id="shareFile{{arquivo.name}}{{arquivo.type}}" type="image" src="../static/images/share.png"
+							<input ng-if="!isShare(arquivo)" class="shareBtn" id="shareFile{{arquivo.name}}{{arquivo.type}}" type="image" src="../static/images/share.png"
 							th:src="@{images/share.png}" name="shareFile" data-toggle="modal" ng-click="openShareModal(arquivo)"></input>
 														
-							<input ng-if="isShare(arquivo)" id="delete" type="image" src="../static/images/delete.png"
+							<input ng-if="!isShare(arquivo)" id="delete" type="image" src="../static/images/delete.png"
 							th:src="@{images/delete.png}" name="removeFile" ng-click="deleteL(arquivo)"></input>
 
 							
@@ -378,8 +379,8 @@
 			   		<h3>{{notificationString}}</h3>
 			  	</div>
 			  	<div class="modal-footer" style="text-align:center">
-			    	<button class="btn" data-dismiss="modal" aria-hidden="true" ng-click="visualization()">Ignorar</button>
-			    	<button class="btn btn-primary" data-dismiss="modal" ng-click="viewFile(notificationAux.sharedFile)" >Visualizar</button>
+			    	<button class="btn" data-dismiss="modal" aria-hidden="true">Ignorar</button>
+			    	<button class="btn btn-primary" data-dismiss="modal" ng-click="viewSharedFile(notificationAux.sharedFile)" th:action="@{/home/editor}">Visualizar</button>
 			  	</div>
 			</div>
 
