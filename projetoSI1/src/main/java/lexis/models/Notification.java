@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
  */
 public class Notification implements Comparable<Notification> {
 	
-	public static final boolean READ = true;
+	public static final boolean READ = false;
 	public static final boolean UNREADED = true;
 	
 	String owner;
