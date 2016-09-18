@@ -84,11 +84,11 @@ public class Explorer implements Comparable<Explorer> {
 		
 		List<SharedFile> sharedFilesWithThisUser = sharedFiles.get(owner); 
 		
-		if(!sharedFilesWithThisUser.contains(fileReadAndWrite)) {
-			
-			sharedFilesWithThisUser.add(fileReadAndWrite);
-			addNotification(new Notification(owner, fileReadAndWrite, log));
-		}
+		
+		sharedFilesWithThisUser.remove(fileReadAndWrite);
+		sharedFilesWithThisUser.add(fileReadAndWrite);
+		addNotification(new Notification(owner, fileReadAndWrite, log));
+		
 		
 		return fileReadAndWrite;
 	}
@@ -114,11 +114,10 @@ public class Explorer implements Comparable<Explorer> {
 		
 		List<SharedFile> sharedFilesWithThisUser = sharedFiles.get(owner);
 		
-		if(!sharedFilesWithThisUser.contains(fileReadOnly)) {		
-		
-			sharedFiles.get(owner).add(fileReadOnly);
-			addNotification(new Notification(owner, fileReadOnly, log));
-		}
+
+		sharedFilesWithThisUser.remove(fileReadOnly);
+		sharedFilesWithThisUser.add(fileReadOnly);
+		addNotification(new Notification(owner, fileReadOnly, log));
 		
 		return fileReadOnly;
 	}
