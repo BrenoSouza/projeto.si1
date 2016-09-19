@@ -18,6 +18,7 @@ import lexis.models.Notification;
 import lexis.models.Pair;
 import lexis.models.Permission;
 import lexis.models.SharedFile;
+import lexis.models.TrashFileAndFolder;
 import lexis.models.Type;
 import lexis.models.User;
 import lexis.services.UserServiceDAO;
@@ -239,6 +240,14 @@ public class HomeController {
 	public SharedFile getSharedFile(@RequestBody Object json){
 		int position = JsonUtil.getIndex();
 		return explorer.getNotifications()[position].getSharedFile();
+	}
+	/**
+	 * metodo que retorna a lixeira do usuario
+	 * @return Object Json contendo a lixeira do usuario
+	 */
+	@RequestMapping(value = "trash", method = RequestMethod.GET)
+	public TrashFileAndFolder[] getTrash(){
+		return explorer.getTrash();
 	}
 	
 	/**
