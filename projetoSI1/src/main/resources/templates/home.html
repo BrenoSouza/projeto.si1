@@ -24,6 +24,8 @@
 	href="../static/css/dialogbox.css" th:href="@{css/dialogbox.css}" />
 <link href="css/navbar-fixed-side.css" rel="stylesheet" />
 <link href="css/simple-sidebar.css" rel="stylesheet" />
+ <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    
 </head>
 <body ng-controller="listaArquivosCtrl">
 
@@ -40,16 +42,17 @@
 			th:src="@{images/bell1.png}"></input>
 		</a>
 	</div>
-	
-	<div id="menu" onmouseleave="closeMenu()" style="overflow: auto" >
-		<ul class = "sidebar-nav">
-			<li ng-repeat="notification in notificationList" class = "sidebar-nav"><a
-				ng-click="showModalNotification(notification)" align="center" class = "sidebar-nav">
-					<div id="notificationSpan" >
+
+	<div id="menu" onmouseleave="closeMenu()" style="overflow: auto">
+		<ul class="sidebar-nav">
+			<li ng-repeat="notification in notificationList" class="sidebar-nav"><a
+				ng-click="showModalNotification(notification)" align="center"
+				class="sidebar-nav">
+					<div id="notificationSpan">
 						<span class="list-group-item"> {{notification.owner}}
 							compartilhou um arquivo com você! </span>
 					</div>
-	
+
 			</a></li>
 
 		</ul>
@@ -88,27 +91,31 @@
 	</div>
 
 
-	<div id="header-menu" style="margin-right: 11%" align="right">
-	
-		<div id="sidebar-wrapper" >
-							<ul class="sidebar-nav" align="left" >
-								<li class="sidebar-brand"><a href="#"> Menu </a></li>
-								<li><a href="#">Meus Arquivos</a></li>
-								<li><a href="#">Meus Arquivos Compartilhados</a></li>
-								<li><a href="#">Compartilhados Comigo</a></li>
-								<li><a href="#">Lixeira</a></li>
-	
-							</ul>
-						</div>
-		
+	<div id="header-menu" style="margin-right: 11%" align="left">
+
+		<div id="sidebar-wrapper">
+			<ul class="sidebar-nav" align="left">
+				<li class="sidebar-brand"><a href="#"> Menu </a></li>
+				<li><a href="#"><span class="glyphicon glyphicon-inbox"></span>
+						Meus Arquivos</a></li>
+				<li><a href="#"><span class="glyphicon glyphicon-share"></span>
+						Arquivos Compartilhados </a></li>
+				<li><a href="#"><span class="glyphicon glyphicon-link"></span>
+						Compartilhados Comigo </a></li>
+				<li><a href="#"><span class="glyphicon glyphicon-trash"></span>
+						Lixeira </a></li>
+
+			</ul>
+		</div>
+
 
 		<div class="principalmenu">
-			
+
 			<table class="tabelaprincipal">
 
 				<td class="colunaTabelaPrincipal" valign="top" align="right">
 
-					<div id="header-menu" align="right" style= "margin-right: -7%">
+					<div id="header-menu" align="right" style="margin-right: -7%">
 
 						<table cellpadding="10">
 							<tr>
