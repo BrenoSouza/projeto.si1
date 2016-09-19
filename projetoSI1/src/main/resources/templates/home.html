@@ -74,11 +74,7 @@
 				</a>
 
 				<div class="nav-collapse collapse navbar-inverse-collapse">
-					<form class="navbar-search pull-left" action="#">
-						<input type="text" class="search-query span3" placeholder="Busca"></input>
 
-
-					</form>
 					<ul class="nav pull-right">
 						<li><a th:href="@{logout}"> <b style="font-size: 20px">Sair</b>
 						</a></li>
@@ -91,28 +87,23 @@
 	</div>
 
 
-	<div id="header-menu" style="margin-right: 11%" align="right">
+	<div id="header-menu" style="margin-right: 11%" align="left">
+		<div id="sidebar-wrapper">
+			<ul class="sidebar-nav">
+
+				<li class="sidebar-brand"><a href="#"> Usuario </a></li>
+				<li><a href="#">Meus Arquivos</a></li>
+				<li><a href="#">Meus Arquivos Compartilhados</a></li>
+				<li><a href="#">Compartilhados Comigo</a></li>
+				<li><a href="#">Lixeira</a></li>
+
+			</ul>
+		</div>
 
 		<div class="principalmenu">
 			<table class="tabelaprincipal">
-				<td class="coluna1TabelaPrincipal">
 
-					<div id="sidebar-wrapper">
-						<ul class="sidebar-nav">
-							<li class="sidebar-brand"><a href="#"> Menu </a></li>
-							<li><a href="#">Meus Arquivos</a></li>
-							<li><a href="#">Meus Arquivos Compartilhados</a></li>
-							<li><a href="#">Compartilhados Comigo</a></li>
-							<li><a href="#">Lixeira</a></li>
-
-						</ul>
-					</div>
-
-
-
-
-
-				</td>
+				<td class="coluna1TabelaPrincipal"></td>
 
 				<td class="coluna2TabelaPrincipal" valign="top" align="right">
 

@@ -22,7 +22,7 @@ body {
 
 #sidebar-wrapper {
 	z-index: 1000;
-	position: fixed;
+	position: absolute;
 	left: 250px;
 	width: 0;
 	height: 86.5%;
@@ -105,7 +105,7 @@ body {
 	}
 	#sidebar-wrapper {
 		width: 250px;
-		margin-top: -115px;
+		margin-top: -0.5%;
 	}
 	#wrapper.toggled #sidebar-wrapper {
 		width: 0;
@@ -115,7 +115,7 @@ body {
 		position: relative;
 	}
 	#wrapper.toggled #page-content-wrapper {
-		position: relative;
+		position: absolute;
 		margin-right: 0;
 	}
 }
