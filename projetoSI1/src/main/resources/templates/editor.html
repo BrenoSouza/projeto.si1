@@ -35,60 +35,22 @@
 </head>
 <body ng-controller="editorCtrl">
 
-	<div id="menuButton" onmouseover = "openMenu()">
-	  <div></div>
-	  <div></div>
-	  <div></div>
+	<div id="menuButton" onmouseover="openMenu()">
+		<a class="brand topbar-links" style="margin-left: 0%"> <input
+			style="height: 20px;" id="notification" type="image"
+			th:src="@{images/bell1.png}"></input>
+		</a>
 	</div>
 	<div id="menu" onmouseleave="closeMenu()">
 		<ul>
-			<li>
-				<a ng-click = "InicialFolder()" align = "center">
-					<span>
-						<span>
-							Meus Arquivos
-						</span>
-					</span>
-				</a>
-			</li>
-			<li>	
-				<a ng-click = "sharedWithMeFolder()">
-					<span>
-						<span>
-							Arquivos compartilhados comigo
-						</span>
-					</span>
-				</a>
-				
-			</li>
-			
-			<li>
-				<a ng-click = "sharedFolder()">
-					<span>
-						<span>
-							Meus arquivos compartilhados
-						</span>
-					</span>
-				</a>
-			</li>
-			<li>	
-				<a ng-click = "myAccount()">
-					<span>
-						<span>
-							Minha Conta
-						</span>
-					</span>
-				</a>
-			</li>
-			<li>	
-				<a ng-click = "trashFolder()">
-					<span>
-						<span>
-							Lixeira
-						</span>
-					</span>
-				</a>
-			</li>
+			<li ng-repeat="notification in notificationList"><a
+				ng-click="showModalNotification(notification)" align="center">
+					<div id="notificationSpan">
+						<span class="list-group-item"> {{notification.owner}}
+							compartilhou um arquivo com você! </span>
+					</div>
+			</a></li>
+
 		</ul>
 	</div>
 
@@ -108,14 +70,11 @@
 					data-target=".navbar-inverse-collapse"> <span class="icon-bar"></span>
 					<span class="icon-bar"></span> <span class="icon-bar"></span>
 				</a> 
-				<a class="brand topbar-links" ng-click="blankTextArea()" href="home" th:action="@{/home}" style="margin-left: 2%">
+				<a class="brand topbar-links" ng-click="blankTextArea()" href="home" th:action="@{/home}" style="margin-left: 0%">
 					<img src="..imagen/lexisName.pbg" th:src="@{../images/lexisName.png}"> </img>
 				</a>
 					
 				<div class="nav-collapse collapse navbar-inverse-collapse">
-					<form class="navbar-search pull-left" action="#">
-						<input type="text" class="search-query span3" placeholder="Busca"></input>
-					</form>
 					<ul class="nav pull-right">
 						<li><a href="/" th:action="@{/}"><b style="font-size:20px">Sair</b></a></li>
 						<li class="divider-vertical"></li>
@@ -125,11 +84,11 @@
 		</div>
 	</div>
 
-	<div style="position:absolute"><h1>{{file.name}}.{{file.type}}</h1></div>
+	<div style="position:absolute;margin-left: 22%;"><h1>{{file.name}}.{{file.type}}</h1></div>
 
 
 	<div class="container" >
-		<div class="row" style="margin-top: 5%; margin-left: 10%">
+		<div class="row" style="margin-top: 7%; margin-left: 10%">
 			<div class="span8">
 				<ul class="menu inline unlabeled">
 					<li><a href="#">Novo Documento</a></li>
