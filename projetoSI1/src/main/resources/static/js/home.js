@@ -3,15 +3,9 @@ var app = angular.module("listaArquivos", []);
 app.controller("listaArquivosCtrl", function($scope, $http) {
 	
     $scope.arquivos = [];
-    
-    $scope.myFilesAndFolders = [];
-    
+        
     $scope.mySharedFilesAndFolders = [];
-    
-    $scope.filesAndFoldersSharedWithMe = [];
-    
-    $scope.deletedFilesAndFolders = [];
-    
+            
     $scope.notificationList = [];
     
     $scope.sharedFileAux;
@@ -20,14 +14,16 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     
     $scope.notificationString = "";
         
+    
     window.onload = function() {
-
     	$scope.showMyFilesAndFoldersOnTable(); 
-    	
+    	loadingNotifications();
     }
     
+    //CALL NOTIFICATIONS EVERY 30 SECONDS
+	setInterval(loadingNotifications, 30000);
     
-    
+	
     var loadingNotifications = function() {
 		$scope.notificationList = [];    		
     	
@@ -37,23 +33,10 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     				$scope.notificationList.push(data[i]);    					
     			}
     		}
-    	});
-		
-    	loadingNotifications();
-
-    			    		    	
+    	});  
+		console.log(30);
     };
     
-    $scope.showMyFilesAndFoldersOnTable = function() {
-		$scope.arquivos = [];
-    	
-		$http.get("/home/explorer").success(function(data, status) {
-    		
-    		$scope.arquivos = data.folderDirectory.concat(data.fileDirectory);
-    		
-    	}); 
-    };
-
 
     $scope.addFolder = function() {
 
@@ -76,7 +59,7 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
 	};
 
 
-    $scope.addTxt = function() {
+    $scope.addFile = function() {
 
     	var nome = document.getElementById("newFileName").value;
     	var selectedType = document.getElementById("selectType").value;
@@ -105,9 +88,7 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     $scope.changeFolder = function(name) {
         $http.get("/home/explorer/" + name).success(function(data, status) {
         	$scope.showMyFilesAndFoldersOnTable();
-        });
-        
-        
+        }); 
     }
 
     $scope.backFolder = function() {
@@ -116,12 +97,6 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     	});
     }
     
-    $scope.deleteFolder = function(file) {
-    	
-    	$http.post("/home/deleteFolder", file).success(function(data, status) {
-        	$scope.showMyFilesAndFoldersOnTable();
-    	});
-    }
     
     $scope.renameFolder = function() {
     	var nName = document.getElementById('newRenameFolderName').value;
@@ -140,16 +115,7 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     	
     }
     
-    $scope.deleteFile = function(file) {
-    		
-   	    $http.post("/home/deleteFile", file).success(function(data, status) {
-   	    	$scope.showMyFilesAndFoldersOnTable();
-   	    });
-    	
-    }
-    
-    
-    
+     
     $scope.renameFile = function() {    	
     	var nName = document.getElementById("newRenameFileName").value;
     	var nType = document.getElementById("selectRenameType").value;
@@ -172,53 +138,7 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     	$scope.blankInput("newRenameFileName");
 
     } 
-    
-    
-    $scope.showSharedFilesWithMe = function() {
-    	$scope.arquivos = [];
-    	$http.get("/home/SharedFiles").success(function(data, status) {
-    		
-			if(data != undefined) {
-				for (var i = 0; i < data.length; i++) {
-					for (var j = 0; j < data[i].second.length; j++) {
-						$scope.arquivos.push(data[i].second[j]);
-					}
-				}	
-			}
-			
-		});    	
-    	    	
-    }
-    
-    $scope.showMySharedFiles = function() {
-    	$scope.arquivos = [];
-    	for (var i = 0; i < $scope.arquivos.length; i++) {
-			if ($scope.arquivos[i].permission === "public") {
-				$scope.mySharedFiles.push(arquivos[i]);
-			}
-		}
-    	
-    }
-    
-        
-    $scope.deleteL = function(arquivo) {
-    	
-		if (arquivo.type != "folder") {
-			file = {
-				name: arquivo.name,
-        		type: arquivo.type
-			}
-			
-			$scope.deleteFile(file);
-		} else {
-			file = {
-    			name: arquivo.name
-    		}  
-			
-			$scope.deleteFolder(file);
-		}
-    }
-  
+       
     
     $scope.shareFile = function() {
     	 var userLogin = document.getElementById("userLoginShare").value;
@@ -247,6 +167,7 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
          }
          $scope.blankInput("userLoginShare");
          $scope.sharedFileAux = undefined;
+         
     }
         
     
@@ -264,6 +185,68 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     }
     
     
+//DELETE FUNCTIONS
+    
+    $scope.deleteOption = function(arquivo) {
+    	
+		if (arquivo.type != "folder") {
+			file = {
+				name: arquivo.name,
+        		type: arquivo.type
+			}
+			
+			$scope.deleteFile(file);
+		} else {
+			file = {
+    			name: arquivo.name
+    		}  
+			
+			$scope.deleteFolder(file);
+		}
+    }
+  
+    
+    $scope.deleteFile = function(file) {
+		
+   	    $http.post("/home/deleteFile", file).success(function(data, status) {
+   	    	$scope.showMyFilesAndFoldersOnTable();
+   	    });
+    }
+    
+    
+    $scope.deleteFolder = function(file) {
+    	
+    	$http.post("/home/deleteFolder", file).success(function(data, status) {
+        	$scope.showMyFilesAndFoldersOnTable();
+    	});
+    }
+    
+    
+    
+    //SHOW FILES ON TABLE
+    
+    
+    $scope.showMyFilesAndFoldersOnTable = function() {
+		$scope.arquivos = [];
+    	
+		$http.get("/home/explorer").success(function(data, status) {
+    		
+    		$scope.arquivos = data.folderDirectory.concat(data.fileDirectory);
+    		
+    	}); 
+    };
+    
+    
+    $scope.showMySharedFiles = function() {
+    	$scope.arquivos = [];
+    	for (var i = 0; i < $scope.arquivos.length; i++) {
+			if ($scope.arquivos[i].permission === "public") {
+				$scope.mySharedFiles.push(arquivos[i]);
+			}
+		}
+    }
+    
+    
     $scope.showTrash = function() {
     	$http.get("/home/trash").success(function(data, status) {
     		console.log(data);
@@ -273,7 +256,22 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     }
     
     
-    //VIEW
+    $scope.showSharedFilesWithMe = function() {
+    	$scope.arquivos = [];
+    	$http.get("/home/SharedFiles").success(function(data, status) {
+    		
+			if(data != undefined) {
+				for (var i = 0; i < data.length; i++) {
+					for (var j = 0; j < data[i].second.length; j++) {
+						$scope.arquivos.push(data[i].second[j]);
+					}
+				}	
+			}
+		});    		
+    }
+    
+    
+    //VIEWS
     
     $scope.viewFile = function(arquivo) {
     	if (arquivo.owner === undefined) {

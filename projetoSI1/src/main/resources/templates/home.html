@@ -95,7 +95,7 @@
 		<div id="sidebar-wrapper">
 			<ul class="sidebar-nav" align="left">
 				<li class="sidebar-brand"><a href="#"> Menu </a></li>
-				<li><a href="#"><span class="glyphicon glyphicon-inbox"></span>
+				<li><a ng-click="showMyFilesAndFoldersOnTable()" href="#"><span class="glyphicon glyphicon-inbox"></span>
 						Meus Arquivos</a></li>
 				<li><a href="#"><span class="glyphicon glyphicon-share"></span>
 						Arquivos Compartilhados </a></li>
@@ -217,7 +217,7 @@
 											ng-if="!isShare(arquivo)" id="delete" type="image"
 											src="../static/images/delete.png"
 											th:src="@{images/delete.png}" name="removeFile"
-											ng-click="deleteL(arquivo)"></input></td>
+											ng-click="deleteOption(arquivo)"></input></td>
 
 
 									</tr>
@@ -271,7 +271,7 @@
 			<button class="btn" data-dismiss="modal" aria-hidden="true"
 				ng-click="blankInput('newFileName')">Cancelar</button>
 			<button class="btn btn-primary" data-dismiss="modal"
-				ng-click="addTxt()">Salvar</button>
+				ng-click="addFile()">Salvar</button>
 		</div>
 	</div>
 
