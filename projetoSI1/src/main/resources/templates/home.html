@@ -13,8 +13,7 @@
 
 <link rel="stylesheet" href="../static/css/bootstrap.css"
 	th:href="@{css/bootstrap.css}" />
-<link rel="stylesheet" type="text/css"
-	href="../static/css/bootstrap-responsive.css"
+<link rel="stylesheet" type="text/css" href="../static/css/bootstrap-responsive.css"
 	th:href="@{css/bootstrap-responsive.css}" />
 <link rel="stylesheet" type="text/css" href="../static/css/style.css"
 	th:href="@{css/style.css}" />
@@ -22,8 +21,8 @@
 	th:href="@{css/menu.css}" />
 <link rel="stylesheet" type="text/css"
 	href="../static/css/dialogbox.css" th:href="@{css/dialogbox.css}" />
-<link href="css/navbar-fixed-side.css" rel="stylesheet" />
-<link href="css/simple-sidebar.css" rel="stylesheet" />
+<link rel="stylesheet" href="../static/css/navbar-fixed-side.css" th:href="@{navbar-fixed-side.css}"/>
+<link rel="stylesheet" href="../static/css/simple-sidebar.css" th:href="@{css/simple-sidebar.css}"/>
  
     
 </head>
@@ -100,9 +99,9 @@
 						Meus Arquivos</a></li>
 				<li><a href="#"><span class="glyphicon glyphicon-share"></span>
 						Arquivos Compartilhados </a></li>
-				<li><a href="#"><span class="glyphicon glyphicon-link"></span>
+				<li><a ng-click="showSharedFilesWithMe()" href="#"><span class="glyphicon glyphicon-link"></span>
 						Compartilhados Comigo </a></li>
-				<li><a href="#"><span class="glyphicon glyphicon-trash"></span>
+				<li ng-click="showTrash()"><a href="#" ><span class="glyphicon glyphicon-trash"></span>
 						Lixeira </a></li>
 
 			</ul>
@@ -159,9 +158,6 @@
 								style="background: #B0C4DE">
 								<thead style="background: #1f3c58">
 									<tr style="border: bold">
-										<th><img src="../static/images/star-marked.png"
-											th:src="@{images/star-marked.png}" alt="" class="star-marked"></img>
-										</th>
 
 										<th><a href="#" style="color: white"
 											ng-click="sortBy('name')"> Nome</a></th>
@@ -182,10 +178,6 @@
 								<tbody>
 									<tr
 										ng-repeat="arquivo in arquivos | filter: {name: searchFile} | orderBy:tipoOrdenacao:direction">
-
-										<td><a href="#"> <img src="../static/images/star.png"
-												th:src="@{images/star.png}" alt="" class="star"></img>
-										</a></td>
 
 										<td id="td-name"><span ng-if="isTxt(arquivo.type)">
 												<a ng-click="viewFile(arquivo)" href="/editor"
