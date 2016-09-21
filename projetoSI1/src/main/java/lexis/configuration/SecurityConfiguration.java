@@ -30,6 +30,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
         http
             .authorizeRequests()
             	.antMatchers(HttpMethod.POST,"/userRegister").permitAll()
+            	.antMatchers("/console/**").permitAll()
             	.antMatchers(HttpMethod.GET,"/index").permitAll()
             	.anyRequest().authenticated()
             		.and()
@@ -44,6 +45,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
                 
 
         http.csrf().disable();
+        http.headers().frameOptions().disable();
     }
     
     @Override

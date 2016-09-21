@@ -27,21 +27,22 @@ public class User implements UserDetails {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	
+	@Version
+	private Integer version;
+	@Column(name = "user_email")
+	private String email;
+	@Column(name = "user_name")
+	private String username;
+	@Column(name = "user_password")
+	private String password;
+	
 	
 	public static final int MAX_LENGTH_LOGIN = 30;
 	public static final int MIN_LENGTH_LOGIN = 6;
-	
 	public static final int MAX_LENGTH_PASSWORD = 30;
 	public static final int MIN_LENGTH_PASSWORD = 8;
 	
-	@Version
-	private Integer version;
-	private String username;
-	private String password;
-	private String email;
-	//private BCryptPasswordEncoder crypt = new BCryptPasswordEncoder();
-	
-	
+		
 	public User() {
 		username = null;
 	}
