@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import lexis.models.DataBase;
 import lexis.models.Explorer;
@@ -37,11 +38,25 @@ public class HomeController {
 
 	private Explorer explorer;
 
+	
+	/**
+	 * Metodo responsavel pelo home.html
+	 * @return Retorna a home.html
+	 */
+	@RequestMapping()
+	public ModelAndView home() {
+		ModelAndView home = new ModelAndView("home");
+		if(userLogged() == null){
+			home.setViewName("redirect:index");
+		}
+		return home;
+	}
+	
 	/**
 	 * @return retorna o usuario logado na sessão
 	 */
 	@RequestMapping(value = "/user", method = RequestMethod.GET)
-	public String home() {
+	public String User() {
 		return userLogged().getUsername();
 	}
 	

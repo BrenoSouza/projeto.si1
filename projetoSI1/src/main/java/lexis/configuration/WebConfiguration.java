@@ -18,7 +18,7 @@ public class WebConfiguration extends  WebMvcConfigurerAdapter{
 			@Override
 			public void customize(ConfigurableEmbeddedServletContainer arg0) {
 				arg0.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND,"/404"));	
-				arg0.addErrorPages(new ErrorPage(HttpStatus.FORBIDDEN,"/403"));	
+				arg0.addErrorPages(new ErrorPage(HttpStatus.FORBIDDEN,"/403"));
 			}
 		};
 	}

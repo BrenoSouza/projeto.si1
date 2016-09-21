@@ -9,12 +9,14 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
+	private final int DAY = 60*60*24;
 	
 	@Autowired
 	private UserDetailsService users;
@@ -22,16 +24,24 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+    	SpringRememberMeService springRememberMeService = new SpringRememberMeService("key", users);
+    	springRememberMeService.setTokenValiditySeconds(DAY);
+    	
         http
             .authorizeRequests()
             	.antMatchers(HttpMethod.POST,"/userRegister").permitAll()
+            	.antMatchers(HttpMethod.GET,"/index").permitAll()
             	.anyRequest().authenticated()
             		.and()
             	.formLogin()
             		.loginPage("/login").permitAll()
             		.and()
+                .rememberMe().tokenValiditySeconds(DAY)
+                .rememberMeServices(springRememberMeService)//servletContext.getSessionCookieConfig().setMaxAge(600);
+                    .and()
             	.logout()
                 	.logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
+                
 
         http.csrf().disable();
     }
