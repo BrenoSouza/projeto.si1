@@ -13,8 +13,9 @@
 	rel="stylesheet" type="text/css" />
 <link href='https://fonts.googleapis.com/css?family=Indie+Flower'
 	rel='stylesheet' type='text/css' />
-	
-<link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet"/>
+
+<link href="https://fonts.googleapis.com/css?family=Ubuntu"
+	rel="stylesheet" />
 
 
 
@@ -29,9 +30,11 @@
 	th:href="@{css/editor.css}" />
 <link rel="stylesheet" type="text/css" href="../static/css/menu.css"
 	th:href="@{css/menu.css}" />
-<link rel="stylesheet" type="text/css" href="../static/css/dialogbox.css"
-	th:href="@{css/dialogbox.css}" />
-	
+<link rel="stylesheet" type="text/css"
+	href="../static/css/dialogbox.css" th:href="@{css/dialogbox.css}" />
+<link rel="stylesheet" href="../static/css/menuEditor.css"
+	th:href="@{css/menuEditor.css}" />
+
 </head>
 <body ng-controller="editorCtrl">
 
@@ -56,27 +59,29 @@
 
 	<div id="dialogoverlay"></div>
 	<div id="dialogbox">
-	  <div>
-	    <div id="dialogboxhead"></div>
-	    <div id="dialogboxbody"></div>
-	    <div id="dialogboxfoot"></div>
-	  </div>
-	</div> 
-	
+		<div>
+			<div id="dialogboxhead"></div>
+			<div id="dialogboxbody"></div>
+			<div id="dialogboxfoot"></div>
+		</div>
+	</div>
+
 	<div class="navbar navbar-inverse">
 		<div class="navbar-inner">
 			<div class="container">
 				<a class="btn btn-navbar" data-toggle="collapse"
 					data-target=".navbar-inverse-collapse"> <span class="icon-bar"></span>
 					<span class="icon-bar"></span> <span class="icon-bar"></span>
-				</a> 
-				<a class="brand topbar-links" ng-click="blankTextArea()" href="home" th:action="@{/home}" style="margin-left: 0%">
-					<img src="..imagen/lexisName.pbg" th:src="@{../images/lexisName.png}"> </img>
+				</a> <a class="brand topbar-links" ng-click="blankTextArea()"
+					href="home" th:action="@{/home}" style="margin-left: 0%"> <img
+					src="..imagen/lexisName.pbg" th:src="@{../images/lexisName.png}">
+					</img>
 				</a>
-					
+
 				<div class="nav-collapse collapse navbar-inverse-collapse">
 					<ul class="nav pull-right">
-						<li><a href="/" th:action="@{/}"><b style="font-size:20px">Sair</b></a></li>
+						<li><a href="/" th:action="@{/}"><b
+								style="font-size: 20px">Sair</b></a></li>
 						<li class="divider-vertical"></li>
 					</ul>
 				</div>
@@ -84,42 +89,45 @@
 		</div>
 	</div>
 
-	<div style="position:absolute;margin-left: 22%;"><h1>{{file.name}}.{{file.type}}</h1></div>
+	<div style="position: absolute; margin-left: 22%;">
+		<h1>{{file.name}}.{{file.type}}</h1>
+	</div>
+
+	<div id="sidebar-wrapper">
+		<ul class="sidebar-nav" align="left">
+			<li class="sidebar-brand"><a href="#"> Menu </a></li>
+			<li><a href="#">Salvar</a></li>
+			<li><a href="#">Salvar Como</a></li>
+			<li><a href="#">Compartilhar</a></li>
 
 
-	<div class="container" >
-		<div class="row" style="margin-top: 7%; margin-left: 10%">
-			<div class="span8">
-				<ul class="menu inline unlabeled">
-					<li><a href="#">Novo Documento</a></li>
-					<!--
-             -->
-					<li><a ng-click="saveFile()" href="">Salvar</a></li>
-					<!--
-             -->
-					<li><a href="#">Salvar como</a></li>
-					<!--
-             -->
-             		<li><a href="#">Compartilhar</a></li>
-             		
-					<li><a ng-click="discard()" href="#">Descartar Alterações</a></li>
-					
-				</ul>
-			</div>
-		</div>
+			<li><a href="#">Tipo</a></li>
+
+
+
+			<li><a href="#">Descartar Alterações</a></li>
+
+		</ul>
+
+
+
+	</div>
+
+	<div class="container">
+		<div class="row" style="margin-top: 7%; margin-left: 10%"></div>
 	</div>
 
 	<div class="container" style="">
 		<div class="row">
 			<div class="span12">
 				<form action="#" method="get">
-					<textarea id="fileData" name="textValue" class="input-text"></textarea>					
+					<textarea id="fileData" name="textValue" class="input-text"></textarea>
 				</form>
 			</div>
 
 		</div>
 	</div>
-	
+
 	<script th:src="@{/js/menu.js}" src="../static/js/menu.js"></script>
 	<script th:src="@{/js/dialogbox.js}" src="../static/js/dialogbox.js"></script>
 
@@ -132,10 +140,12 @@
 			</footer>
 		</div>
 	</div>
-	
-	<script th:src="@{/js/angular.min.js}" src="../static/js/angular.min.js"></script>	
-	<script th:src="@{/js/EditorController.js}" src="../static/js/EditorController.js"></script>
-	
-	
+
+	<script th:src="@{/js/angular.min.js}"
+		src="../static/js/angular.min.js"></script>
+	<script th:src="@{/js/EditorController.js}"
+		src="../static/js/EditorController.js"></script>
+
+
 </body>
 </html>
