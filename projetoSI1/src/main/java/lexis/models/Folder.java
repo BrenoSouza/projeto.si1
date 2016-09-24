@@ -47,7 +47,7 @@ public class Folder implements FileAndFolder {
 
 		folderDirectory = new ArrayList<Folder>();
 
-		if (!Util.isAValidName(name))
+		if (!ModelsUtil.isAValidName(name))
 			name = getNewFoldersName(UNAMED_FOLDER);
 
 		if (permission == null)
@@ -67,7 +67,7 @@ public class Folder implements FileAndFolder {
 		if (permission == null)
 			permission = Permission.PRIVATE;
 
-		if (!Util.isAValidName(name))
+		if (!ModelsUtil.isAValidName(name))
 			name = UNAMED_FOLDER;
 
 		Folder temp;
@@ -95,7 +95,7 @@ public class Folder implements FileAndFolder {
 		if (permission == null)
 			permission = Permission.PRIVATE;
 
-		if (!Util.isAValidName(name))
+		if (!ModelsUtil.isAValidName(name))
 			name = UNAMED_FOLDER;
 
 		Folder temp;
@@ -117,7 +117,7 @@ public class Folder implements FileAndFolder {
 		if (dateCreation == null)
 			throw new NullPointerException();
 
-		if (!Util.isAValidName(name))
+		if (!ModelsUtil.isAValidName(name))
 			name = File.UNAMED_FILE;
 
 		List<String> newPath = getPathWithThisFolder();
@@ -400,7 +400,7 @@ public class Folder implements FileAndFolder {
 	@Override
 	public void setName(String name) {
 
-		if (!Util.isAValidName(name))
+		if (!ModelsUtil.isAValidName(name))
 			name = getNewFoldersName(UNAMED_FOLDER);
 
 		this.name = name;

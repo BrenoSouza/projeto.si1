@@ -49,7 +49,7 @@ public class File implements FileAndFolder {
 	 */
 	public File(String name, Type type, Permission permission, List<String> path, LocalDateTime dateCreation) {
 
-		if(!Util.isAValidName(name)) 
+		if(!ModelsUtil.isAValidName(name)) 
 			name = UNAMED_FILE;
 		
 		if(type == null)
