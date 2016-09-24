@@ -10,15 +10,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import lexis.models.DataBase;
 import lexis.models.Explorer;
 import lexis.models.Folder;
+import lexis.models.ModelsUtil;
 import lexis.models.Notification;
 import lexis.models.Pair;
 import lexis.models.Permission;
 import lexis.models.SharedFile;
+import lexis.models.TrashFile;
 import lexis.models.TrashFileAndFolder;
+import lexis.models.TrashFolder;
 import lexis.models.Type;
 import lexis.models.User;
 import lexis.services.UserServiceDAO;
@@ -37,11 +41,25 @@ public class HomeController {
 
 	private Explorer explorer;
 
+	
+	/**
+	 * Metodo responsavel pelo home.html
+	 * @return Retorna a home.html
+	 */
+	@RequestMapping()
+	public ModelAndView home() {
+		ModelAndView home = new ModelAndView("home");
+		if(userLogged() == null){
+			home.setViewName("redirect:index");
+		}
+		return home;
+	}
+	
 	/**
 	 * @return retorna o usuario logado na sessão
 	 */
 	@RequestMapping(value = "/user", method = RequestMethod.GET)
-	public String home() {
+	public String User() {
 		return userLogged().getUsername();
 	}
 	
@@ -246,8 +264,13 @@ public class HomeController {
 	 * @return Object Json contendo a lixeira do usuario
 	 */
 	@RequestMapping(value = "trash", method = RequestMethod.GET)
-	public TrashFileAndFolder[] getTrash(){
-		return explorer.getTrash();
+	public Pair<List<TrashFile>, List<TrashFolder>> getTrash(){		
+		return ModelsUtil.transformGetTrashOutput(explorer.getTrash());
+	}
+	
+	@RequestMapping(value= "cleantrash", method = RequestMethod.GET)
+	public void cleanTrash(){
+		//explorer.cleanTrash();
 	}
 	
 	/**
