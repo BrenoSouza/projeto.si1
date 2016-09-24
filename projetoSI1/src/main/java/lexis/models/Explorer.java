@@ -19,7 +19,7 @@ public class Explorer implements Comparable<Explorer> {
 	
 	private TreeMap<String, List<SharedFile>> sharedFiles;
 	
-	private List<FileAndFolder> trash;
+	private List<TrashFileAndFolder> trash;
 	
 	private List<Notification> notifications;
 	
@@ -39,7 +39,7 @@ public class Explorer implements Comparable<Explorer> {
 		
 		usersThatImSharing = new TreeSet<String>();
 		sharedFiles = new TreeMap<String, List<SharedFile>>();
-		trash = new ArrayList<FileAndFolder>();
+		trash = new ArrayList<TrashFileAndFolder>();
 		
 		notifications = new ArrayList<Notification>();
 		
@@ -256,7 +256,7 @@ public class Explorer implements Comparable<Explorer> {
 		Folder aux = stackFolder.peek().getFolder(name);
 	
 		if(aux != null) {
-			trash.add(aux);
+			trash.add(new TrashFolder(aux));
 			return stackFolder.peek().removeFolder(name);
 		}
 		
@@ -267,7 +267,7 @@ public class Explorer implements Comparable<Explorer> {
 		File aux = stackFolder.peek().getFile(name, type);
 		
 		if(aux != null) {
-			trash.add(aux);
+			trash.add(new TrashFile(aux));
 			return stackFolder.peek().removeFile(name, type);
 		
 		}

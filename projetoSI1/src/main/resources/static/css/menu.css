@@ -3,7 +3,7 @@
 #menuButton{
 	position: absolute;
 	top: 10px;
-	left: 20px;
+	right: 7%;
 	width: 20px;
 	height: 24px;
 	background: #191919;
@@ -25,17 +25,19 @@
 	border-radius: 4px;
 	transition: background 0.3s linear 0s;
 }
+
 #menu{
 	position: absolute;
-	left: 0px;
+	right: 260px;
 	top: 50px;
-	width: 260px;
-	height: 125px;
+	width: 350px;
+	height: 200px;
 	background: #333;
 	opacity: 0;
 	transition: opacity 0.3s linear 0s, right 0s linear 0s;
 	cursor: pointer;
 }
+
 
 #notificationSpan {
 	text-decoration: none;

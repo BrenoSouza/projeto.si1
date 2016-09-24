@@ -4,7 +4,7 @@ body {
 }
 
 a:link, a:active, a:visited {
-	color:; #315e8a;
+	color:; #315 e8a;
 	text-decoration: none;
 }
 
@@ -64,7 +64,7 @@ td {
 	text-align-last: center;
 }
 
-.table-responsive{
+.table-responsive {
 	padding-bottom: 70px;
 }
 
@@ -73,7 +73,9 @@ td {
 	width: 100%;
 	height: 50px;
 	background-color: #222222;
-	top: 0; left: 0; right: 0;
+	top: 0;
+	left: 0;
+	right: 0;
 }
 
 .no-margin {
@@ -120,10 +122,8 @@ h3.explorer-header-text {
 	background: #f1f2ea;
 }
 
-
 .principal {
 	padding-top: 10px;
-
 }
 
 .footer {
@@ -135,7 +135,8 @@ h3.explorer-header-text {
 	padding: 25px 0;
 	text-align: center;
 	font-weight: 100;
-	left: 0; right: 0;
+	left: 0;
+	right: 0;
 	bottom: 0;
 }
 
@@ -148,12 +149,12 @@ h3.explorer-header-text {
 }
 
 #header-menu {
-	margin-top: 55px; 
-	margin-left: 40px;
+	margin-top: -15px;
+	margin-left: 5px;
 }
 
 ul.header-menu {
-
+	
 }
 
 .menu {
@@ -173,13 +174,12 @@ ul.header-menu {
 	color: #ebebeb;
 }
 
-
 .sign-in {
 	margin: 0 auto;
 }
 
 #sign-up {
-
+	
 }
 
 .sign-up {
@@ -198,6 +198,7 @@ ul.header-menu {
 	padding: 5px 2%;
 	width: 30%;
 }
+
 .sign-up input.button, .sign-in input {
 	width: auto;
 }
@@ -206,9 +207,79 @@ ul.header-menu {
 	padding-left: 5%;
 	margin: 0 auto;
 	width: 1%;
-	
 }
 
 #td-name {
-	text-align-last: initial;	
+	text-align-last: initial;
+}
+
+.table-external {
+	width: 90%;
+	padding-left: 5%;
+}
+
+.menu-lateral {
+	width: 20%;
+	background-color: blue;
+	padding-left: 5%;
+	margin: left;
+}
+
+.principalmenu {
+	height: 100%;
+}
+
+.explorer {
+	margin-left: 2%;
+	margin-right: 2%;
+}
+
+.tabelaprincipal {
+	height: 100%;
+	width: 100%;
+}
+
+.coluna1TabelaPrincipal {
+	height: 100px;
+	width: 15%;
+	background: white;
+}
+
+.coluna2TabelaPrincipal {
+	margin-right: 1%;
+	margin-left: 90%;
+}
+/* make sidebar nav vertical */
+@media ( min-width : 768px) {
+	.sidebar-nav .navbar .navbar-collapse {
+		padding: 0;
+		max-height: none;
+	}
+	.sidebar-nav .navbar ul {
+		float: none;
+		display: block;
+	}
+	.sidebar-nav .navbar li {
+		float: none;
+		display: block;
+	}
+	.sidebar-nav .navbar li a {
+		padding-top: 12px;
+		padding-bottom: 12px;
+	}
+}
+
+@media ( min-width :768px) {
+	#wrapper {
+		padding-right: 0;
+	}
+	#wrapper.toggled {
+		padding-right: 250px;
+	}
+	#sidebar-wrapper {
+		width: 0;
+	}
+	#wrapper.toggled #sidebar-wrapper {
+		width: 250px;
+	}
 }
