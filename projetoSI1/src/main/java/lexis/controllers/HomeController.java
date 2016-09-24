@@ -264,13 +264,8 @@ public class HomeController {
 	 * @return Object Json contendo a lixeira do usuario
 	 */
 	@RequestMapping(value = "trash", method = RequestMethod.GET)
-	public Pair<List<TrashFile>, List<TrashFolder>> getTrash(){		
-		return ModelsUtil.transformGetTrashOutput(explorer.getTrash());
-	}
-	
-	@RequestMapping(value= "cleantrash", method = RequestMethod.GET)
-	public void cleanTrash(){
-		//explorer.cleanTrash();
+	public Pair<TrashFile[], TrashFolder[]> getTrash(){		
+		return ModelsUtil.transformGetTrashOutput(explorer.getTrashFile(), explorer.getTrashFolder());
 	}
 	
 	/**
