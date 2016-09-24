@@ -15,11 +15,14 @@ import org.springframework.web.servlet.ModelAndView;
 import lexis.models.DataBase;
 import lexis.models.Explorer;
 import lexis.models.Folder;
+import lexis.models.ModelsUtil;
 import lexis.models.Notification;
 import lexis.models.Pair;
 import lexis.models.Permission;
 import lexis.models.SharedFile;
+import lexis.models.TrashFile;
 import lexis.models.TrashFileAndFolder;
+import lexis.models.TrashFolder;
 import lexis.models.Type;
 import lexis.models.User;
 import lexis.services.UserServiceDAO;
@@ -261,8 +264,13 @@ public class HomeController {
 	 * @return Object Json contendo a lixeira do usuario
 	 */
 	@RequestMapping(value = "trash", method = RequestMethod.GET)
-	public TrashFileAndFolder[] getTrash(){
-		return explorer.getTrash();
+	public Pair<List<TrashFile>, List<TrashFolder>> getTrash(){		
+		return ModelsUtil.transformGetTrashOutput(explorer.getTrash());
+	}
+	
+	@RequestMapping(value= "cleantrash", method = RequestMethod.GET)
+	public void cleanTrash(){
+		//explorer.cleanTrash();
 	}
 	
 	/**
