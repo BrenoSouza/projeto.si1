@@ -12,11 +12,11 @@ function clickMenu(){
 }
 
 function openMenu(){
-	menu.style.left = "0px"; // return it to active screen space
+	menu.style.right = "0px"; // return it to active screen space
 	menu.style.opacity = 1;
 }
 
 function closeMenu(){
 	menu.style.opacity = 0;
-	menu.style.left = "-260px"; // remove it from active screen space
+	menu.style.right = "-350px"; // remove it from active screen space
 }

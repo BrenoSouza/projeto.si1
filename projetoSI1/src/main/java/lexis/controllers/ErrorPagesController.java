@@ -10,7 +10,7 @@ public class ErrorPagesController {
 	 * mapeamento para a pagina de erro padrão
 	 * @return
 	 */
-	@RequestMapping("/404")
+	@RequestMapping("404")
 	public String notFound(){
 		return "404";
 	}
@@ -19,7 +19,7 @@ public class ErrorPagesController {
 	 * mapeamento para a pagina de acesso restrito
 	 * @return
 	 */
-	@RequestMapping("/403")
+	@RequestMapping("403")
 	public String forbidden(){
 		return "403";
 	}

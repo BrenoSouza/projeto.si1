@@ -19,6 +19,8 @@ public class Explorer implements Comparable<Explorer> {
 	
 	private TreeMap<String, List<SharedFile>> sharedFiles;
 	
+	private List<TrashFileAndFolder> trash;
+	
 	private List<Notification> notifications;
 	
 	/**
@@ -37,6 +39,7 @@ public class Explorer implements Comparable<Explorer> {
 		
 		usersThatImSharing = new TreeSet<String>();
 		sharedFiles = new TreeMap<String, List<SharedFile>>();
+		trash = new ArrayList<TrashFileAndFolder>();
 		
 		notifications = new ArrayList<Notification>();
 		
@@ -84,11 +87,11 @@ public class Explorer implements Comparable<Explorer> {
 		
 		List<SharedFile> sharedFilesWithThisUser = sharedFiles.get(owner); 
 		
-		if(!sharedFilesWithThisUser.contains(fileReadAndWrite)) {
-			
-			sharedFilesWithThisUser.add(fileReadAndWrite);
-			addNotification(new Notification(owner, fileReadAndWrite, log));
-		}
+		
+		sharedFilesWithThisUser.remove(fileReadAndWrite);
+		sharedFilesWithThisUser.add(fileReadAndWrite);
+		addNotification(new Notification(owner, fileReadAndWrite, log));
+		
 		
 		return fileReadAndWrite;
 	}
@@ -114,11 +117,10 @@ public class Explorer implements Comparable<Explorer> {
 		
 		List<SharedFile> sharedFilesWithThisUser = sharedFiles.get(owner);
 		
-		if(!sharedFilesWithThisUser.contains(fileReadOnly)) {		
-		
-			sharedFiles.get(owner).add(fileReadOnly);
-			addNotification(new Notification(owner, fileReadOnly, log));
-		}
+
+		sharedFilesWithThisUser.remove(fileReadOnly);
+		sharedFilesWithThisUser.add(fileReadOnly);
+		addNotification(new Notification(owner, fileReadOnly, log));
 		
 		return fileReadOnly;
 	}
@@ -251,11 +253,26 @@ public class Explorer implements Comparable<Explorer> {
 	}
 	
 	public boolean removeFolder(String name) {
-		return stackFolder.peek().removeFolder(name);
+		Folder aux = stackFolder.peek().getFolder(name);
+	
+		if(aux != null) {
+			trash.add(new TrashFolder(aux));
+			return stackFolder.peek().removeFolder(name);
+		}
+		
+		return false;
 	}
 	
 	public boolean removeFile(String name, Type type) {
-		return stackFolder.peek().removeFile(name, type);
+		File aux = stackFolder.peek().getFile(name, type);
+		
+		if(aux != null) {
+			trash.add(new TrashFile(aux));
+			return stackFolder.peek().removeFile(name, type);
+		
+		}
+		
+		return false;
 	}
 	
 	
@@ -307,6 +324,10 @@ public class Explorer implements Comparable<Explorer> {
 	
 	public String getOwner() {
 		return owner;
+	}
+	
+	public TrashFileAndFolder[] getTrash() {
+		return trash.toArray(new TrashFileAndFolder[0]);
 	}
 	
 	@Override

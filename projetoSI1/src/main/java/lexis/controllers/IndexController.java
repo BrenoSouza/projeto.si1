@@ -29,19 +29,18 @@ public class IndexController {
 	 * autimaticamente para o home.html 
 	 * @return
 	 */
-	@RequestMapping(value = {"/","login","index"}) // acessa o url "/"
-	public ModelAndView index(@AuthenticationPrincipal User user) {
+	@RequestMapping(value = {"/","index","login"}) // acessa o url "/"
+	public ModelAndView login(@AuthenticationPrincipal User user) {
 		ModelAndView index = new ModelAndView("index");
 		if(user != null){
-			index.setViewName("home");
+			index.setViewName("redirect:home");
 		}
-		// adicionar um User com a chave "usercadastro"
 		index.addObject("userRegister", new User());
-
+		
 		// retorna o objeto para o index.html
 		return index;
 	}
-
+	
 	/**
 	 * Metodo resposavel pelo cadastro de um novo usuario, recebe do form do
 	 * index.html um USER e caso nao haja erro no usuario passado retorna ao
@@ -79,17 +78,6 @@ public class IndexController {
 			attributes.addFlashAttribute("mensagemerror", e.getMessage());
 			return register;
 		}
-	}
-
-	/**
-	 * Metodo responsavel pelo home.html
-	 * @return Retorna a home.html
-	 */
-	@RequestMapping("/home")
-	public ModelAndView home() {
-		ModelAndView login = new ModelAndView();
-		login.setViewName("home");
-		return login;
 	}
 
 }

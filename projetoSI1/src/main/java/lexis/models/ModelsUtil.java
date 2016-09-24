@@ -1,5 +1,8 @@
 package lexis.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Classe com algumas funcionalidades e alguns metodos 
  * de verificacao que sao comuns em classes que nao pussuem 
@@ -7,7 +10,7 @@ package lexis.models;
  * @author klynger
  *
  */
-public class Util {
+public class ModelsUtil {
 	
 	
 	/**
@@ -28,4 +31,20 @@ public class Util {
 		return result;
 
 	}
+	
+	public static Pair<List<TrashFile>, List<TrashFolder>> transformGetTrashOutput(TrashFileAndFolder[] trash) {
+		List<TrashFile> trashFiles = new ArrayList<TrashFile>();
+		List<TrashFolder> trashFolders = new ArrayList<TrashFolder>();
+		
+		for(TrashFileAndFolder elem : trash) {
+			if(elem instanceof TrashFile) {
+				trashFiles.add((TrashFile) elem);
+			} else {
+				trashFolders.add((TrashFolder) elem);
+			}
+		}
+		
+		return new Pair<List<TrashFile>, List<TrashFolder>>(trashFiles, trashFolders);
+	}
+
 }

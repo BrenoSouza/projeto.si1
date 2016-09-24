@@ -45,28 +45,4 @@ public class SharedFileReadOnly extends SharedFile {
 	}
 	
 
-	@Override
-	public boolean equals(Object obj) {
-		if(!(obj instanceof SharedFileReadOnly))
-			return false;
-					
-		SharedFileReadOnly otherFile = (SharedFileReadOnly) obj;
-		
-		return getOwner().equals(otherFile.getOwner()) && 
-				getFile().equals(otherFile.getFile());
-	}
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
 }
