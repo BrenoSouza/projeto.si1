@@ -23,6 +23,7 @@ public class Folder implements FileAndFolder {
 	private LocalDateTime dateCreation;
 	private LocalDateTime dateEdition;
 	private Permission permission;
+	private boolean inTrash;
 
 	@ElementCollection
 	private List<Folder> folderDirectory;
@@ -59,6 +60,7 @@ public class Folder implements FileAndFolder {
 		this.permission = permission;
 		this.path = path;
 		this.fileDirectory = new ArrayList<File>();
+		this.inTrash = false;
 
 	}
 
@@ -257,6 +259,16 @@ public class Folder implements FileAndFolder {
 
 		}
 		return null;
+	}
+	
+	@Override
+	public boolean isInTrash() {
+		return inTrash;
+	}
+	
+	@Override
+	public void putInTrash() {
+		inTrash = true;
 	}
 
 	/**

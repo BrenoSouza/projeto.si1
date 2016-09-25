@@ -11,6 +11,7 @@ public final class TrashFile implements TrashFileAndFolder {
 			throw new NullPointerException();
 		
 		this.file = file;
+		this.file.putInTrash();
 		
 	}
 	
@@ -43,6 +44,10 @@ public final class TrashFile implements TrashFileAndFolder {
 		return file.getStringPath();
 	}
 	
+	@Override
+	public boolean isInTrash() {
+		return file.isInTrash();
+	}
 
 	protected File getFile() {
 		return file;

@@ -29,6 +29,7 @@ public class File implements FileAndFolder {
 	private String data;
 	private Type type;
 	private Permission permission;
+	private boolean inTrash;
 	
 	
 	@ElementCollection
@@ -65,6 +66,7 @@ public class File implements FileAndFolder {
 		this.dateEdition = dateCreation;
 		this.permission = permission;
 		this.path = path;
+		this.inTrash = false;
 	}
 	
 	public File()  {
@@ -135,6 +137,16 @@ public class File implements FileAndFolder {
 	@Override
 	public List<String> getPath() {
 		return path;
+	}
+	
+	@Override
+	public boolean isInTrash() {
+		return inTrash;
+	}
+	
+	@Override
+	public void putInTrash() {
+		inTrash = true;
 	}
 	
 	@Override
