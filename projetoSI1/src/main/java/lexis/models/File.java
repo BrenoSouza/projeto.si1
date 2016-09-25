@@ -6,6 +6,13 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Enumerated;
+import javax.persistence.EnumType;
+import javax.persistence.Id;
+import javax.persistence.Version;
 
 
 /**
@@ -15,20 +22,33 @@ import javax.persistence.ElementCollection;
  *         Cabral, Raimundo Heitor, Rafael Klynger.
  *
  */
+@Entity
 public class File implements FileAndFolder {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer id;
 	
 	private static final String SEP = "/";
 	
 	public static final String EMPTY_DATA = "";
 	public static final String UNAMED_FILE = "Sem titulo";
-
-	@Column // (scale = 4)
+	
+	@Version
+	private Integer version;
+	@Column(name = "file_name") // (scale = 4)
 	private String name;
+	@Column(name = "file_date_creation")
 	private LocalDateTime dateCreation;
+	@Column(name = "file_date_edition")
 	private LocalDateTime dateEdition;
+	@Column(name = "file_data")
 	private String data;
+	@Enumerated(EnumType.STRING)
 	private Type type;
+	@Enumerated(EnumType.STRING)
 	private Permission permission;
+	@Column(name = "file_in_trash")
 	private boolean inTrash;
 	
 	

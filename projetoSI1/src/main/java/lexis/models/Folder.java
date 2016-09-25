@@ -3,6 +3,13 @@ package lexis.models;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Version;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 
@@ -13,21 +20,36 @@ import javax.persistence.ElementCollection;
  *         Cabral, Raimundo Heitor, Rafael Klynger.
  *
  */
+@Entity
 public class Folder implements FileAndFolder {
+	
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer id;
+	
 	public static final String SEP = "/";
 	public static final String UNAMED_FOLDER = "Sem titulo";
-
-	@Column // (scale = 3)
+	
+	
+	@Version
+	private Integer version;
+	@Column(name = "folder_name") // (scale = 3)
 	private String name;
+	@Column(name = "folder_date_creation")
 	private LocalDateTime dateCreation;
+	@Column(name = "folder_date_edition")
 	private LocalDateTime dateEdition;
+	@Enumerated(EnumType.STRING)
 	private Permission permission;
+	@Column(name = "folder_in_trash")
 	private boolean inTrash;
 
 	@ElementCollection
 	private List<Folder> folderDirectory;
+	@ElementCollection
 	private List<File> fileDirectory;
+	@ElementCollection
 	private List<String> path;
 
 	public Folder(String name, Permission permission, List<String> path) {

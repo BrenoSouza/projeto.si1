@@ -2,6 +2,12 @@ package lexis.models;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Version;
+
 /**
  * Classe usada para compartilhar um arquivo 
  * com outro usuario e esse usuario tem apenas 
@@ -13,11 +19,16 @@ import java.time.LocalDateTime;
  * @author klynger
  *
  */
+@Entity
 public class SharedFileReadOnly extends SharedFile {
 	
 	public static final String TYPE_SHARING = "Read Only";
 	
-
+	@Version
+	private Integer version;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer id;
 	
 	/**
 	 * Construtor da classe que recebe o arquivo 

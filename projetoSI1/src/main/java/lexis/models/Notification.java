@@ -2,22 +2,40 @@ package lexis.models;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Version;
+
 /**
  * Classe possui notificacoes para o usuario sobre arquivos 
  * que foram compartilhados com ele.
  * @author klynger
  *
  */
+@Entity
 public class Notification implements Comparable<Notification> {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer id;
 	
 	public static final boolean READ = false;
 	public static final boolean UNREADED = true;
 	
+	@Version
+	private Integer version;
+	@Column(name = "notification_owner")
 	String owner;
+	@Column(name = "notification_log")
 	LocalDateTime log;
-
+	
+	@Column(name = "notification_sharedFile")
 	SharedFile sharedFile;
 	
+	@Column(name = "notification_unread")
 	boolean unread;
 	
 	/**

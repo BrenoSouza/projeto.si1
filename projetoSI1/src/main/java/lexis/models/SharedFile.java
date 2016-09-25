@@ -2,10 +2,26 @@ package lexis.models;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Version;
+
+@Entity
 public abstract class SharedFile {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer id;
 	
+	@Version
+	private Integer version;
+	@Column(name = "shared_file_file")
 	private File file;
+	@Column(name = "shared_file_owner")
 	private String owner;
+	@Column(name = "shared_file_index")
 	private int index;
 	
 	

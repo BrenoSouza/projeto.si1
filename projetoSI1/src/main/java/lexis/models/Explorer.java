@@ -7,21 +7,44 @@ import java.util.Stack;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Version;
+
+@Entity
 public class Explorer implements Comparable<Explorer> {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer id;
+	
 	public static final int MAX_NOTIFICATIONS = 10;
-
+	
+	@Version
+	private Integer version;
+	@Column(name = "explorer_root")
 	private Folder root;
+	@Column(name = "explorer_owner")
 	private String owner;
+	@Column(name = "explorer_stack_folder")
 	private Stack<Folder> stackFolder;
 	
+	@ElementCollection
 	private TreeSet<String> usersThatImSharing;
 	
+	@ElementCollection
 	private TreeMap<String, List<SharedFile>> sharedFiles;
 	
+	@ElementCollection
 	private List<TrashFile> trashFile;
+	@ElementCollection
 	private List<TrashFolder> trashFolder;
 	
+	@ElementCollection
 	private List<Notification> notifications;
 	
 	/**

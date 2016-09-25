@@ -2,6 +2,7 @@ package lexis.models;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 
+
 public enum Permission {
 	PRIVATE, PUBLIC;
 	
