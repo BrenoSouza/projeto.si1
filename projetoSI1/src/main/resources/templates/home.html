@@ -216,7 +216,7 @@
 											ng-click="showModalRenameFolder(arquivo)"></input> 
 											
 											<input
-											ng-if="!isShare(arquivo)" class="shareBtn"
+											ng-if="arquivo.type != 'folder'" class="shareBtn"
 											id="shareFile{{arquivo.name}}{{arquivo.type}}" type="image"
 											src="../static/images/share.png" th:src="@{images/share.png}"
 											name="shareFile" data-toggle="modal"
