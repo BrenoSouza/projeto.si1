@@ -18,7 +18,11 @@ public final class TrashFile implements TrashFileAndFolder {
 	public String getName() {
 		return file.getName();
 	}
-
+	
+	public Type getType() {
+		return file.getType();
+	}
+	
 	@Override
 	public LocalDateTime getDateCreation() {
 		return file.getDateCreation();
