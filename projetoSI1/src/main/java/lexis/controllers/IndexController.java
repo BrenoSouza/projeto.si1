@@ -8,9 +8,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import lexis.controllers.util.UserRegisterHelper;
 import lexis.models.User;
+import lexis.repositories.FolderRepository;
 import lexis.services.UserServiceDAO;
-import lexis.util.UserRegisterHelper;
 
 @Controller
 public class IndexController {
@@ -23,6 +24,7 @@ public class IndexController {
 		this.userService = userService;
 	}
 	
+	
 	/**
 	 * Metodo responsavel pelo index.html
 	 * caso um usuario ja esteja logado, ele redireciona
@@ -30,7 +32,7 @@ public class IndexController {
 	 * @return
 	 */
 	@RequestMapping(value = {"/","index","login"}) // acessa o url "/"
-	public ModelAndView login(@AuthenticationPrincipal User user) {
+	public ModelAndView login(@AuthenticationPrincipal User user) {		
 		ModelAndView index = new ModelAndView("index");
 		if(user != null){
 			index.setViewName("redirect:home");
@@ -59,7 +61,7 @@ public class IndexController {
 	public ModelAndView userRegister(User userRegister, RedirectAttributes attributes) {
 		
 		ModelAndView register = new ModelAndView("redirect:login");
-		UserRegisterHelper userRegisterHelper = new UserRegisterHelper(userService);
+		UserRegisterHelper userRegisterHelper = new UserRegisterHelper();
 		
 		try {			
 			// verifica se a erros no usuario

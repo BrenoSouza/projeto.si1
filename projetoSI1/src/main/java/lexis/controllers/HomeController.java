@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import lexis.controllers.util.JsonUtil;
 import lexis.models.DataBase;
 import lexis.models.Explorer;
 import lexis.models.Folder;
@@ -26,7 +27,6 @@ import lexis.models.TrashFolder;
 import lexis.models.Type;
 import lexis.models.User;
 import lexis.services.UserServiceDAO;
-import lexis.util.JsonUtil;
 
 @RestController
 @RequestMapping("/home")
