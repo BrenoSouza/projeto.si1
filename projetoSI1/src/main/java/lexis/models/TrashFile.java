@@ -9,7 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Version;
 
-@Entity
+//@Entity
 public final class TrashFile implements TrashFileAndFolder {
 	
 	@Id

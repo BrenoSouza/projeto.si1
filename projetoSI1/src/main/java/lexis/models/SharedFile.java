@@ -3,13 +3,14 @@ package lexis.models;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Version;
 
-@Entity
+//@Entity
 public abstract class SharedFile {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -17,10 +18,13 @@ public abstract class SharedFile {
 	
 	@Version
 	private Integer version;
+	
 	@Column(name = "shared_file_file")
 	private File file;
+	
 	@Column(name = "shared_file_owner")
 	private String owner;
+	
 	@Column(name = "shared_file_index")
 	private int index;
 	
@@ -108,8 +112,7 @@ public abstract class SharedFile {
 	abstract public String getTypeSharing();
 	
 	abstract public void setData(String data, LocalDateTime dateEdition);
-	
-	
+
 	@Override
 	public String toString() {
 		

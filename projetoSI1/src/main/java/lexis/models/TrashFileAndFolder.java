@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Embeddable;
 
-@Embeddable
 public interface TrashFileAndFolder {
 	
 	/**

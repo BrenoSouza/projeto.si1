@@ -12,7 +12,6 @@ import javax.persistence.Embeddable;
  *         Cabral, Raimundo Heitor, Rafael Klynger.
  *
  */
-@Embeddable
 public interface FileAndFolder extends TrashFileAndFolder {
 
 	/**

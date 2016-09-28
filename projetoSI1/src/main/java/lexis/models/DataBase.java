@@ -11,15 +11,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Version;
 
-@Entity
+//@Entity
 public class DataBase {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	
-	@Version
-	private Integer version;
+
 	@Column
 	private static DataBase dataBase;
 	@ElementCollection
@@ -140,6 +138,5 @@ public class DataBase {
 		
 		return sharedFile;		
 	}
-	
 
 }

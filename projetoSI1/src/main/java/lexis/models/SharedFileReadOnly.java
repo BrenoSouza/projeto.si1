@@ -19,7 +19,7 @@ import javax.persistence.Version;
  * @author klynger
  *
  */
-@Entity
+//@Entity
 public class SharedFileReadOnly extends SharedFile {
 	
 	public static final String TYPE_SHARING = "Read Only";
@@ -54,6 +54,17 @@ public class SharedFileReadOnly extends SharedFile {
 		// TODO Auto-generated method stub
 		
 	}
-	
+
+
+
+	public Integer getVersion() {
+		return version;
+	}
+
+
+
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
 
 }

@@ -9,28 +9,33 @@ import java.util.TreeSet;
 
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 import javax.persistence.Version;
 
-@Entity
+//@Entity
 public class Explorer implements Comparable<Explorer> {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	
+
 	public static final int MAX_NOTIFICATIONS = 10;
 	
 	@Version
 	private Integer version;
+	
 	@Column(name = "explorer_root")
 	private Folder root;
+	
 	@Column(name = "explorer_owner")
 	private String owner;
-	@Column(name = "explorer_stack_folder")
+	
+	@ElementCollection//(name = "explorer_stack_folder")
 	private Stack<Folder> stackFolder;
 	
 	@ElementCollection
@@ -41,6 +46,7 @@ public class Explorer implements Comparable<Explorer> {
 	
 	@ElementCollection
 	private List<TrashFile> trashFile;
+	
 	@ElementCollection
 	private List<TrashFolder> trashFolder;
 	
@@ -384,5 +390,5 @@ public class Explorer implements Comparable<Explorer> {
 		
 		return goToRoot();
 	}
-	
+
 }

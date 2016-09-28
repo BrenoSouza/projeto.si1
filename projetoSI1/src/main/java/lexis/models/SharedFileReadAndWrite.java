@@ -8,7 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Version;
 
-@Entity
+//@Entity
 public final class SharedFileReadAndWrite extends SharedFile {
 	
 	@Version
@@ -32,5 +32,13 @@ public final class SharedFileReadAndWrite extends SharedFile {
 	public  String getTypeSharing() {
 		return TYPE_SHARING;
 	}
-	
+
+	public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+
 }
