@@ -3,6 +3,7 @@ package lexis;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  * Classe que ira inicializar a aplicação
@@ -11,6 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  *         Cabral, Raimundo Heitor, Rafael Klynger.
  *
  */
+@ComponentScan(basePackages = {"lexis"})
 @EnableAutoConfiguration
 @SpringBootApplication
 public class Application {
