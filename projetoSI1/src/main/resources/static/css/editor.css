@@ -6,6 +6,7 @@ body {
 .topbar-links {
 	font-weight: 300;
 }
+
 .center-text {
 	height: 100%;
 	margin-top: 50px;
@@ -18,11 +19,11 @@ body {
 	padding-left: 10px;
 }
 
-textarea  
-{  
-   font-family:"Ubuntu", serif;  
-   font-size: 15px;
-   rows="3";
+textarea {
+	font-family: "Ubuntu", serif;
+	font-size: 15px;
+	rows
+	="3";
 }
 
 .unlabeled {
@@ -34,20 +35,27 @@ ul.inline li, ol.inline li {
 	margin: 15px;
 }
 
-.input-text {
+.input-text  {
 	display: block;
 	font-weight: 500;
 	max-width: 819px;
 	min-width: 819px;
-	min-height: 750px;
+	min-height: 350px;
 	max-height: 750px;
 	padding-bottom: 50px;
+	padding-top: 100px;
 	margin-left: auto;
 	margin-right: auto;
 	align-content: center;
+	margin-left: auto;
 }
 
 h1.title {
 	color: red;
 	font-weight: 500;
+}
+
+.tituloFile {
+	width: 580px;
+	height: 23px;
 }
