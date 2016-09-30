@@ -22,7 +22,6 @@ import lexis.models.Pair;
 import lexis.models.Permission;
 import lexis.models.SharedFile;
 import lexis.models.TrashFile;
-import lexis.models.TrashFileAndFolder;
 import lexis.models.TrashFolder;
 import lexis.models.Type;
 import lexis.models.User;
@@ -105,7 +104,7 @@ public class HomeController {
 		Permission permission = JsonUtil.getPermission();
 		LocalDateTime dateCreation = JsonUtil.GetDateCreation();
 		
-		explorer.currentFolder().addFolder(name, permission, dateCreation);
+		explorer.addFolder(name, permission, dateCreation);
 	}
 
 	/**
@@ -121,7 +120,7 @@ public class HomeController {
 		Type type = JsonUtil.getType();
 		LocalDateTime dateCreation = JsonUtil.GetDateCreation();
 		
-		explorer.currentFolder().addFile(name, type, permission, dateCreation);
+		explorer.addFile(name, type, permission, dateCreation);
 	}
 
 	/**

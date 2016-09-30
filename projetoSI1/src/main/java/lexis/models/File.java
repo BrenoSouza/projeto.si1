@@ -25,6 +25,10 @@ import javax.persistence.Transient;
 @Entity
 public class File implements FileAndFolder {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3351932681798762902L;
 	@Transient
 	private static final String SEP = "/";
 	@Transient

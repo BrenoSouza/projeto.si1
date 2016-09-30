@@ -3,8 +3,6 @@ package lexis.models;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import javax.persistence.Embeddable;
-
 /**
  * Interface que dita as regras que todo arquivo e pasta tem que ter.
  * 

@@ -1,10 +1,9 @@
 package lexis.models;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import javax.persistence.Embeddable;
-
-public interface TrashFileAndFolder {
+public interface TrashFileAndFolder extends Serializable {
 	
 	/**
 	 * @return O nome do objeto.

@@ -24,6 +24,11 @@ import javax.persistence.ElementCollection;
 public class Folder implements FileAndFolder {
 	
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4989997726749486926L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id_folder")

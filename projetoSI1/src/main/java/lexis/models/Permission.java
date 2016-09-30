@@ -1,9 +1,11 @@
 package lexis.models;
 
+import java.io.Serializable;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 
-public enum Permission {
+public enum Permission implements Serializable {
 	PRIVATE, PUBLIC;
 	
 	

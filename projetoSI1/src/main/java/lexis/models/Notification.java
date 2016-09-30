@@ -1,5 +1,6 @@
 package lexis.models;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -8,7 +9,13 @@ import java.time.LocalDateTime;
  * @author klynger
  *
  */
-public class Notification implements Comparable<Notification> {
+public class Notification implements Comparable<Notification>, Serializable {
+	
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8161737401915179695L;
 	
 	public static final boolean READ = false;
 	public static final boolean UNREADED = true;

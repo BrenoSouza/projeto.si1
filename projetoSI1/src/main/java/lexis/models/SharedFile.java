@@ -1,17 +1,19 @@
 package lexis.models;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Version;
 
 //@Entity
-public abstract class SharedFile {
+public abstract class SharedFile implements  Serializable {
+
+	private static final long serialVersionUID = 1057400889808018146L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;

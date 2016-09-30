@@ -2,7 +2,6 @@ package lexis.models;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,7 +20,9 @@ import javax.persistence.Version;
  */
 //@Entity
 public class SharedFileReadOnly extends SharedFile {
-	
+
+	private static final long serialVersionUID = -9170535956018149023L;
+
 	public static final String TYPE_SHARING = "Read Only";
 	
 	@Version
