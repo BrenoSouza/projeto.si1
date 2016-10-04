@@ -12,14 +12,6 @@ import java.util.Stack;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Version;
-
-//@Entity
 public class Explorer implements Comparable<Explorer>, Serializable {
 	
 
@@ -27,41 +19,25 @@ public class Explorer implements Comparable<Explorer>, Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -4424953303868949139L;
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
-	
 	static final String FOLDER_EXPLORERS = "explorers";
 	static final String EXTENSION = "ser";
 	
 	public static final int MAX_NOTIFICATIONS = 10;
 	
-	@Version
-	private Integer version;
-	
-	@Column(name = "explorer_root")
 	private Folder root;
 	
-	@Column(name = "explorer_owner")
 	private String owner;
 	
-	@ElementCollection//(name = "explorer_stack_folder")
 	private Stack<Folder> stackFolder;
 	
-	@ElementCollection
 	private TreeSet<String> usersThatImSharing;
 	
-	@ElementCollection
 	private TreeMap<String, List<SharedFile>> sharedFiles;
 	
-	@ElementCollection
 	private List<TrashFile> trashFile;
 	
-	@ElementCollection
 	private List<TrashFolder> trashFolder;
 	
-	@ElementCollection
 	private List<Notification> notifications;
 	
 	/**

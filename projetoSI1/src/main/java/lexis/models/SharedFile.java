@@ -3,33 +3,15 @@ package lexis.models;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Version;
-
-//@Entity
 public abstract class SharedFile implements  Serializable {
 
 	private static final long serialVersionUID = 1057400889808018146L;
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
 	
-	@Version
-	private Integer version;
-	
-	@Column(name = "shared_file_file")
 	private File file;
 	
-	@Column(name = "shared_file_owner")
 	private String owner;
 	
-	@Column(name = "shared_file_index")
 	private int index;
-	
 	
 	public SharedFile(File file, String owner) {
 		if(file == null || owner == null)

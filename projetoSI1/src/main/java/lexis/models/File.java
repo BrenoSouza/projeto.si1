@@ -4,16 +4,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Enumerated;
-import javax.persistence.EnumType;
-import javax.persistence.Id;
-import javax.persistence.Transient;
-
 
 /**
  * Classe responsavel pelo obejto do tipo arquivo.
@@ -22,53 +12,30 @@ import javax.persistence.Transient;
  *         Cabral, Raimundo Heitor, Rafael Klynger.
  *
  */
-@Entity
 public class File implements FileAndFolder {
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 3351932681798762902L;
-	@Transient
 	private static final String SEP = "/";
-	@Transient
 	public static final String EMPTY_DATA = "";
-	@Transient
 	public static final String UNAMED_FILE = "Sem titulo";
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id_file")
-	private Integer id;
-	
-	@Column(name = "file_name") // (scale = 4)
 	private String name;
 	
-	@Column(name = "file_date_creation")
 	private LocalDateTime dateCreation;
 	
-	@Column(name = "file_date_edition")
 	private LocalDateTime dateEdition;
 	
-	@Column(name = "file_data")
 	private String data;
 	
-	@Enumerated(EnumType.STRING)
 	private Type type;
 	
-	@Enumerated(EnumType.STRING)
 	private Permission permission;
 	
-	@Column(name = "file_in_trash")
 	private boolean inTrash;
 	
-	@Column(name = "file_owner_id")
-	private Integer owner;
-	
-	@Column(name = "parent_folder_id")
-	private Integer parentFolder;
-	
-	@ElementCollection
 	private List<String> path;
 	
 	public File(String name, Type type, Permission permission, List<String> path) {
@@ -232,15 +199,13 @@ public class File implements FileAndFolder {
 
 	@Override
 	public String toString() {
-		return  "ID: "+ getId() +
-				"Name: " + getName() + 
+		return  "Name: " + getName() + 
 				"\n Date Creation: " + getDateCreation().toString() +
 				"\n Date Edition: " + getDateEdition().toString() + 
 				"\n Source Code: "+ getData()+
 				"\nType of File: " + type.name().toLowerCase() + 
 				"\nPermission: " + permission.name().toLowerCase() + 
-				"\nOwner: " + getOwner() +
-				"\nParentFolder: " + getParentFolder() + "\n";
+				"\n";
 
 	}
 
@@ -255,15 +220,6 @@ public class File implements FileAndFolder {
 		return stringPath;
 	}
 
-	//------------------------------GETS AND SETS------------------------------------------
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
 	public void setData(String data) {
 		this.data = data;
 	}
@@ -272,21 +228,5 @@ public class File implements FileAndFolder {
 		this.inTrash = inTrash;
 	}
 	
-	public Integer getOwner() {
-		return owner;
-	}
-
-	public void setOwner(Integer owner) {
-		this.owner = owner;
-	}
-
-	public Integer getParentFolder() {
-		return parentFolder;
-	}
-
-	public void setParentFolder(Integer parentFolder) {
-		this.parentFolder = parentFolder;
-	}
-
 	
 }

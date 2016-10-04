@@ -9,25 +9,11 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.TreeMap;
 
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
-//@Entity
 public class DataBase implements Serializable {
 
 
 	private static final long serialVersionUID = 6013810455664863783L;
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
-
-	@Column
 	private static DataBase dataBase;
-	@ElementCollection
 	private TreeMap<String, Explorer> data;
 
 	private DataBase() {

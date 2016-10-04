@@ -3,15 +3,6 @@ package lexis.models;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Transient;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 
 /**
  * Classe responsavel pelo objeto do tipo pasta.
@@ -20,7 +11,6 @@ import javax.persistence.ElementCollection;
  *         Cabral, Raimundo Heitor, Rafael Klynger.
  *
  */
-@Entity
 public class Folder implements FileAndFolder {
 	
 
@@ -29,58 +19,24 @@ public class Folder implements FileAndFolder {
 	 */
 	private static final long serialVersionUID = -4989997726749486926L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id_folder")
-	private Integer id;
-	
-	@Transient
 	public static final String SEP = "/";
-	@Transient
 	public static final String UNAMED_FOLDER = "Sem titulo";
 		
-	@Column(name = "folder_name") // (scale = 3)
 	private String name;
 	
-	@Column(name = "folder_date_creation")
 	private LocalDateTime dateCreation;
 	
-	@Column(name = "folder_date_edition")
 	private LocalDateTime dateEdition;
 	
-	@Enumerated(EnumType.STRING)
 	private Permission permission;
 	
-	@Column(name = "folder_in_trash")
 	private boolean inTrash;
 
-	//@ElementCollection
-	@Transient
 	private List<Folder> folderDirectory;
 	
-	//@ElementCollection
-	@Transient
 	private List<File> fileDirectory;
 	
-	@Column(name = "file_owner_id")
-	private Integer owner;
-	
-	@Column(name = "parent_folder_id")
-	private Integer parentFolder;	
-	
-	@Column(name = "root") // (scale = 3)
-	private String root;
-	
-	@Column(name = "trash") // (scale = 3)
-	private String trash;
-	
-	@Column(name = "shared") // (scale = 3)
-	private String shared;
-	
-	@ElementCollection
 	private List<String> path;
-	
-	public Folder(){}
 
 	public Folder(String name, Permission permission, List<String> path) {
 		this(name, permission, path, LocalDateTime.now());
@@ -510,16 +466,10 @@ public class Folder implements FileAndFolder {
 
 	@Override
 	public String toString() {
-		return  "ID: "+ getId()+
-				"Name: " + getName() +
+		return  "Name: " + getName() +
 				"\nDate of creation: " + getDateCreation() + 
 				"\n Date of edition: " + getDateEdition() +
 				"\n Permission: " + getPermission()+
-				"\n Owner: "+ getOwner() +
-				"\n ParentFolder: "+ getParentFolder()+
-				"\n Root: "+ getRoot()+
-				"\n Trash: "+ getTrash()+
-				"\n Shared: "+ getShared()+
 				"\nFiles: " + getFileDirectory() + "\n";
 	}
 
@@ -558,63 +508,11 @@ public class Folder implements FileAndFolder {
 		newPath.add(this.getName());
 		return newPath;
 	}
-	
-	//------------------------------GETS AND SETS------------------------------------------
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	public void setInTrash(boolean inTrash) {
 		this.inTrash = inTrash;
 	}
 
-	
-	public Integer getOwner() {
-		return owner;
-	}
-
-	public void setOwner(Integer owner) {
-		this.owner = owner;
-	}
-
-	public Integer getParentFolder() {
-		return parentFolder;
-	}
-
-	public void setParentFolder(Integer parentFolder) {
-		this.parentFolder = parentFolder;
-	}
-	
-	public String getRoot() {
-		return root;
-	}
-
-	public void setRoot(String rootName) {
-		this.root = rootName;
-	}
-
-	public String getTrash() {
-		return trash;
-	}
-
-	public void setTrash(String trashName) {
-		this.trash = trashName;
-	}
-
-	public String getShared() {
-		return shared;
-	}
-
-	public void setShared(String sharedName) {
-		this.shared = sharedName;
-	}
-
-	//------------------------------GETS AND SETS------------------------------------------
 	private static void auxFind(String name, List<FileAndFolder> results, Folder folder) {
 
 		for (Folder f : folder.getFolderDirectory()) {

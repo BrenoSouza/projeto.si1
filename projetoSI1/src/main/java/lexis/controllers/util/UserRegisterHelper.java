@@ -5,16 +5,13 @@ import org.springframework.stereotype.Component;
 
 import lexis.exceptions.*;
 import lexis.models.DataBase;
-import lexis.models.Folder;
 import lexis.models.User;
-import lexis.services.FolderServiceDAO;
 import lexis.services.UserServiceDAO;
 
 @Component
 public class UserRegisterHelper {
 
 	private static UserServiceDAO userService;
-	private static FolderServiceDAO folderService;
 	private User userTemp;
 
 	@Autowired
@@ -22,11 +19,6 @@ public class UserRegisterHelper {
 		userService = userService2;
 	}
 	
-	@Autowired
-	public void setFolderRepository(FolderServiceDAO folderService2) {
-		folderService = folderService2;
-	}
-		
 	public UserRegisterHelper(){}
 
 	public void hasErrorIn(User user) {
@@ -116,20 +108,12 @@ public class UserRegisterHelper {
 	}
 	// registra o usuario
 	public void RegisterUser(User userRegister) {
-		if((userRegister == null)||(userService == null)||(folderService == null)){
+		if((userRegister == null)||(userService == null)){
 			throw new LoginNotRegisteredException("erro ao cadastrar");
 		}
 		DataBase.getInstance().addNewUser(userRegister);
 		userService.saveUser(userRegister);
-		Folder root =  new Folder();
-		Folder trash =  new Folder();
-		Folder shared =  new Folder();
-		root.setRoot(userRegister.getUsername());
-		trash.setTrash(userRegister.getUsername());
-		shared.setShared(userRegister.getUsername());
-		folderService.saveFolder(root);
-		folderService.saveFolder(trash);
-		folderService.saveFolder(shared);
+	
 
 	}
 

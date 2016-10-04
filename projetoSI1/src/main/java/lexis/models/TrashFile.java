@@ -3,24 +3,10 @@ package lexis.models;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Version;
-
-//@Entity
 public final class TrashFile implements TrashFileAndFolder, Serializable {
 	
 	private static final long serialVersionUID = 9062475293631527828L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
-	
-	@Version
-	private Integer version;
-	@Column(name = "Trash_file_file")
 	private File file;
 	
 	public TrashFile(File file) {
