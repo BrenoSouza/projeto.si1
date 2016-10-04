@@ -23,6 +23,15 @@ public class DataBase implements Serializable {
 	public static synchronized DataBase getInstance() {
 		if (dataBase == null)
 			dataBase = new DataBase();
+		
+		java.io.File explorersFolder = new java.io.File(Explorer.FOLDER_EXPLORERS);
+		
+		if(!explorersFolder.exists()) 
+			explorersFolder.mkdir();
+				
+			
+		
+		
 		return dataBase;
 	}
 
