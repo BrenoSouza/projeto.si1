@@ -18,28 +18,33 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
  *
  */
 @Entity
+@Table(name = "APP_USER")
 public class User implements UserDetails {
 
+	@Transient
 	private static final long serialVersionUID = 1L;
 
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
+	private Long id;
 	
 	@Version
 	private Integer version;
-	@Column(name = "user_email")
+	//@Column(name = "user_email")
 	private String email;
-	@Column(name = "user_name")
+	//@Column(name = "user_name")
 	private String username;
-	@Column(name = "user_password")
+	//@Column(name = "user_password")
 	private String password;
 	
-	
+	@Transient
 	public static final int MAX_LENGTH_LOGIN = 30;
+	@Transient
 	public static final int MIN_LENGTH_LOGIN = 6;
+	@Transient
 	public static final int MAX_LENGTH_PASSWORD = 30;
+	@Transient
 	public static final int MIN_LENGTH_PASSWORD = 8;
 	
 		
@@ -70,7 +75,7 @@ public class User implements UserDetails {
 	/**
 	 * @return - Retorna o id do usuario.
 	 */
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
@@ -80,7 +85,7 @@ public class User implements UserDetails {
 	 * @param id
 	 *            Integer - novo id.
 	 */
-	public void setId(Integer id) throws Exception {
+	public void setId(Long id) throws Exception {
 		if(id == null)
 			throw new NullPointerException();
 		this.id = id;
@@ -229,5 +234,7 @@ public class User implements UserDetails {
 	public boolean isEnabled() {
 		return true;
 	}
+	
+	
 	
 }

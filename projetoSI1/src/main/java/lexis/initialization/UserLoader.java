@@ -44,7 +44,7 @@ public class UserLoader implements ApplicationListener<ContextRefreshedEvent> {
 			admin = new User("admin", "admin", "admin@admin");
 			
 			// salvando no banco de dados
-			DataBase.getInstance().addNewUser(admin);
+			//DataBase.getInstance().addNewUser(admin);
 			//userRepository.save(admin);
 			
 		} catch (Exception e) {
@@ -53,13 +53,13 @@ public class UserLoader implements ApplicationListener<ContextRefreshedEvent> {
 
 		User guest;
 		try {
-			guest = new User("guest", "guest", "guest@guest");
-			Explorer explorer = DataBase.getInstance().addNewUser(guest);
-			explorer.currentFolder().addFolder("geustpasta1", Permission.PRIVATE);
-			explorer.currentFolder().addFolder("geustpasta2", Permission.PRIVATE);
+			//guest = new User("guest", "guest", "guest@guest");
+			//Explorer explorer = DataBase.getInstance().addNewUser(guest);
+			//explorer.currentFolder().addFolder("geustpasta1", Permission.PRIVATE);
+			//explorer.currentFolder().addFolder("geustpasta2", Permission.PRIVATE);
 			//userRepository.save(guest);
 
-			log.info("Saved guest - id:" + guest.getId());
+			//log.info("Saved guest - id:" + guest.getId());
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

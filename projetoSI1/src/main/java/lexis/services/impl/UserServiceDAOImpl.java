@@ -43,7 +43,7 @@ public class UserServiceDAOImpl implements UserServiceDAO,UserDetailsService{
 	 * @return o Usuario associado ao Id, ou null.
 	 */
 	@Override
-	public User getUserById(Integer id) {
+	public User getUserById(Long id) {
 		return userRepository.findOne(id);
 	}
 
@@ -65,7 +65,7 @@ public class UserServiceDAOImpl implements UserServiceDAO,UserDetailsService{
 	 *            Integer - o id que sera passado para a remocao.
 	 */
 	@Override
-	public void deleteUser(Integer id) {
+	public void deleteUser(Long id) {
 		userRepository.delete(id);
 	}
 

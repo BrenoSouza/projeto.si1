@@ -112,6 +112,8 @@ public class UserRegisterHelper {
 			throw new LoginNotRegisteredException("erro ao cadastrar");
 		}
 		DataBase.getInstance().addNewUser(userRegister);
+		
+		
 		userService.saveUser(userRegister);
 	
 
