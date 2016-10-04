@@ -24,12 +24,15 @@ public class DataBase implements Serializable {
 		if (dataBase == null)
 			dataBase = new DataBase();
 		
+<<<<<<< HEAD
 		java.io.File explorersFolder = new java.io.File(Explorer.FOLDER_EXPLORERS);
 		
 		if(!explorersFolder.exists()) 
 			explorersFolder.mkdir();
 				
 			
+=======
+>>>>>>> refs/remotes/origin/back
 		
 		
 		return dataBase;
@@ -92,7 +95,11 @@ public class DataBase implements Serializable {
 		if (output == null) {
 			output = getExplorerInFile(userLogin);
 		}
-
+		
+		if(output == null) 
+			data.put(userLogin, new Explorer(userLogin));
+		
+		
 		return output;
 	}
 

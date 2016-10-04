@@ -24,7 +24,7 @@ public interface UserServiceDAO {
 	 * @param id
 	 * @return o Usuario associado ao Id, ou null.
 	 */
-	User getUserById(Integer id);
+	User getUserById(Long id);
 
 	/**
 	 * Salva o usuario.
@@ -90,6 +90,6 @@ public interface UserServiceDAO {
 	 * @param id
 	 *            Integer - o id que sera passado para a remocao.
 	 */
-	void deleteUser(Integer id);
+	void deleteUser(Long id);
 
 }

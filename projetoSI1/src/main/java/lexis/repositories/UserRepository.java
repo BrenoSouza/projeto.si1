@@ -11,7 +11,7 @@ import lexis.models.User;
  * @author Grupo 7, Alexandre Gullo, Jose Breno, Matheus Benedito, Melisse
  *         Cabral, Raimundo Heitor, Rafael Klyger.
  */
-public interface UserRepository extends CrudRepository<User, Integer> {
+public interface UserRepository extends CrudRepository<User, Long> {
 	/**
 	 * Metodo que busca usuario a partir do email.
 	 * 
