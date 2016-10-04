@@ -23,6 +23,9 @@ public class DataBase implements Serializable {
 	public static synchronized DataBase getInstance() {
 		if (dataBase == null)
 			dataBase = new DataBase();
+		
+		
+		
 		return dataBase;
 	}
 
@@ -83,7 +86,11 @@ public class DataBase implements Serializable {
 		if (output == null) {
 			output = getExplorerInFile(userLogin);
 		}
-
+		
+		if(output == null) 
+			data.put(userLogin, new Explorer(userLogin));
+		
+		
 		return output;
 	}
 
