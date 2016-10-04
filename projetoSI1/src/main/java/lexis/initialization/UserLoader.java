@@ -45,7 +45,7 @@ public class UserLoader implements ApplicationListener<ContextRefreshedEvent> {
 			
 			// salvando no banco de dados
 			DataBase.getInstance().addNewUser(admin);
-			userRepository.save(admin);
+			//userRepository.save(admin);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -57,7 +57,7 @@ public class UserLoader implements ApplicationListener<ContextRefreshedEvent> {
 			Explorer explorer = DataBase.getInstance().addNewUser(guest);
 			explorer.currentFolder().addFolder("geustpasta1", Permission.PRIVATE);
 			explorer.currentFolder().addFolder("geustpasta2", Permission.PRIVATE);
-			userRepository.save(guest);
+			//userRepository.save(guest);
 
 			log.info("Saved guest - id:" + guest.getId());
 			
