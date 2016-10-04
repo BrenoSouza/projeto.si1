@@ -273,7 +273,8 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     //VIEWS
     
     $scope.viewFile = function(arquivo) {
-    	if (arquivo.owner === undefined) {
+    	console.log(arquivo.owner);
+    	if (arquivo.owner === null) {
     		var file = {
     			name: arquivo.name,
     			type: arquivo.type
