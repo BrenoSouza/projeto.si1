@@ -90,6 +90,12 @@
  		if (output == null) {
  			output = getExplorerInFile(userLogin);
  		}
+ 		
+ 		if(output == null) {
+ 			output = new Explorer(userLogin);
+ 			data.put(userLogin, output);
+ 		}
+ 			
  
  		return output;
  	}
