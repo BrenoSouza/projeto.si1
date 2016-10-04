@@ -248,9 +248,7 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     
     $scope.showTrash = function() {
     	$http.get("/home/trash").success(function(data, status) {
-    		console.log(data);
     		$scope.arquivos = data.first.concat(data.second);
-    		console.log($scope.arquivos);
     	});
     }
     
@@ -273,8 +271,7 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
     //VIEWS
     
     $scope.viewFile = function(arquivo) {
-    	console.log(arquivo.owner);
-    	if (arquivo.owner === null) {
+    	if (arquivo.owner === undefined) {
     		var file = {
     			name: arquivo.name,
     			type: arquivo.type
@@ -299,7 +296,6 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
 
     	});
     }
-
     
     
     
@@ -330,7 +326,6 @@ app.controller("listaArquivosCtrl", function($scope, $http) {
         $scope.direction = !$scope.direction;
     }
     
-
     
     
     //ABRIR MODALS:
