@@ -1,13 +1,17 @@
 package lexis.models;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public abstract class SharedFile {
+public abstract class SharedFile implements  Serializable {
+
+	private static final long serialVersionUID = 1057400889808018146L;
 	
 	private File file;
-	private String owner;
-	private int index;
 	
+	private String owner;
+	
+	private int index;
 	
 	public SharedFile(File file, String owner) {
 		if(file == null || owner == null)
@@ -92,8 +96,7 @@ public abstract class SharedFile {
 	abstract public String getTypeSharing();
 	
 	abstract public void setData(String data, LocalDateTime dateEdition);
-	
-	
+
 	@Override
 	public String toString() {
 		

@@ -32,25 +32,24 @@ public class UserLoader implements ApplicationListener<ContextRefreshedEvent> {
 	public void setUserRepository(UserRepository userRepository) {
 		this.userRepository = userRepository;
 	}
-
+	
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 
 		// Adicionando usuarios ao sistema.
 		User admin;
 		try {
+			
+			//criando e salvando usuarios usuarios
 			admin = new User("admin", "admin", "admin@admin");
+			
+			// salvando no banco de dados
 			DataBase.getInstance().addNewUser(admin);
 			userRepository.save(admin);
-			
-			log.info("Saved admin - id: " + admin.getId());
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-
-
 
 		User guest;
 		try {

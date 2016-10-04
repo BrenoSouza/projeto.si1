@@ -1,9 +1,12 @@
 package lexis.models;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public final class TrashFile implements TrashFileAndFolder {
+public final class TrashFile implements TrashFileAndFolder, Serializable {
 	
+	private static final long serialVersionUID = 9062475293631527828L;
+
 	private File file;
 	
 	public TrashFile(File file) {
@@ -11,6 +14,7 @@ public final class TrashFile implements TrashFileAndFolder {
 			throw new NullPointerException();
 		
 		this.file = file;
+		this.file.putInTrash();
 		
 	}
 	
@@ -18,7 +22,11 @@ public final class TrashFile implements TrashFileAndFolder {
 	public String getName() {
 		return file.getName();
 	}
-
+	
+	public Type getType() {
+		return file.getType();
+	}
+	
 	@Override
 	public LocalDateTime getDateCreation() {
 		return file.getDateCreation();
@@ -39,6 +47,10 @@ public final class TrashFile implements TrashFileAndFolder {
 		return file.getStringPath();
 	}
 	
+	@Override
+	public boolean isInTrash() {
+		return file.isInTrash();
+	}
 
 	protected File getFile() {
 		return file;

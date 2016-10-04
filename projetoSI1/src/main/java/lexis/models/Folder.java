@@ -3,8 +3,6 @@ package lexis.models;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 
 /**
  * Classe responsavel pelo objeto do tipo pasta.
@@ -14,19 +12,30 @@ import javax.persistence.ElementCollection;
  *
  */
 public class Folder implements FileAndFolder {
+	
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4989997726749486926L;
 
 	public static final String SEP = "/";
 	public static final String UNAMED_FOLDER = "Sem titulo";
-
-	@Column // (scale = 3)
+		
 	private String name;
+	
 	private LocalDateTime dateCreation;
+	
 	private LocalDateTime dateEdition;
+	
 	private Permission permission;
+	
+	private boolean inTrash;
 
-	@ElementCollection
 	private List<Folder> folderDirectory;
+	
 	private List<File> fileDirectory;
+	
 	private List<String> path;
 
 	public Folder(String name, Permission permission, List<String> path) {
@@ -59,6 +68,7 @@ public class Folder implements FileAndFolder {
 		this.permission = permission;
 		this.path = path;
 		this.fileDirectory = new ArrayList<File>();
+		this.inTrash = false;
 
 	}
 
@@ -258,6 +268,16 @@ public class Folder implements FileAndFolder {
 		}
 		return null;
 	}
+	
+	@Override
+	public boolean isInTrash() {
+		return inTrash;
+	}
+	
+	@Override
+	public void putInTrash() {
+		inTrash = true;
+	}
 
 	/**
 	 * Procura por arquivos apenas pelo nome deles.
@@ -446,8 +466,11 @@ public class Folder implements FileAndFolder {
 
 	@Override
 	public String toString() {
-		return "Name: " + getName() + "\nDate of creation: " + getDateCreation() + "\nFolders: "
-				+ getFolderDirectory().toString() + "\nFiles: " + getFileDirectory() + "\n";
+		return  "Name: " + getName() +
+				"\nDate of creation: " + getDateCreation() + 
+				"\n Date of edition: " + getDateEdition() +
+				"\n Permission: " + getPermission()+
+				"\nFiles: " + getFileDirectory() + "\n";
 	}
 
 	public String getNewFoldersName(String name) {
@@ -484,6 +507,10 @@ public class Folder implements FileAndFolder {
 		List<String> newPath = new ArrayList<String>(path.subList(0, path.size()));
 		newPath.add(this.getName());
 		return newPath;
+	}
+
+	public void setInTrash(boolean inTrash) {
+		this.inTrash = inTrash;
 	}
 
 	private static void auxFind(String name, List<FileAndFolder> results, Folder folder) {

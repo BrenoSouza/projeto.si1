@@ -1,8 +1,10 @@
 package lexis.models;
 
+import java.io.Serializable;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 
-public enum Type {
+public enum Type implements Serializable {
 	TXT, MD;
 
 	@JsonCreator

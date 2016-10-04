@@ -1,5 +1,10 @@
 package lexis.models;
 
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,19 +12,31 @@ import java.util.Stack;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-public class Explorer implements Comparable<Explorer> {
+public class Explorer implements Comparable<Explorer>, Serializable {
+	
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4424953303868949139L;
+	static final String FOLDER_EXPLORERS = "explorers";
+	static final String EXTENSION = "ser";
 	
 	public static final int MAX_NOTIFICATIONS = 10;
-
+	
 	private Folder root;
+	
 	private String owner;
+	
 	private Stack<Folder> stackFolder;
 	
 	private TreeSet<String> usersThatImSharing;
 	
 	private TreeMap<String, List<SharedFile>> sharedFiles;
 	
-	private List<TrashFileAndFolder> trash;
+	private List<TrashFile> trashFile;
+	
+	private List<TrashFolder> trashFolder;
 	
 	private List<Notification> notifications;
 	
@@ -39,10 +56,11 @@ public class Explorer implements Comparable<Explorer> {
 		
 		usersThatImSharing = new TreeSet<String>();
 		sharedFiles = new TreeMap<String, List<SharedFile>>();
-		trash = new ArrayList<TrashFileAndFolder>();
+		trashFile = new ArrayList<TrashFile>();
+		trashFolder = new ArrayList<TrashFolder>();
 		
 		notifications = new ArrayList<Notification>();
-		
+		writeExplorer(this);
 	}
 	
 	private void addNotification(Notification notification) {
@@ -92,10 +110,19 @@ public class Explorer implements Comparable<Explorer> {
 		sharedFilesWithThisUser.add(fileReadAndWrite);
 		addNotification(new Notification(owner, fileReadAndWrite, log));
 		
-		
+		writeExplorer(this);
 		return fileReadAndWrite;
 	}
 	
+	public void addFolder(String name, Permission permission, LocalDateTime dateCreation) {
+		currentFolder().addFolder(name, permission, dateCreation);
+		writeExplorer(this);
+	}
+	
+	public void addFile(String name, Type type, Permission permission, LocalDateTime dateCreation) {
+		currentFolder().addFile(name, type, permission, dateCreation);
+		writeExplorer(this);
+	}
 	/**
 	 * Adiciona arquivos de terceiros para esse explorer. O dono 
 	 * desse explorer tem permissao apenas para ver alguns 
@@ -122,6 +149,7 @@ public class Explorer implements Comparable<Explorer> {
 		sharedFilesWithThisUser.add(fileReadOnly);
 		addNotification(new Notification(owner, fileReadOnly, log));
 		
+		writeExplorer(this);
 		return fileReadOnly;
 	}
 	
@@ -245,7 +273,9 @@ public class Explorer implements Comparable<Explorer> {
 	
 	
 	public File openFile(String name, Type type) {
-		return stackFolder.peek().getOrCreateFile(name, type);
+		File aux = stackFolder.peek().getOrCreateFile(name, type);
+		writeExplorer(this);
+		return aux;
 	}
 	
 	public File getFile(String name, Type type) {
@@ -254,25 +284,25 @@ public class Explorer implements Comparable<Explorer> {
 	
 	public boolean removeFolder(String name) {
 		Folder aux = stackFolder.peek().getFolder(name);
-	
+		boolean result = false;
 		if(aux != null) {
-			trash.add(new TrashFolder(aux));
-			return stackFolder.peek().removeFolder(name);
+			trashFolder.add(new TrashFolder(aux));
+			result = stackFolder.peek().removeFolder(name);
 		}
-		
-		return false;
+		writeExplorer(this);
+		return result;
 	}
 	
 	public boolean removeFile(String name, Type type) {
 		File aux = stackFolder.peek().getFile(name, type);
-		
+		boolean result = false;
 		if(aux != null) {
-			trash.add(new TrashFile(aux));
-			return stackFolder.peek().removeFile(name, type);
+			trashFile.add(new TrashFile(aux));
+			result = stackFolder.peek().removeFile(name, type);
 		
 		}
-		
-		return false;
+		writeExplorer(this);
+		return result;
 	}
 	
 	
@@ -289,7 +319,7 @@ public class Explorer implements Comparable<Explorer> {
 			int index = stackFolder.size();
 			temp.setCellOfPath(index, newName);
 		}
-		
+		writeExplorer(this);
 	}
 	
 	public void renameFile(String oldName, String newName, Type oldType, Type newType) {
@@ -304,9 +334,29 @@ public class Explorer implements Comparable<Explorer> {
 			temp.setName(newName);
 			temp.setType(newType);
 		}
-		
+		writeExplorer(this);
 	}
 	
+	private static void writeExplorer(Explorer explorer) {
+		ObjectOutputStream out = null;
+
+		try {
+			out = new ObjectOutputStream(new BufferedOutputStream(
+					new FileOutputStream(FOLDER_EXPLORERS + "/" + explorer.getOwner() + "." + EXTENSION)));
+			out.writeObject(explorer);
+		} catch (Exception e) {
+			// TODO
+		} finally {
+			try {
+				if(out != null)
+					out.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+	}
 	
 	public Folder currentFolder() {
 		return stackFolder.peek();
@@ -326,8 +376,12 @@ public class Explorer implements Comparable<Explorer> {
 		return owner;
 	}
 	
-	public TrashFileAndFolder[] getTrash() {
-		return trash.toArray(new TrashFileAndFolder[0]);
+	public TrashFile[] getTrashFile() {
+		return trashFile.toArray(new TrashFile[0]);
+	}
+	
+	public TrashFolder[] getTrashFolder() {
+		return trashFolder.toArray(new TrashFolder[0]);
 	}
 	
 	@Override
@@ -355,5 +409,5 @@ public class Explorer implements Comparable<Explorer> {
 		
 		return goToRoot();
 	}
-	
+
 }

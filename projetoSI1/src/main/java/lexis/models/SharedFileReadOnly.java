@@ -14,11 +14,11 @@ import java.time.LocalDateTime;
  *
  */
 public class SharedFileReadOnly extends SharedFile {
-	
-	public static final String TYPE_SHARING = "Read Only";
-	
 
-	
+	private static final long serialVersionUID = -9170535956018149023L;
+
+	public static final String TYPE_SHARING = "Read Only";
+		
 	/**
 	 * Construtor da classe que recebe o arquivo 
 	 * em questao e o dono do arquivo.
@@ -43,6 +43,5 @@ public class SharedFileReadOnly extends SharedFile {
 		// TODO Auto-generated method stub
 		
 	}
-	
 
 }

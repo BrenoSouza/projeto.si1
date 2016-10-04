@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 
 public final class TrashFolder implements TrashFileAndFolder {
 	
+	private static final long serialVersionUID = -8344927605101822430L;
+
 	Folder folder;
 	
 	public TrashFolder(Folder folder) {
@@ -11,6 +13,7 @@ public final class TrashFolder implements TrashFileAndFolder {
 			throw new NullPointerException();
 		
 		this.folder = folder;
+		this.folder.putInTrash();
 	}
 	
 	@Override
@@ -43,6 +46,11 @@ public final class TrashFolder implements TrashFileAndFolder {
 	}
 	
 	@Override
+	public boolean isInTrash() {
+		return folder.isInTrash();
+	}
+	
+	@Override
 	public boolean equals(Object obj) {
 		if(obj == null)
 			return false;
@@ -54,5 +62,4 @@ public final class TrashFolder implements TrashFileAndFolder {
 		
 		return this.getFolder().equals(otherTrashFolder.getFolder());
 	}
-
 }

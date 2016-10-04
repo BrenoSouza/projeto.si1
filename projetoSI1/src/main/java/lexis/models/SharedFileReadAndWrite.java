@@ -2,7 +2,10 @@ package lexis.models;
 
 import java.time.LocalDateTime;
 
+
 public final class SharedFileReadAndWrite extends SharedFile {
+	
+	private static final long serialVersionUID = -7382772783384859855L;
 	
 	public static final String TYPE_SHARING = "Read and Write";
 	
@@ -19,5 +22,5 @@ public final class SharedFileReadAndWrite extends SharedFile {
 	public  String getTypeSharing() {
 		return TYPE_SHARING;
 	}
-	
+
 }

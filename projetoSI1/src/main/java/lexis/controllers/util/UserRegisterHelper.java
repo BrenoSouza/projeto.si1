@@ -1,20 +1,25 @@
-package lexis.util;
+package lexis.controllers.util;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import lexis.exceptions.*;
 import lexis.models.DataBase;
 import lexis.models.User;
 import lexis.services.UserServiceDAO;
 
-
+@Component
 public class UserRegisterHelper {
 
-	private UserServiceDAO userService;
+	private static UserServiceDAO userService;
 	private User userTemp;
 
-	public UserRegisterHelper(UserServiceDAO userService) {
-		this.userService = userService;
-			
+	@Autowired
+	public void setUserService(UserServiceDAO userService2) {
+		userService = userService2;
 	}
+	
+	public UserRegisterHelper(){}
 
 	public void hasErrorIn(User user) {
 		check(user);
@@ -103,8 +108,12 @@ public class UserRegisterHelper {
 	}
 	// registra o usuario
 	public void RegisterUser(User userRegister) {
+		if((userRegister == null)||(userService == null)){
+			throw new LoginNotRegisteredException("erro ao cadastrar");
+		}
 		DataBase.getInstance().addNewUser(userRegister);
 		userService.saveUser(userRegister);
+	
 
 	}
 

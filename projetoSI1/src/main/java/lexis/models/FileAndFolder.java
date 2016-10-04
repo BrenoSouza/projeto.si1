@@ -3,8 +3,6 @@ package lexis.models;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import javax.persistence.Embeddable;
-
 /**
  * Interface que dita as regras que todo arquivo e pasta tem que ter.
  * 
@@ -12,13 +10,7 @@ import javax.persistence.Embeddable;
  *         Cabral, Raimundo Heitor, Rafael Klynger.
  *
  */
-@Embeddable
-public interface FileAndFolder {
-
-	/**
-	 * @return O nome do objeto.
-	 */
-	public String getName();
+public interface FileAndFolder extends TrashFileAndFolder {
 
 	/**
 	 * Atualiza o nome.
@@ -27,12 +19,6 @@ public interface FileAndFolder {
 	 *            String - novo nome.
 	 */
 	public void setName(String name);
-
-	/**
-	 * @return Date - a data de criação do objeto.
-	 */
-	public LocalDateTime getDateCreation();
-	
 	
 	/**
 	 * Estabelece uma data de criacao. Esse metodo so 
@@ -42,11 +28,6 @@ public interface FileAndFolder {
 	 * sido inicializada.
 	 */
 	public void setDateCreation(LocalDateTime date) throws Exception;
-	
-	/**
-	 * @return Date - a data de ediçao do objeto.
-	 */
-	public LocalDateTime getDateEdition();
 	
 	/**
 	 * Atualiza a data de edicao.
@@ -70,8 +51,9 @@ public interface FileAndFolder {
 	public void setCellOfPath(int index, String newValue);
 	
 	public String getStringPath();
-		
 	
+	public void putInTrash();
+		
 	
 	
 	

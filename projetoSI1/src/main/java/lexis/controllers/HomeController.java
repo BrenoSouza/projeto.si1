@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import lexis.controllers.util.JsonUtil;
 import lexis.models.DataBase;
 import lexis.models.Explorer;
 import lexis.models.Folder;
@@ -21,12 +22,10 @@ import lexis.models.Pair;
 import lexis.models.Permission;
 import lexis.models.SharedFile;
 import lexis.models.TrashFile;
-import lexis.models.TrashFileAndFolder;
 import lexis.models.TrashFolder;
 import lexis.models.Type;
 import lexis.models.User;
 import lexis.services.UserServiceDAO;
-import lexis.util.JsonUtil;
 
 @RestController
 @RequestMapping("/home")
@@ -105,7 +104,7 @@ public class HomeController {
 		Permission permission = JsonUtil.getPermission();
 		LocalDateTime dateCreation = JsonUtil.GetDateCreation();
 		
-		explorer.currentFolder().addFolder(name, permission, dateCreation);
+		explorer.addFolder(name, permission, dateCreation);
 	}
 
 	/**
@@ -121,7 +120,7 @@ public class HomeController {
 		Type type = JsonUtil.getType();
 		LocalDateTime dateCreation = JsonUtil.GetDateCreation();
 		
-		explorer.currentFolder().addFile(name, type, permission, dateCreation);
+		explorer.addFile(name, type, permission, dateCreation);
 	}
 
 	/**
@@ -264,13 +263,8 @@ public class HomeController {
 	 * @return Object Json contendo a lixeira do usuario
 	 */
 	@RequestMapping(value = "trash", method = RequestMethod.GET)
-	public Pair<List<TrashFile>, List<TrashFolder>> getTrash(){		
-		return ModelsUtil.transformGetTrashOutput(explorer.getTrash());
-	}
-	
-	@RequestMapping(value= "cleantrash", method = RequestMethod.GET)
-	public void cleanTrash(){
-		//explorer.cleanTrash();
+	public Pair<TrashFile[], TrashFolder[]> getTrash(){		
+		return ModelsUtil.transformGetTrashOutput(explorer.getTrashFile(), explorer.getTrashFolder());
 	}
 	
 	/**

@@ -14,7 +14,7 @@ import lexis.Application;
 import lexis.models.User;
 import lexis.repositories.UserRepository;
 import lexis.services.UserServiceDAO;
-import lexis.services.UserServiceDAOImpl;
+import lexis.services.impl.UserServiceDAOImpl;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)

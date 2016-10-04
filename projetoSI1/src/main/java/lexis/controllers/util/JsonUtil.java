@@ -1,4 +1,4 @@
-package lexis.util;
+package lexis.controllers.util;
 
 import java.io.IOException;
 import java.time.LocalDateTime;

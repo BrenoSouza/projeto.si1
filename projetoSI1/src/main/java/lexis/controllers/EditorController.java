@@ -8,14 +8,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
- 
+
+import lexis.controllers.util.JsonUtil;
 import lexis.models.DataBase;
 import lexis.models.Explorer;
 import lexis.models.File;
 import lexis.models.SharedFile;
 import lexis.models.Type;
 import lexis.models.User;
-import lexis.util.JsonUtil;
  
 @RestController
 @RequestMapping("/editor")

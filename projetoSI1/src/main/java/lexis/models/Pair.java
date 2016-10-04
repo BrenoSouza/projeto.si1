@@ -1,11 +1,14 @@
 package lexis.models;
 
-public class Pair <B, C> {
+import java.io.Serializable;
+
+public class Pair <B, C> implements Serializable {
+	
+	private static final long serialVersionUID = 7045731650503959480L;
 	
 	B first;
 	C second;
-	
-	
+		
 	public Pair(B first, C second) {
 		this.first = first;
 		this.second = second;

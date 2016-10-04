@@ -201,23 +201,34 @@
 
 										<td>Falta formatar o objeto data</td>
 
-										<td><input ng-if="isTxt(arquivo.type)" id="rename"
+										<td>
+											<span ng-if="arquivo.inTrash != true">
+											
+											<input ng-if="isTxt(arquivo.type)" id="rename"
 											type="image" src="../static/images/rename.png"
 											th:src="@{images/rename.png}" name="renameFile"
-											ng-click="showModalRenameFile(arquivo)"></input> <input
+											ng-click="showModalRenameFile(arquivo)"></input> 
+											
+											<input
 											ng-if="!isTxt(arquivo.type)" id="rename" type="image"
 											src="../static/images/rename.png"
 											th:src="@{images/rename.png}" name="renameFolder"
-											ng-click="showModalRenameFolder(arquivo)"></input> <input
-											ng-if="!isShare(arquivo)" class="shareBtn"
+											ng-click="showModalRenameFolder(arquivo)"></input> 
+											
+											<input
+											ng-if="arquivo.type != 'folder'" class="shareBtn"
 											id="shareFile{{arquivo.name}}{{arquivo.type}}" type="image"
 											src="../static/images/share.png" th:src="@{images/share.png}"
 											name="shareFile" data-toggle="modal"
-											ng-click="openShareModal(arquivo)"></input> <input
+											ng-click="openShareModal(arquivo)"></input> 
+											
+											<input
 											ng-if="!isShare(arquivo)" id="delete" type="image"
 											src="../static/images/delete.png"
 											th:src="@{images/delete.png}" name="removeFile"
-											ng-click="deleteOption(arquivo)"></input></td>
+											ng-click="deleteOption(arquivo)"></input>
+											</span>
+											</td>
 
 
 									</tr>

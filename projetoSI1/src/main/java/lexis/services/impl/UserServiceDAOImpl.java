@@ -1,4 +1,4 @@
-package lexis.services;
+package lexis.services.impl;
 
 import java.util.Iterator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import lexis.models.User;
 import lexis.repositories.UserRepository;
+import lexis.services.UserServiceDAO;
 
 /**
  * Implementacao da interface UserService.

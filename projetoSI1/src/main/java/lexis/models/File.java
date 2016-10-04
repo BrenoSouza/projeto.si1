@@ -4,9 +4,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-
 
 /**
  * Classe responsavel pelo obejto do tipo arquivo.
@@ -17,24 +14,29 @@ import javax.persistence.ElementCollection;
  */
 public class File implements FileAndFolder {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3351932681798762902L;
 	private static final String SEP = "/";
-	
 	public static final String EMPTY_DATA = "";
 	public static final String UNAMED_FILE = "Sem titulo";
-
-	@Column // (scale = 4)
+	
 	private String name;
+	
 	private LocalDateTime dateCreation;
+	
 	private LocalDateTime dateEdition;
+	
 	private String data;
+	
 	private Type type;
+	
 	private Permission permission;
 	
+	private boolean inTrash;
 	
-	@ElementCollection
 	private List<String> path;
-	
-	
 	
 	public File(String name, Type type, Permission permission, List<String> path) {
 		this(name, type, permission, path, LocalDateTime.now());
@@ -65,6 +67,7 @@ public class File implements FileAndFolder {
 		this.dateEdition = dateCreation;
 		this.permission = permission;
 		this.path = path;
+		this.inTrash = false;
 	}
 	
 	public File()  {
@@ -123,9 +126,7 @@ public class File implements FileAndFolder {
 	@Override
 	public void setName(String name) {
 		this.name = name;
-
 	}
-
 
 	@Override
 	public LocalDateTime getDateCreation() {
@@ -135,6 +136,16 @@ public class File implements FileAndFolder {
 	@Override
 	public List<String> getPath() {
 		return path;
+	}
+	
+	@Override
+	public boolean isInTrash() {
+		return inTrash;
+	}
+	
+	@Override
+	public void putInTrash() {
+		inTrash = true;
 	}
 	
 	@Override
@@ -152,7 +163,6 @@ public class File implements FileAndFolder {
 	public void setDateEdition(LocalDateTime date) {
 		if(date != null)
 			this.dateEdition = date;
-
 	}
 	
 	@Override
@@ -189,10 +199,13 @@ public class File implements FileAndFolder {
 
 	@Override
 	public String toString() {
-		return "Name: " + getName() + "\nCreation: " + getDateCreation().toString() +
-				"\nLast Edition: " + getDateEdition().toString() + "\nType of File: " + 
-				type.name().toLowerCase() + "\nPermission: " + permission.name().toLowerCase() + 
-				"\nData: " + data + "\n";
+		return  "Name: " + getName() + 
+				"\n Date Creation: " + getDateCreation().toString() +
+				"\n Date Edition: " + getDateEdition().toString() + 
+				"\n Source Code: "+ getData()+
+				"\nType of File: " + type.name().toLowerCase() + 
+				"\nPermission: " + permission.name().toLowerCase() + 
+				"\n";
 
 	}
 
@@ -207,9 +220,13 @@ public class File implements FileAndFolder {
 		return stringPath;
 	}
 
+	public void setData(String data) {
+		this.data = data;
+	}
 
-
-
+	public void setInTrash(boolean inTrash) {
+		this.inTrash = inTrash;
+	}
 	
-
+	
 }
