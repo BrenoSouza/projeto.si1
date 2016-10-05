@@ -1,10 +1,10 @@
 # projeto.si1
 
-Grupo 7: Alexandre Gullo
-         Breno Souza
-         Matheus Benedito Braga
-         Melisse Cabral
-         Rafael Klynger
+Grupo 7: Alexandre Gullo,
+         Breno Souza,
+         Matheus Benedito Braga,
+         Melisse Cabral,
+         Rafael Klynger,
          Raimundo Heitor
          
 Documento decisões da Terceira Entrega:
